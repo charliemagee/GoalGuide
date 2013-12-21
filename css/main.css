@@ -4113,19 +4113,19 @@ textarea {
   list-style-type: none;
   overflow: hidden; }
 
-#goalcontent, #primegoalcontent {
+#goalcontent, #primarygoalcontent {
   position: relative;
   display: none; }
 
 .goalsinprogress, .goalscompleted, .goalsmissed,
-.primegoals {
+.primarygoals {
   margin: 0 0 10px 0;
   padding: 0;
   list-style-type: none;
   overflow: hidden; }
 
 .users li, .goalsinprogress li, .goalscompleted li, .goalsmissed li,
-.primegoals li {
+.primarygoals li {
   position: relative;
   margin: 10px auto;
   color: black;
@@ -4139,34 +4139,34 @@ textarea {
   border-left: 4px solid #ffd200;
   border-right: 4px solid #ffd200; }
 
-.goalsinprogress li, .goalscompleted li, .goalsmissed li, .primegoals li {
+.goalsinprogress li, .goalscompleted li, .goalsmissed li, .primarygoals li {
   padding: 4px 5px 6px 5px;
   font-size: 20px;
   line-height: 26px;
   text-align: center;
   text-transform: capitalize; }
 
-.goalscompleted li.completed, .primegoals li.completed {
+.goalscompleted li.completed, .primarygoals li.completed {
   background-color: #aee0ab;
   border-left: 4px solid #419d3b;
   border-right: 4px solid #419d3b; }
 
-.goalsinprogress li.inprogress, .primegoals li.inprogress {
+.goalsinprogress li.inprogress, .primarygoals li.inprogress {
   background-color: #d3e7fe;
   border-left: 4px solid #1a4677;
   border-right: 4px solid #1a4677; }
 
-.goalsmissed li.missed, .primegoals li.missed {
+.goalsmissed li.missed, .primarygoals li.missed {
   background-color: #f6d3d3;
   border-left: 4px solid #800404;
   border-right: 4px solid #800404; }
 
-.primegoals li.parent {
+.primarygoals li.parent {
   background-color: lightgray;
   border-left: 4px solid black;
   border-right: 4px solid black; }
 
-.primegoals li.sub {
+.primarygoals li.sub {
   width: 95%;
   float: right;
   margin-top: -5px; }
@@ -4190,19 +4190,19 @@ textarea {
 #user1.display, #user2.display, #user3.display, #user4.display {
   display: block; }
 
-ul#listheader, ul#primelistheader {
+ul#listheader, ul#primarylistheader {
   margin: 0;
   padding: 0;
   width: 100%;
   list-style-type: none; }
 
-ul#listheader li, ul#primelistheader li {
+ul#listheader li, ul#primarylistheader li {
   display: inline-block;
   font-size: 16px;
   line-height: 20px;
   text-align: center; }
 
-ul#listheader li.listheadertitle, ul#primelistheader li.listheadertitle {
+ul#listheader li.listheadertitle, ul#primarylistheader li.listheadertitle {
   width: 55%;
   text-align: center; }
 
@@ -4210,7 +4210,7 @@ ul#listheader li.listheaderdeadline {
   width: 25%;
   text-align: left; }
 
-ul#listheader li.listheaderstatus, ul#primelistheader li.listheaderstatus {
+ul#listheader li.listheaderstatus, ul#primarylistheader li.listheaderstatus {
   width: 11%;
   margin-left: -5px; }
 
@@ -4301,7 +4301,7 @@ ul#listheader li.listheaderstatus, ul#primelistheader li.listheaderstatus {
 #addgoalform #thestartdate, #addgoalform #theenddate {
   width: 40%; }
 
-#addgoal, #addprimegoal {
+#addgoal, #addprimarygoal {
   display: none; }
 
 .icondropdown, .icondropdownsub {

@@ -30,13 +30,13 @@ require_once("header.php");
             </div>
 
             <div class="btn-group pull-right" data-toggle="buttons-radio">
-                <button type="button" class="btn btn-small btn-primary primegoal"><i class="fa-large icon-stack" ></i> Primary</button>
+                <button type="button" class="btn btn-small btn-primary primarygoal"><i class="fa-large icon-stack" ></i> Primary</button>
                 <button type="button" class="btn btn-small btn-primary sologoal active"><i class="fa-large icon-bell" ></i> Solo</button>
             </div>
 
             <!-- Button to create new Goal -->
             <a href="#createModal" role="button" id="addgoal" class="btn btn-success btn-medium pull-right" data-toggle="modal"><i class="fa icon-checkmark" ></i>&nbsp;&nbsp;Add Goal</a>
-            <a href="#createModal" role="button" id="addprimegoal" class="btn btn-success btn-medium pull-right" data-toggle="modal"><i class="fa icon-checkmark" ></i>&nbsp;&nbsp;Add Primary Goal</a>
+            <a href="#createModal" role="button" id="addprimarygoal" class="btn btn-success btn-medium pull-right" data-toggle="modal"><i class="fa icon-checkmark" ></i>&nbsp;&nbsp;Add Primary Goal</a>
             <div class="clearfix"></div>
 
             <div id="goalcontent">
@@ -56,13 +56,13 @@ require_once("header.php");
 
                 </ul>
             </div>
-            <div id="primegoalcontent">
-                <ul id="primelistheader">
+            <div id="primarygoalcontent">
+                <ul id="primarylistheader">
                     <!--                    <li class="listheadercategory">Category</li>-->
                     <li class="listheadertitle">Goal</li>
                     <li class="listheaderstatus">Completed?</li>
                 </ul>
-                <ul class="primegoals">
+                <ul class="primarygoals">
 
                 </ul>
             </div>
@@ -391,8 +391,8 @@ require_once("header.php");
                     </form>
                     <div class="clearfix"></div>
                 </div>
-                <div id="addprimegoalform">
-                    <h3 class="detailsLabel">Create New Prime Goal</h3>
+                <div id="addprimarygoalform">
+                    <h3 class="detailsLabel">Create New Primary Goal</h3>
                     <form class="form-horizontal">
                         <div class="control-group">
                             <label class="control-label" for="thecategory">Category</label>
@@ -405,9 +405,9 @@ require_once("header.php");
                             </div>
                         </div>
                         <div class="control-group">
-                            <label class="control-label" for="theprimegoal">Primary Goal</label>
+                            <label class="control-label" for="theprimarygoal">Primary Goal</label>
                             <div class="controls">
-                                <input type="text" id="theprimegoal" class="input-large goalcomplete textempty" placeholder="What's the primary goal?">
+                                <input type="text" id="theprimarygoal" class="input-large goalcomplete textempty" placeholder="What's the primary goal?">
                             </div>
                         </div>
                         <hr/>
@@ -1010,7 +1010,7 @@ require_once("header.php");
                             </div>
                         </div>
                         <div class="savinggoals push-right-savegoal">
-                            <button type="button" id="saveprimegoal" data-dismiss="modal" class="btn btn-success btn-medium"><i class="fa-large icon-checkmark" ></i>&nbsp;&nbsp;Save These Goals</a></button>
+                            <button type="button" id="saveprimarygoal" data-dismiss="modal" class="btn btn-success btn-medium"><i class="fa-large icon-checkmark" ></i>&nbsp;&nbsp;Save These Goals</a></button>
                             <button type="button" id="savegoalcancel"  data-dismiss="modal" class="btn btn-danger btn-medium"><i class="fa-large icon-remove" ></i>&nbsp;&nbsp;Cancel</a></button>
                         </div>
                     </form>
