@@ -172,7 +172,6 @@ $('.primarygoal').click ->
   $('#addprimarygoal').show()
   $('#addgoal').hide()
 
-
 ###
 this adds a goal to the goalsArray, resaves the goalsArray with the new info, resaves the usersGoals to localstorage, then clears the form
 ###
@@ -200,6 +199,7 @@ $('#savegoal').click ->
       incentivepic: $("input[name=incentivepic]:checked").val()
       incentivetext: $("#theincentivetext").val()
       userguid: userguid
+      username: username
   goals.push(newgoal)
   localStorage.setItem "goals", JSON.stringify(goals)
   $("#addgoalform").hide()
@@ -306,7 +306,7 @@ displayMyGoalList = ->
     newinfocreated = JSON.stringify(goal.goal.infocreated)
     if (goal.goal.category is goalCategory)
       if (goal.goal.status is 'completed')
-        completedHTML.push """<li class='#{ goal.goal.status }' >
+        completedHTML.push """<li class='#{ goal.goal.status }' data-info='#{ goal.goal.infotype }' data-goalguid='#{ goal.goal.goalguid }'>
                           <span class='goaltitle'><i class='fa-large icon-#{ goal.goal.icon }'></i>#{ goal.goal.goal }</span>
                           <span class='goaldeadline'>#{ goal.goal.deadline }</span>
                           <span class='goalremove'><button type='button' class='btn btn-mini btn-danger removegoal' data-removegoal='#{ goal.goal }'><b>X</b></button></span>
@@ -315,28 +315,28 @@ displayMyGoalList = ->
 
       else if (goal.goal.status is "inprogress")
         if (goal.goal.infotype is 'text')
-          inprogressHTML.push """<li class='#{ goal.goal.status }' >
+          inprogressHTML.push """<li class='#{ goal.goal.status }' data-info='#{ goal.goal.infotype }' data-goalguid='#{ goal.goal.goalguid }' >
                           <span class='goaltitle'><i class='fa-large icon-#{ goal.goal.icon }'></i>#{ goal.goal.goal }</span>
                           <span class='goaldeadline'>#{ goal.goal.deadline }</span>
                           <span class='goalremove'><button type='button' class='btn btn-mini btn-danger removegoal' data-removegoal='#{ goals.goal }'><b>X</b></button></span>
                           <span class='goalstatus' data-goal='#{ goal.goal.goal }' data-complete='#{ goal.goal.completedmessage }'><input type='checkbox' /></span>
                           <span class='gatherinfo'><input type='text' name='info' class='info'/></span></li>"""
         else
-          inprogressHTML.push """<li class='#{ goal.goal.status }' >
+          inprogressHTML.push """<li class='#{ goal.goal.status }' data-info='#{ goal.goal.infotype }' data-goalguid='#{ goal.goal.goalguid }' >
                           <span class='goaltitle'><i class='fa-large icon-#{ goal.goal.icon }'></i>#{ goal.goal.goal }</span>
                           <span class='goaldeadline'>#{ goal.goal.deadline }</span>
                           <span class='goalremove'><button type='button' class='btn btn-mini btn-danger removegoal' data-removegoal='#{ goals.goal }'><b>X</b></button></span>
                           <span class='goalstatus' data-goal='#{ goal.goal.goal }' data-complete='#{ goal.goal.completedmessage }'><input type='checkbox' /></span></li>"""
       else
         if (goal.goal.infotype is 'text')
-          missedHTML.push """<li class='#{ goal.goal.status }' >
+          missedHTML.push """<li class='#{ goal.goal.status }' data-info='#{ goal.goal.infotype }' data-goalguid='#{ goal.goal.goalguid }' >
                           <span class='goaltitle'><i class='fa-large icon-#{ goal.goal.icon }'></i>#{ goal.goal.goal }</span>
                           <span class='goaldeadline'>#{ goal.goal.deadline }</span>
                           <span class='goalremove'><button type='button' class='btn btn-mini btn-danger removegoal' data-removegoal='#{ goals.goal }'><b>X</b></button></span>
                           <span class='goalstatus' data-goal='#{ goal.goal.goal }'><input type='checkbox' /></span>
                           <span class='gatherinfo'><input type='text' name='info' class='info'/></span></li>"""
         else
-          missedHTML.push """<li class='#{ goal.goal.status }' >
+          missedHTML.push """<li class='#{ goal.goal.status }' data-info='#{ goal.goal.infotype }' data-goalguid='#{ goal.goal.goalguid }' >
                           <span class='goaltitle'><i class='fa-large icon-#{ goal.goal.icon }'></i>#{ goal.goal.goal }</span>
                           <span class='goaldeadline'>#{ goal.goal.deadline }</span>
                           <span class='goalremove'><button type='button' class='btn btn-mini btn-danger removegoal' data-removegoal='#{ goals.goal }'><b>X</b></button></span>
@@ -348,58 +348,57 @@ displayMyGoalList = ->
   $(".goalsection").css(visibility: "visible").fadeIn(200)
 
 $(".goalscompleted").delegate "input[type=checkbox]", "click", ->
-  goalguid = $(this).parent().parent().data("goalguid")
+  goalguid = $(this).closest('li').data("goalguid")
   emailGoal = $(this).parent().data('goal')
-  $(this).parent().parent().removeClass("completed").addClass("inprogress").prop("checked", false)
+  $(this).closest('li').removeClass("completed").addClass("inprogress").prop("checked", false)
   updateStatus = 'inprogress'
   $.each goals, (index, goal) ->
-    if index is goalguid
-      goal.status = updateStatus
+    if goal.goal.goalguid is goalguid
+      goal.goal.status = updateStatus
       false # break the each
   localStorage.setItem "goals", JSON.stringify(goals)
-  logSummary()
+  goalChange()
   displayMyGoalList()
 
 $(".goalsinprogress").delegate "input[type=checkbox]", "click", ->
   checkinginfotype = $(this).closest('li').data('info')
-  console.log(checkinginfotype)
   if ( !$(this).closest('li').find('input[type="text"]').val() ) and (checkinginfotype is 'text')
     alert "You have to enter a number before this goal can be completed."
     $(this).removeAttr('checked');
   else
     goalguid = $(this).closest('li').data("goalguid")
     alertmessage = $(this).parent().data("complete")
-    console.log(goalguid)
     emailGoal = $(this).parent().data('goal')
     newinfo = parseInt($(this).closest('li').find('input[type="text"]').val(), 10)
     mygoaldate = createInfoDate()
     updateStatus = 'completed'
     $.each goals, (index, goal) ->
-      if index is goalguid
-        if goal.infotype is 'text'
-          goal.myinfo.push newinfo
-          goal.infocreated.push mygoaldate
-        goal.status = updateStatus
-        goal.datecompleted = mygoaldate
+      if goal.goal.goalguid is goalguid
+        if goal.goal.infotype is 'text'
+          goal.goal.myinfo.push newinfo
+          goal.goal.infocreated.push mygoaldate
+        goal.goal.status = updateStatus
+        goal.goal.datecompleted = mygoaldate
         alert(alertmessage)
         false # break the each
     localStorage.setItem "goals", JSON.stringify(goals)
     logSummary()
     $(this).find('.info').val('')
     $(this).closest('li').removeClass("inprogress missed").addClass("completed").prop("checked", true)
+    goalChange()
     displayMyGoalList()
 
 $(".goalsmissed").delegate "input[type=checkbox]", "click", ->
-  goalguid = $(this).parent().parent().data("goalguid")
+  goalguid = $(this).closest('li').data("goalguid")
   emailGoal = $(this).parent().data('goal')
-  $(this).parent().parent().removeClass("missed").addClass("inprogress").prop("checked", false)
+  $(this).closest('li').removeClass("missed").addClass("inprogress").prop("checked", false)
   updateStatus = 'inprogress'
   $.each goals, (index, goal) ->
-    if index is goalguid
-      goal.status = updateStatus
+    if goal.goal.goalguid is goalguid
+      goal.goal.status = updateStatus
       false # break the each
   localStorage.setItem "goals", JSON.stringify(goals)
-  logSummary()
+  goalChange()
   displayMyGoalList()
 
 $(".primarygoal").click ->
@@ -704,16 +703,16 @@ logSummary = ->
       console.log("Didn't work so good...");
 
 goalChange = ->
-  # Copy local-storage into variable.
-  key = undefined
+#  # Copy local-storage into variable.
+#  key = undefined
   postThis = {}
-  i = 0
-  len = localStorage.length
-
-  while i < len
-    key = localStorage.key(i)
-    postThis[key] = "" + localStorage.getItem(key)
-    i++
+#  i = 0
+#  len = localStorage.length
+#
+#  while i < len
+#    key = localStorage.key(i)
+#    postThis[key] = "" + localStorage.getItem(key)
+#    i++
 
   postThis.goals = localStorage.getItem("goals")
   # Use ajax to ask PHP to save this to a logfile
