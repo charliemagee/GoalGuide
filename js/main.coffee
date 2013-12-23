@@ -703,16 +703,16 @@ logSummary = ->
       console.log("Didn't work so good...");
 
 goalChange = ->
-#  # Copy local-storage into variable.
-#  key = undefined
+  # Copy local-storage into variable.
+  key = undefined
   postThis = {}
-#  i = 0
-#  len = localStorage.length
-#
-#  while i < len
-#    key = localStorage.key(i)
-#    postThis[key] = "" + localStorage.getItem(key)
-#    i++
+  i = 0
+  len = localStorage.length
+
+  while i < len
+    key = localStorage.key(i)
+    postThis[key] = "" + localStorage.getItem(key)
+    i++
 
   postThis.goals = localStorage.getItem("goals")
   # Use ajax to ask PHP to save this to a logfile

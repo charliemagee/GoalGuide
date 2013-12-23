@@ -13,6 +13,7 @@
 <script src="js/jquery-1.8.3.min.js"></script>
 <script src="js/jquery-ui-1.10.0.custom.min.js"></script>
 <script src="js/main.js"></script>
+<script src="js/bootstrap/bootstrap-alert.js"></script>
 <script src="js/bootstrap/bootstrap-transition.js"></script>
 <script src="js/bootstrap/bootstrap-collapse.js"></script>
 <script src="js/bootstrap/bootstrap-button.js"></script>
