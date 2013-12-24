@@ -309,7 +309,7 @@ displayMyGoalList = ->
         completedHTML.push """<li class='#{ goal.goal.status }' data-info='#{ goal.goal.infotype }' data-goalguid='#{ goal.goal.goalguid }'>
                           <span class='goaltitle'><i class='fa-large icon-#{ goal.goal.icon }'></i>#{ goal.goal.goal }</span>
                           <span class='goaldeadline'>#{ goal.goal.deadline }</span>
-                          <span class='goalremove'><button type='button' class='btn btn-mini btn-danger removegoal' data-removegoal='#{ goal.goal }'><b>X</b></button></span>
+                          <span class='goalremove'><button type='button' class='btn btn-mini btn-danger removegoal'><b>X</b></button></span>
                           <span class='goalstatus' data-goal='#{ goal.goal.goal }' ><input type='checkbox' checked/></span>
                           <span><i class='fa-large icon-stats chartbutton' data-infocreated='#{ newinfocreated }' data-myinfo='[#{ goal.goal.myinfo }]' data-incentivetext='#{ goal.goal.incentivetext }' data-incentivepic='#{ goal.goal.incentivepic }' data-goal='#{ goal.goal.goal }'></i></span></li>"""
 
@@ -318,28 +318,28 @@ displayMyGoalList = ->
           inprogressHTML.push """<li class='#{ goal.goal.status }' data-info='#{ goal.goal.infotype }' data-goalguid='#{ goal.goal.goalguid }' >
                           <span class='goaltitle'><i class='fa-large icon-#{ goal.goal.icon }'></i>#{ goal.goal.goal }</span>
                           <span class='goaldeadline'>#{ goal.goal.deadline }</span>
-                          <span class='goalremove'><button type='button' class='btn btn-mini btn-danger removegoal' data-removegoal='#{ goals.goal }'><b>X</b></button></span>
+                          <span class='goalremove'><button type='button' class='btn btn-mini btn-danger removegoal' ><b>X</b></button></span>
                           <span class='goalstatus' data-goal='#{ goal.goal.goal }' data-complete='#{ goal.goal.completedmessage }'><input type='checkbox' /></span>
                           <span class='gatherinfo'><input type='text' name='info' class='info'/></span></li>"""
         else
           inprogressHTML.push """<li class='#{ goal.goal.status }' data-info='#{ goal.goal.infotype }' data-goalguid='#{ goal.goal.goalguid }' >
                           <span class='goaltitle'><i class='fa-large icon-#{ goal.goal.icon }'></i>#{ goal.goal.goal }</span>
                           <span class='goaldeadline'>#{ goal.goal.deadline }</span>
-                          <span class='goalremove'><button type='button' class='btn btn-mini btn-danger removegoal' data-removegoal='#{ goals.goal }'><b>X</b></button></span>
+                          <span class='goalremove'><button type='button' class='btn btn-mini btn-danger removegoal' ><b>X</b></button></span>
                           <span class='goalstatus' data-goal='#{ goal.goal.goal }' data-complete='#{ goal.goal.completedmessage }'><input type='checkbox' /></span></li>"""
       else
         if (goal.goal.infotype is 'text')
           missedHTML.push """<li class='#{ goal.goal.status }' data-info='#{ goal.goal.infotype }' data-goalguid='#{ goal.goal.goalguid }' >
                           <span class='goaltitle'><i class='fa-large icon-#{ goal.goal.icon }'></i>#{ goal.goal.goal }</span>
                           <span class='goaldeadline'>#{ goal.goal.deadline }</span>
-                          <span class='goalremove'><button type='button' class='btn btn-mini btn-danger removegoal' data-removegoal='#{ goals.goal }'><b>X</b></button></span>
+                          <span class='goalremove'><button type='button' class='btn btn-mini btn-danger removegoal' ><b>X</b></button></span>
                           <span class='goalstatus' data-goal='#{ goal.goal.goal }'><input type='checkbox' /></span>
                           <span class='gatherinfo'><input type='text' name='info' class='info'/></span></li>"""
         else
           missedHTML.push """<li class='#{ goal.goal.status }' data-info='#{ goal.goal.infotype }' data-goalguid='#{ goal.goal.goalguid }' >
                           <span class='goaltitle'><i class='fa-large icon-#{ goal.goal.icon }'></i>#{ goal.goal.goal }</span>
                           <span class='goaldeadline'>#{ goal.goal.deadline }</span>
-                          <span class='goalremove'><button type='button' class='btn btn-mini btn-danger removegoal' data-removegoal='#{ goals.goal }'><b>X</b></button></span>
+                          <span class='goalremove'><button type='button' class='btn btn-mini btn-danger removegoal' ><b>X</b></button></span>
                           <span class='goalstatus' data-goal='#{ goal.goal.goal }'><input type='checkbox' /></span></li>"""
 
   $(".goalsinprogress").html inprogressHTML.join("")
@@ -387,6 +387,7 @@ $(".goalsinprogress").delegate "input[type=checkbox]", "click", ->
     $(this).closest('li').removeClass("inprogress missed").addClass("completed").prop("checked", true)
     goalChange()
     displayMyGoalList()
+
 
 $(".goalsmissed").delegate "input[type=checkbox]", "click", ->
   goalguid = $(this).closest('li').data("goalguid")
@@ -591,17 +592,25 @@ findAndRemoveUserGoals = (array, property, value) ->
     logSummary()
 
 ###
-  delete a goal from the list
+  delete a goal
 ###
 $(".goalsection").delegate "button", "click", ->
-  goalguid = $(this).data("removegoal")
+  goalguid = $(this).closest('li').data("goalguid")
   shouldRemove = confirm("Are you sure you want to remove this goal?")
   if !shouldRemove
     false
   else
-    delete goals[goalguid]
+    i = 0
+
+    while i < goals.length
+      console.log goalguid
+      if goals[i].goal.goalguid and goals[i].goal.goalguid is goalguid
+        console.log 'hello'
+        goals.splice i, 1
+        break
+      i++
     localStorage.setItem "goals", JSON.stringify(goals)
-    logSummary()
+    goalChange()
     displayMyGoalList()
 
 
@@ -704,15 +713,15 @@ logSummary = ->
 
 goalChange = ->
   # Copy local-storage into variable.
-  key = undefined
+#  key = undefined
   postThis = {}
-  i = 0
-  len = localStorage.length
-
-  while i < len
-    key = localStorage.key(i)
-    postThis[key] = "" + localStorage.getItem(key)
-    i++
+#  i = 0
+#  len = localStorage.length
+#
+#  while i < len
+#    key = localStorage.key(i)
+#    postThis[key] = "" + localStorage.getItem(key)
+#    i++
 
   postThis.goals = localStorage.getItem("goals")
   # Use ajax to ask PHP to save this to a logfile
