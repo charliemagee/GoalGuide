@@ -4,24 +4,24 @@ require_once("header.php");
 ?>
 
     <div id="content">
-        <div id="main" class="columnonethird" role="main">
-            <h2 class="pull-left">Students</h2>
-            <!-- Button to create new Student -->
-            <a href="#createModal" role="button" id="adduser" class="btn btn-success btn-medium pull-right" data-toggle="modal"><i class="fa fa-plus" ></i>&nbsp;&nbsp;Add Student</a>
-            <div class="clearfix"></div>
+<!--        <div id="main" class="columnonethird" role="main">-->
+<!--            <h2 class="pull-left">Students</h2>-->
+<!--            <!-- Button to create new Student -->
+<!--            <a href="#createModal" role="button" id="adduser" class="btn btn-success btn-medium pull-right" data-toggle="modal"><i class="fa fa-plus" ></i>&nbsp;&nbsp;Add Student</a>-->
+<!--            <div class="clearfix"></div>-->
+<!---->
+<!---->
+<!--            <div><span class="ascending">A to Z</span> | <span class="descending">Z to A</span></div>-->
+<!--            <div id="usercontent">-->
+<!--                <ul class="users">-->
+<!---->
+<!--                </ul>-->
+<!--            </div>-->
+<!---->
+<!--        </div> <!-- main content -->
 
-
-            <div><span class="ascending">A to Z</span> | <span class="descending">Z to A</span></div>
-            <div id="usercontent">
-                <ul class="users">
-
-                </ul>
-            </div>
-
-        </div> <!-- main content -->
-
-        <aside id="sidebar" class='columntwothirds'>
-            <h2 class="pull-left">Goals</h2>
+        <aside id="sidebar" class='columnfull'>
+            <h2 id="studentname" class="pull-left">Goals</h2>
             <div class="btn-group pull-left push-right" data-toggle="buttons-radio">
 <!--                <button type="button" id="all" class="btn btn-medium btn-primary"><i class="fa-large icon-stack" ></i> All</button>-->
                 <button type="button" id="school" class="btn btn-large btn-primary category active" data-category="school"><i class="fa-large icon-book" ></i> School</button>

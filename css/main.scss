@@ -71,7 +71,7 @@ $red-light: #f6d3d3;
 }
 .columnfull {
   float: left;
-  width:96%;
+  width:97.5%;
 }
 .columntwothirds {
   float: right;
@@ -96,6 +96,9 @@ $red-light: #f6d3d3;
   width: 600px;
   line-height: 60px;
   background: $blue-light;
+  display: none;
+}
+#primaryschool, #primarywork, #primarypersonal {
   display: none;
 }
 #chartbox {

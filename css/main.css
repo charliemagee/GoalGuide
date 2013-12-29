@@ -3939,7 +3939,7 @@ textarea {
 
 .columnfull {
   float: left;
-  width: 96%; }
+  width: 97.5%; }
 
 .columntwothirds {
   float: right;
@@ -3964,6 +3964,9 @@ textarea {
   width: 600px;
   line-height: 60px;
   background: #d3e7fe;
+  display: none; }
+
+#primaryschool, #primarywork, #primarypersonal {
   display: none; }
 
 #chartbox {

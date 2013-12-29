@@ -44,39 +44,15 @@ primarygoals = []
 newinfocreated = ''
 newgoal = {}
 
-users =
-  "0c7270bd-38e8-4db2-ae92-244de019c543":
-    datecreated: "2013-10-15"
-    email: "jimmy@example.com"
-    firstname: "Jimmy"
-    lastname: "Smith"
-    username: "jimmysmith"
-    password: "foobar"
-    notify: "barbour@4j.lane.edu"
-
-  "0c7270bd-38e8-4db2-ae92-244de019mju7":
-    datecreated: "2013-10-16"
-    email: "mary@example.com"
-    firstname: "Mary"
-    lastname: "Jones"
-    username: "maryjones"
-    password: "foobar2"
-    notify: "barbour@4j.lane.edu"
-
-
 ###
   this checks localStorage for data. If none, use the arrays above.
 ###
 init = ->
 #  password = prompt("What is your password?")
 #  if password is "JoshBCog"
-  if localStorage.getItem("users") is null
-    localStorage.setItem "users", JSON.stringify(users)
-  if localStorage.getItem("goals") is null
-    localStorage.setItem "goals", JSON.stringify(goals)
-  if localStorage.getItem("primarygoals") is null
-    localStorage.setItem "primarygoals", JSON.stringify(primarygoals)
-  displayUserList()
+  $.getJSON ("users.json"), (data) ->
+    localStorage.setItem "users", JSON.stringify(data)
+    displayUserList()
 
 
 # loading the json file and showing the goals
@@ -88,15 +64,17 @@ initMine = ->
     localStorage.setItem "goals", JSON.stringify(data)
     $("#goalcontent").show()
     $("#addgoal").show()
+    $("#studentname").html(username + " Goals")
     displayMyGoalList()
 
 ###
  this function displays the list of users with a bit of fade for visual interest
 ###
 displayUserList = ->
+  users = JSON.parse(localStorage["users"])
   newHTML = []
   $.each users, (index, user) ->
-    newHTML.push '<li data-username="' + user.username + '" data-userguid="' + index + '" data-notify="' + user.notify + '" data-firstname="' + user.firstname + '"><span class="userfullname">' + user.firstname + ' ' + user.lastname + '</span><span><button type="button" class="btn btn-mini btn-danger pull-right removeuser" data-removeguid="' + index + '"><b>X</b> </button></span></li>'
+    newHTML.push """<li data-username='#{ user.user.username }' data-userguid='#{ user.user.userguid }' data-notify='#{ user.user.notify }' data-firstname='#{ user.user.firstname }'><span class='userfullname'>#{ user.user.firstname } #{ user.user.lastname }</span><span><button type="button" class="btn btn-mini btn-danger pull-right removeuser"><b>X</b> </button></span></li>"""
 
   $(".users").css(
     "-ms-filter": "progid:DXImageTransform.Microsoft.Alpha(Opacity=1)"
@@ -165,10 +143,14 @@ $('#addprimarygoal').click ->
   $("#adduserform").hide()
 
 $('.sologoal').click ->
+  $('.primarycategory').hide()
+  $('.category').show()
   $('#addprimarygoal').hide()
   $('#addgoal').show()
 
 $('.primarygoal').click ->
+  $('.primarycategory').show()
+  $('.category').hide()
   $('#addprimarygoal').show()
   $('#addgoal').hide()
 
@@ -224,45 +206,46 @@ $('#saveprimarygoal').click ->
   daysOfWeekC = $("#daysoftheweekC input[name=days]:checked").map(->
     $(this).val()
   ).get()
-  primarygoals[goalguid] =
-    category: $("#thecategory").val().toLowerCase()
-    datecreated: datecreated
-    goal: $("#theprimarygoal").val()
-    icon: $("input[name=icon]:checked").val()
-    status: "inprogress"
-    username: username
-    userguid: userguid
-    subA:
-      goal: $("#thegoalA").val()
-      icon: $("#theiconsA input[name=iconA]:checked").val()
+  newgoal =
+    primarygoal:
+      category: $("#theprimarycategory").val().toLowerCase()
+      datecreated: datecreated
+      goal: $("#theprimarygoal").val()
+      icon: $("input[name=icon]:checked").val()
       status: "inprogress"
-      infotype: $("#infotypeA input[name=theinfotypeA]:checked").val()
-      recurring: daysOfWeekA
-      completedmessage: $("#thecompleteA").val()
-      deadline: $("#thedeadlineA").val()
-    subB:
-      goal: $("#thegoalB").val()
-      icon: $("#theiconsB input[name=iconB]:checked").val()
-      status: "inprogress"
-      infotype: $("#infotypeB input[name=theinfotype]:checked").val()
-      recurring: daysOfWeekB
-      completedmessage: $("#thecompleteB").val()
-      deadline: $("#thedeadlineB").val()
-    subC:
-      goal: $("#thegoalC").val()
-      icon: $("#theiconsC input[name=iconC]:checked").val()
-      status: "inprogress"
-      infotype: $("#infotypeC input[name=theinfotype]:checked").val()
-      recurring: daysOfWeekC
-      completedmessage: $("#thecompleteC").val()
-      deadline: $("#thedeadlineC").val()
+      username: username
+      userguid: userguid
+      subA:
+        goal: $("#thegoalA").val()
+        icon: $("#theiconsA input[name=iconA]:checked").val()
+        status: "inprogress"
+        infotype: $("#infotypeA input[name=theinfotypeA]:checked").val()
+        recurring: daysOfWeekA
+        completedmessage: $("#thecompleteA").val()
+        deadline: $("#thedeadlineA").val()
+      subB:
+        goal: $("#thegoalB").val()
+        icon: $("#theiconsB input[name=iconB]:checked").val()
+        status: "inprogress"
+        infotype: $("#infotypeB input[name=theinfotype]:checked").val()
+        recurring: daysOfWeekB
+        completedmessage: $("#thecompleteB").val()
+        deadline: $("#thedeadlineB").val()
+      subC:
+        goal: $("#thegoalC").val()
+        icon: $("#theiconsC input[name=iconC]:checked").val()
+        status: "inprogress"
+        infotype: $("#infotypeC input[name=theinfotype]:checked").val()
+        recurring: daysOfWeekC
+        completedmessage: $("#thecompleteC").val()
+        deadline: $("#thedeadlineC").val()
+  primarygoals.push(newgoal)
   localStorage.setItem "primarygoals", JSON.stringify(primarygoals)
-  goals = JSON.parse(localStorage["goals"])
   $("#addgoalform").hide()
   $("#daysoftheweek").hide()
   $(".textempty").val('')
   $('.uncheckit input').removeAttr('checked');
-  logSummary()
+  primarygoalChange()
   displayprimaryGoals()
 
 
@@ -270,7 +253,12 @@ $('#saveprimarygoal').click ->
 this uses delegate because the lines of info are dynamically placed and won't respond to a simple click. It highlights the clicked User and displays his goals
 ###
 $(".users").delegate "li", "click", ->
-  goals = JSON.parse(localStorage["goals"])
+  $(".goalsection").html('')
+  username = $(this).closest('li').data("username")
+  $.getJSON (username + "primary.json"), (data) ->
+    localStorage.setItem "primarygoals", JSON.stringify(data)
+  $.getJSON (username + ".json"), (data) ->
+    localStorage.setItem "goals", JSON.stringify(data)
   $(this).addClass("active").siblings("li").removeClass "active"
   if (goalType == 'solo')
     $("#goalcontent").show()
@@ -282,10 +270,9 @@ $(".users").delegate "li", "click", ->
   $("#addgoalform").hide()
   $("#adduserform").hide()
   $("#school").addClass('active')
-  userguid = $(this).data("userguid")
-  username = $(this).data("username")
-  firstname = $(this).data('firstname')
-  notify = $(this).data('notify')
+  userguid = $(this).closest('li').data("userguid")
+  firstname = $(this).closest('li').data('firstname')
+  notify = $(this).closest('li').data('notify')
   if (goalType == 'solo')
     $("#addgoal").show()
     displayMyGoalList()
@@ -296,6 +283,10 @@ $(".users").delegate "li", "click", ->
 $(".category").click ->
   goalCategory = $(this).data("category")
   displayMyGoalList()
+
+$(".primarycategory").click ->
+  goalCategory = $(this).data("category")
+  displayprimaryGoals()
 
 displayMyGoalList = ->
   completedHTML = []
@@ -547,7 +538,7 @@ displayprimaryGoals = ->
                         <span class='goaldeadline'>#{ primarygoal.primarygoal.subC.deadline }</span>
                         <span class='chartbutton'><i class='fa-large icon-stats'></i></span>
                         <span class='goalstatus' data-goal='#{ primarygoal.primarygoal.subC.goal }'><input type='checkbox'/></span></li>"""
-      primaryGoalsHTML.push '<span class="clearfix"></span>'
+    primaryGoalsHTML.push '<span class="clearfix"></span>'
 
 
   $(".primarygoals").css(
@@ -626,25 +617,11 @@ $('#therecurringB').click ->
 $('#therecurringC').click ->
   $('#daysoftheweekC').toggle(this.checked)
 
-$('#teethclick').click ->
-  $('#teethchart').show()
-
-$('#readingclick').click ->
-  $('#readingchart').show()
-
 $('#modalclose').click ->
   $('#adduserform').hide()
   $('#addgoalform').hide()
   $('#addprimarygoalform').hide()
 
-
-$('.listheadercategory').click ->
-  $('ul.goals>li').tsort('span.goalcategory',{order:'asc'})
-
-$('.ascending').click ->
-  $('ul.users>li').tsort('span.userfullname', {order:'asc'})
-$('.descending').click ->
-  $('ul.users>li').tsort('span.userfullname', {order:'desc'})
 
 ###
   let's build a chart
@@ -728,6 +705,30 @@ goalChange = ->
   postThis.userid = username
   $.ajax
     url: "goalChange.php"
+    type: "POST"
+    data: postThis
+    success: (response, textStatus, jqXHR) ->
+      console.log("Yay, the save worked!");
+    error: (jqXHR, textStatus, errorThrown) ->
+      console.log("Didn't work so good...");
+
+primarygoalChange = ->
+  # Copy local-storage into variable.
+#  key = undefined
+  postThis = {}
+  #  i = 0
+  #  len = localStorage.length
+  #
+  #  while i < len
+  #    key = localStorage.key(i)
+  #    postThis[key] = "" + localStorage.getItem(key)
+  #    i++
+
+  postThis.primarygoals = localStorage.getItem("primarygoals")
+  # Use ajax to ask PHP to save this to a logfile
+  postThis.userid = username
+  $.ajax
+    url: "primarygoalChange.php"
     type: "POST"
     data: postThis
     success: (response, textStatus, jqXHR) ->
