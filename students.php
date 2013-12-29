@@ -318,25 +318,25 @@ require_once("header.php");
                             <label class="control-label" for="thedaysoftheweek">Which Days:</label>
                             <div class="controls" name="thedaysoftheweek">
                                 <label class="checkbox inline">
-                                    <input type="checkbox" name="days" id="inlineCheckbox1" value="mon"> Mon
+                                    <input type="checkbox" name="days" value="1"> Mon
                                 </label>
                                 <label class="checkbox inline">
-                                    <input type="checkbox" name="days" id="inlineCheckbox2" value="tue"> Tue
+                                    <input type="checkbox" name="days" value="2"> Tue
                                 </label>
                                 <label class="checkbox inline">
-                                    <input type="checkbox" name="days" id="inlineCheckbox3" value="wed"> Wed
+                                    <input type="checkbox" name="days" value="3"> Wed
                                 </label>
                                 <label class="checkbox inline">
-                                    <input type="checkbox" name="days" id="inlineCheckbox1" value="thu"> Thu
+                                    <input type="checkbox" name="days" value="4"> Thu
                                 </label>
                                 <label class="checkbox inline">
-                                    <input type="checkbox" name="days" id="inlineCheckbox2" value="fri"> Fri
+                                    <input type="checkbox" name="days" value="5"> Fri
                                 </label>
                                 <label class="checkbox inline">
-                                    <input type="checkbox" name="days" id="inlineCheckbox3" value="sat"> Sat
+                                    <input type="checkbox" name="days" value="6"> Sat
                                 </label>
                                 <label class="checkbox inline">
-                                    <input type="checkbox" name="days" id="inlineCheckbox3" value="sun"> Sun
+                                    <input type="checkbox" name="days" value="0"> Sun
                                 </label>
                             </div>
                         </div>
@@ -581,25 +581,25 @@ require_once("header.php");
                             <label class="control-label" for="thedaysoftheweekA">Which Days:</label>
                             <div class="controls" name="thedaysoftheweekA">
                                 <label class="checkbox inline">
-                                    <input type="checkbox" name="days" value="mon"> Mon
+                                    <input type="checkbox" name="days" value="1"> Mon
                                 </label>
                                 <label class="checkbox inline">
-                                    <input type="checkbox" name="days" value="tue"> Tue
+                                    <input type="checkbox" name="days" value="2"> Tue
                                 </label>
                                 <label class="checkbox inline">
-                                    <input type="checkbox" name="days" value="wed"> Wed
+                                    <input type="checkbox" name="days" value="3"> Wed
                                 </label>
                                 <label class="checkbox inline">
-                                    <input type="checkbox" name="days" value="thu"> Thu
+                                    <input type="checkbox" name="days" value="4"> Thu
                                 </label>
                                 <label class="checkbox inline">
-                                    <input type="checkbox" name="days" value="fri"> Fri
+                                    <input type="checkbox" name="days" value="5"> Fri
                                 </label>
                                 <label class="checkbox inline">
-                                    <input type="checkbox" name="days" value="sat"> Sat
+                                    <input type="checkbox" name="days" value="6"> Sat
                                 </label>
                                 <label class="checkbox inline">
-                                    <input type="checkbox" name="days" value="sun"> Sun
+                                    <input type="checkbox" name="days" value="0"> Sun
                                 </label>
                             </div>
                         </div>
@@ -781,25 +781,25 @@ require_once("header.php");
                             <label class="control-label" for="thedaysoftheweekB">Which Days:</label>
                             <div class="controls" name="thedaysoftheweekB">
                                 <label class="checkbox inline">
-                                    <input type="checkbox" name="days" value="mon"> Mon
+                                    <input type="checkbox" name="days" value="1"> Mon
                                 </label>
                                 <label class="checkbox inline">
-                                    <input type="checkbox" name="days" value="tue"> Tue
+                                    <input type="checkbox" name="days" value="2"> Tue
                                 </label>
                                 <label class="checkbox inline">
-                                    <input type="checkbox" name="days" value="wed"> Wed
+                                    <input type="checkbox" name="days" value="3"> Wed
                                 </label>
                                 <label class="checkbox inline">
-                                    <input type="checkbox" name="days" value="thu"> Thu
+                                    <input type="checkbox" name="days" value="4"> Thu
                                 </label>
                                 <label class="checkbox inline">
-                                    <input type="checkbox" name="days" value="fri"> Fri
+                                    <input type="checkbox" name="days" value="5"> Fri
                                 </label>
                                 <label class="checkbox inline">
-                                    <input type="checkbox" name="days" value="sat"> Sat
+                                    <input type="checkbox" name="days" value="6"> Sat
                                 </label>
                                 <label class="checkbox inline">
-                                    <input type="checkbox" name="days" value="sun"> Sun
+                                    <input type="checkbox" name="days" value="0"> Sun
                                 </label>
                             </div>
                         </div>
@@ -981,25 +981,25 @@ require_once("header.php");
                             <label class="control-label" for="thedaysoftheweekC">Which Days:</label>
                             <div class="controls" name="thedaysoftheweekC">
                                 <label class="checkbox inline">
-                                    <input type="checkbox" name="days" value="mon"> Mon
+                                    <input type="checkbox" name="days" value="1"> Mon
                                 </label>
                                 <label class="checkbox inline">
-                                    <input type="checkbox" name="days" value="tue"> Tue
+                                    <input type="checkbox" name="days" value="2"> Tue
                                 </label>
                                 <label class="checkbox inline">
-                                    <input type="checkbox" name="days" value="wed"> Wed
+                                    <input type="checkbox" name="days" value="3"> Wed
                                 </label>
                                 <label class="checkbox inline">
-                                    <input type="checkbox" name="days" value="thu"> Thu
+                                    <input type="checkbox" name="days" value="4"> Thu
                                 </label>
                                 <label class="checkbox inline">
-                                    <input type="checkbox" name="days" value="fri"> Fri
+                                    <input type="checkbox" name="days" value="5"> Fri
                                 </label>
                                 <label class="checkbox inline">
-                                    <input type="checkbox" name="days" value="sat"> Sat
+                                    <input type="checkbox" name="days" value="6"> Sat
                                 </label>
                                 <label class="checkbox inline">
-                                    <input type="checkbox" name="days" value="sun"> Sun
+                                    <input type="checkbox" name="days" value="0"> Sun
                                 </label>
                             </div>
                         </div>
