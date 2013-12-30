@@ -62,25 +62,21 @@ init = ->
 
 
 # loading the json file and showing the goals
-initMine = ->
-  username = prompt("What is your username?")
-  if localStorage.getItem("daycheck") is null
-    localStorage.setItem "daycheck", new Date()
-  $.getJSON (username + "primary.json"), (data) ->
-    localStorage.setItem "primarygoals", JSON.stringify(data)
-  $.getJSON (username + ".json"), (data) ->
-    localStorage.setItem "goals", JSON.stringify(data)
-    $("#goalcontent").show()
-    $("#addgoal").show()
-    $("#studentname").html(username + " Goals")
-    now = (new Date()).getTime()
-    lastTime = 0
-    lastTimeStr = localStorage["daycheck"]
-    lastTime = parseInt(lastTimeStr, 10)  if lastTimeStr
-    if now - lastTime > 24 * 60 * 60 * 1000
-      resetCompleted()
-    else
-      displayMyGoalList()
+#initMine = ->
+#  if localStorage.getItem("username") is null
+#    username = prompt("What is your username?")
+#    localStorage.setItem "username", username
+#  if localStorage.getItem("daycheck") is null
+#    localStorage.setItem "daycheck", new Date()
+#  username = localStorage.getItem('username')
+#  $.getJSON (username + "primary.json"), (data) ->
+#    localStorage.setItem "primarygoals", JSON.stringify(data)
+#  $.getJSON (username + ".json"), (data) ->
+#    localStorage.setItem "goals", JSON.stringify(data)
+#    $("#goalcontent").show()
+#    $("#addgoal").show()
+#    $("#studentname").html(username + " Goals")
+#    displayMyGoalList()
 
 # check once a day for recurring goals
 resetCompleted = ->
@@ -90,8 +86,6 @@ resetCompleted = ->
   $.each goals, (i, goal) ->
     dateString = '"' + (goal.goal.recurring) + '"'
     if (goal.goal.status = 'completed') && (dateString.search(dayToday) != -1)
-      console.log goal.goal.goal
-      console.log "i am here"
       goal.goal.status = updateStatus
   localStorage.setItem "goals", JSON.stringify(goals)
   goalChange()
@@ -329,14 +323,9 @@ displayMyGoalList = ->
   completedHTML = []
   inprogressHTML = []
   missedHTML = []
-#  currentDate = new Date()
-#  savedDate = localStorage.getItem("daycheck")
-#  futureDate = savedDate.getDate() + 1
-#  console.log currentDate + ' is current  --  ' + setDate + ' is localstorage  --  ' + futureDate + ' is futuredate'
   goals = JSON.parse(localStorage["goals"])
   $.each goals, (i, goal) ->
     newinfocreated = JSON.stringify(goal.goal.infocreated)
-#        localStorage["daycheck"] = "" + now
     if (goal.goal.category is goalCategory)
       if (goal.goal.status is 'completed')
         completedHTML.push """<li class='#{ goal.goal.status }' data-info='#{ goal.goal.infotype }' data-goalguid='#{ goal.goal.goalguid }'>
@@ -451,7 +440,6 @@ $(".sologoal").click ->
 displayprimaryGoals = ->
   primaryGoalsHTML = []
   primarygoals = JSON.parse(localStorage["primarygoals"])
-  console.log primarygoals
   $.each primarygoals, (index, primarygoal) ->
     if (primarygoal.primarygoal.category == goalCategory)
       primaryGoalsHTML.push """<li class='parent' data-userguid='#{ primarygoal.primarygoal.userguid }' data-goalguid='#{ index }'">
@@ -636,9 +624,7 @@ $(".goalsection").delegate "button", "click", ->
     i = 0
 
     while i < goals.length
-      console.log goalguid
       if goals[i].goal.goalguid and goals[i].goal.goalguid is goalguid
-        console.log 'hello'
         goals.splice i, 1
         break
       i++
@@ -675,7 +661,6 @@ $(".goalscompleted").on "click", "i.chartbutton", ->
   $(".chart-backdrop").show()
   incentivetext = $(this).data('incentivetext')
   incentivepic = 'url("' + $(this).data('incentivepic') + '")'
-  console.log(incentivepic + '  supposed to be incentivepic')
   placeincentivetext =  '<p>' + incentivetext + '</p>'
   $("#incentivetext").html(placeincentivetext)
   $("#incentivepic").css('background-image', incentivepic )

@@ -18,7 +18,6 @@
 <script src="js/bootstrap/bootstrap-collapse.js"></script>
 <script src="js/bootstrap/bootstrap-button.js"></script>
 <script src="js/bootstrap/bootstrap-modal.js"></script>
-<script src="js/date.js"></script>
 <script src="http://code.highcharts.com/highcharts.js"></script>
 <!--<script src="js/jquery.tinysort.min.js"></script>-->
 <!--<script src="js/offline.min.js"></script>-->
@@ -33,13 +32,53 @@
             }
         });
 
+        var interval = 0;
+        var now = (new Date()).getTime();
+        var night = now.getHours();
+        if (night > 2) && (night < 3)
+           resetCompleted();
+           localStorage["daycheck"] = "" + now;
+//        interval = window.setTimeout(function () {
+//            interval = window.setInterval(function () {
+//                resetCompleted();
+//                localStorage["daycheck"] = "" + now;
+//            }, 1 * 60 * 1000);
+//        }, interval);
+
+        var username;
+
+        if (localStorage.getItem("username") === null) {
+            username = prompt("What is your username?");
+            localStorage.setItem("username", username);
+        }
+
+        if (localStorage.getItem("daycheck") === null) {
+            localStorage.setItem("daycheck", new Date());
+        }
+
+        username = localStorage.getItem('username');
+
+        $.getJSON(username + "primary.json", function(data) {
+            return localStorage.setItem("primarygoals", JSON.stringify(data));
+        });
+
+        $.getJSON(username + ".json", function(data) {
+            localStorage.setItem("goals", JSON.stringify(data));
+            $("#goalcontent").show();
+            $("#addgoal").show();
+            $("#studentname").html(username + " Goals");
+            return displayMyGoalList();
+        });
+
+
 
     })
-    $(window).load(function(){
-
-        initMine();
-
-    })
+//    $(window).load(function(){
+//
+//        initMine();
+//
+//
+//    })
 </script>
 <!--<script>-->
 <!--    Offline.options = {-->
