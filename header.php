@@ -63,6 +63,7 @@
                         <ul class="nav">
                             <li id="home" class="active"><a href="index.php"><i class="fa-large icon-home" ></i> Home</a></li>
                             <li id="students"><a href="students.php"><i class="fa-large icon-user green" ></i> Students</a></li>
+                            <li id="goals"><a href="goals.php"><i class="fa-large icon-star green" ></i> Goals</a></li>
                             <!-- <li id="about"><a href="advocates.php"><i class="icon-user blue" ></i>Advocates</a></li> -->
                             <li id="about"><a href="#"><i class="fa-large icon-leaf" ></i> About</a></li>
                             <li id="contact"><a href="#"><i class="fa-large icon-phone" ></i> Contact</a></li>

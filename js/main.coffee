@@ -61,23 +61,6 @@ init = ->
     displayUserList()
 
 
-# loading the json file and showing the goals
-#initMine = ->
-#  if localStorage.getItem("username") is null
-#    username = prompt("What is your username?")
-#    localStorage.setItem "username", username
-#  if localStorage.getItem("daycheck") is null
-#    localStorage.setItem "daycheck", new Date()
-#  username = localStorage.getItem('username')
-#  $.getJSON (username + "primary.json"), (data) ->
-#    localStorage.setItem "primarygoals", JSON.stringify(data)
-#  $.getJSON (username + ".json"), (data) ->
-#    localStorage.setItem "goals", JSON.stringify(data)
-#    $("#goalcontent").show()
-#    $("#addgoal").show()
-#    $("#studentname").html(username + " Goals")
-#    displayMyGoalList()
-
 # check once a day for recurring goals
 resetCompleted = ->
   goals = JSON.parse(localStorage["goals"])
@@ -129,8 +112,22 @@ createGuid = ->
   create a date for the goal info input
 ###
 createInfoDate = ->
-  currentDate = new Date()
-  newcreated = currentDate.getDate() + "/" + currentDate.getMonth()
+  d = new Date()
+  month = new Array()
+  month[0] = "Jan"
+  month[1] = "Feb"
+  month[2] = "Mar"
+  month[3] = "April"
+  month[4] = "May"
+  month[5] = "June"
+  month[6] = "July"
+  month[7] = "Aug"
+  month[8] = "Sept"
+  month[9] = "Oct"
+  month[10] = "Nov"
+  month[11] = "Dec"
+  n = month[d.getMonth()]
+  newcreated = n + ' ' + d.getDate()
 
 ###
   create a date for recurring goal check

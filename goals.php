@@ -32,8 +32,11 @@ require_once("header.php");
                 <!--                    <li class="listheadercategory">Category</li>-->
                 <li class="listheadertitle">Goal</li>
                 <li class="listheaderdeadline">Deadline</li>
+                <li class="listheaderremove">Delete</li>
                 <li class="listheaderstatus">Completed?</li>
+                <li class="listheadergatherinfo">Data</li>
             </ul>
+            <div class="clearfix"></div>
             <ul class="goalsinprogress goalsection">
 
             </ul>
@@ -954,8 +957,6 @@ require_once("header.php");
     <div class="clearfix"></div>
     </div>
 
-    <!--                <div id="teethchart"></div>-->
-    <!--                <div id="readingchart"></div>-->
     </div>
     <div class="modal-footer">
         <!--                <p class="small">This window remains open after saving so that you can quickly create another item.</p>-->
