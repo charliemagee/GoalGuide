@@ -18,6 +18,7 @@
 <script src="js/bootstrap/bootstrap-collapse.js"></script>
 <script src="js/bootstrap/bootstrap-button.js"></script>
 <script src="js/bootstrap/bootstrap-modal.js"></script>
+<script src="js/date.js"></script>
 <script src="http://code.highcharts.com/highcharts.js"></script>
 <!--<script src="js/jquery.tinysort.min.js"></script>-->
 <!--<script src="js/offline.min.js"></script>-->

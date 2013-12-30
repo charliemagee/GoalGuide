@@ -73,15 +73,29 @@ initMine = ->
     $("#goalcontent").show()
     $("#addgoal").show()
     $("#studentname").html(username + " Goals")
-    displayMyGoalList()
+    now = (new Date()).getTime()
+    lastTime = 0
+    lastTimeStr = localStorage["daycheck"]
+    lastTime = parseInt(lastTimeStr, 10)  if lastTimeStr
+    if now - lastTime > 24 * 60 * 60 * 1000
+      resetCompleted()
+    else
+      displayMyGoalList()
 
 # check once a day for recurring goals
-dailyCheck = ->
-    dayToday = createDayToday()
-    dateString = goal.goal.recurring
-    console.log dayToday
-    if (goal.goal.status is 'completed') && (dateString.search(dayToday) isnt -1)
-      goal.goal.status is 'inprogress'
+resetCompleted = ->
+  goals = JSON.parse(localStorage["goals"])
+  dayToday = createDayToday()
+  updateStatus = 'inprogress'
+  $.each goals, (i, goal) ->
+    dateString = '"' + (goal.goal.recurring) + '"'
+    if (goal.goal.status = 'completed') && (dateString.search(dayToday) != -1)
+      console.log goal.goal.goal
+      console.log "i am here"
+      goal.goal.status = updateStatus
+  localStorage.setItem "goals", JSON.stringify(goals)
+  goalChange()
+  displayMyGoalList()
 
 ###
  this function displays the list of users with a bit of fade for visual interest
@@ -315,16 +329,14 @@ displayMyGoalList = ->
   completedHTML = []
   inprogressHTML = []
   missedHTML = []
-  currentDate = new Date()
-  setDate = localStorage.getItem("daycheck")
-  futureDate = setDate + (60 * 100)
-  console.log currentDate + ' is current  --  ' + setDate + ' is localstorage  --  ' + futureDate + ' is futuredate'
+#  currentDate = new Date()
+#  savedDate = localStorage.getItem("daycheck")
+#  futureDate = savedDate.getDate() + 1
+#  console.log currentDate + ' is current  --  ' + setDate + ' is localstorage  --  ' + futureDate + ' is futuredate'
   goals = JSON.parse(localStorage["goals"])
   $.each goals, (i, goal) ->
     newinfocreated = JSON.stringify(goal.goal.infocreated)
-    if futureDate < currentDate
-      localStorage.setItem "daycheck", new Date()
-      dailyCheck()
+#        localStorage["daycheck"] = "" + now
     if (goal.goal.category is goalCategory)
       if (goal.goal.status is 'completed')
         completedHTML.push """<li class='#{ goal.goal.status }' data-info='#{ goal.goal.infotype }' data-goalguid='#{ goal.goal.goalguid }'>
