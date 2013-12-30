@@ -33,9 +33,9 @@
         });
 
         var interval = 0;
-        var now = (new Date()).getTime();
+        var now = new Date();
         var night = now.getHours();
-        if (night > 2) && (night < 3)
+        if (night > 2 && night < 3)
            resetCompleted();
            localStorage["daycheck"] = "" + now;
 //        interval = window.setTimeout(function () {
