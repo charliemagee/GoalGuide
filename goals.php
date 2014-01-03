@@ -29,7 +29,6 @@ require_once("header.php");
 
         <div id="goalcontent">
             <ul id="listheader">
-                <!--                    <li class="listheadercategory">Category</li>-->
                 <li class="listheadertitle">Goal</li>
                 <li class="listheaderdeadline">Deadline</li>
                 <li class="listheaderremove">Delete</li>
@@ -49,10 +48,13 @@ require_once("header.php");
         </div>
         <div id="primarygoalcontent">
             <ul id="primarylistheader">
-                <!--                    <li class="listheadercategory">Category</li>-->
                 <li class="listheadertitle">Goal</li>
+                <li class="listheaderdeadline">Deadline</li>
+                <li class="listheaderremove">Delete</li>
                 <li class="listheaderstatus">Completed?</li>
+                <li class="listheadergatherinfo">Data</li>
             </ul>
+            <div class="clearfix"></div>
             <ul class="primarygoals">
 
             </ul>
@@ -66,6 +68,9 @@ require_once("header.php");
             <div id="incentivetext"></div>
         </div>
         <div class="chart-backdrop hidechart"></div>
+        <div class="congratsmessageholder">
+             <div class="congratsmessage"></div>
+        </div>
     </div> <!-- end sidebar -->
 
     <div id="createModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="createLabel" aria-hidden="true">

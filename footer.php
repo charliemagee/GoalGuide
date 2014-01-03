@@ -32,18 +32,13 @@
             }
         });
 
+// need to run a check every 24 hours to update recurring goals; this triggers once every 30 minutes to cover the chance that they closed the browser window and reopened at a random time
         var interval = 0;
-        var now = new Date();
-        var night = now.getHours();
-        if (night > 2 && night < 3)
-           resetCompleted();
-           localStorage["daycheck"] = "" + now;
-//        interval = window.setTimeout(function () {
-//            interval = window.setInterval(function () {
-//                resetCompleted();
-//                localStorage["daycheck"] = "" + now;
-//            }, 1 * 60 * 1000);
-//        }, interval);
+        interval = window.setTimeout(function () {
+            interval = window.setInterval(function () {
+                  resetCompleted();
+            }, 30 * 60 * 1000);
+        }, interval);
 
         var username;
 
@@ -51,12 +46,20 @@
             username = prompt("What is your username?");
             localStorage.setItem("username", username);
         }
-
+        var x = new Date();
+        var y = x.getHours();
         if (localStorage.getItem("daycheck") === null) {
-            localStorage.setItem("daycheck", new Date());
+            localStorage.setItem("daycheck", y);
         }
 
         username = localStorage.getItem('username');
+
+        $.getJSON(username + "user.json", function(data) {
+            localStorage.setItem("user", JSON.stringify(data));
+            user = JSON.parse(localStorage.getItem('user'));
+            notify = user.notify;
+            return localStorage.setItem("notify", notify)
+        });
 
         $.getJSON(username + "primary.json", function(data) {
             return localStorage.setItem("primarygoals", JSON.stringify(data));
@@ -73,12 +76,7 @@
 
 
     })
-//    $(window).load(function(){
-//
-//        initMine();
-//
-//
-//    })
+
 </script>
 <!--<script>-->
 <!--    Offline.options = {-->

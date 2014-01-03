@@ -4035,6 +4035,25 @@ textarea {
   font-size: 14px;
   text-align: center; }
 
+.congratsmessageholder {
+  position: absolute;
+  top: -100px;
+  left: 50%; }
+
+.congratsmessage {
+  display: none;
+  position: relative;
+  left: -50%;
+  width: 300px;
+  padding: 50px 35px;
+  background-color: #79cb73;
+  border: 5px solid white;
+  font-size: 32px;
+  font-weight: normal;
+  color: black;
+  font-family: 'AmaranthBold', Arial, sans-serif;
+  text-align: center; }
+
 .push-right {
   margin-left: 20px; }
 
@@ -4210,7 +4229,7 @@ ul#listheader li.listheadertitle, ul#primarylistheader li.listheadertitle {
   float: left;
   text-align: center; }
 
-ul#listheader li.listheaderdeadline {
+ul#listheader li.listheaderdeadline, ul#primarylistheader li.listheaderdeadline {
   float: left;
   width: 10%;
   text-align: center; }
@@ -4219,13 +4238,13 @@ ul#listheader li.listheaderstatus, ul#primarylistheader li.listheaderstatus {
   float: right;
   width: 11%; }
 
-ul#listheader li.listheadergatherinfo {
+ul#listheader li.listheadergatherinfo, ul#primarylistheader li.listheadergatherinfo {
   float: right;
   width: 4%;
   margin: 0 15px 0 0;
   padding-right: 5px; }
 
-ul#listheader li.listheaderremove {
+ul#listheader li.listheaderremove, ul#primarylistheader li.listheaderremove {
   float: right;
   width: 7%;
   padding-right: 7px; }
@@ -4275,6 +4294,9 @@ ul#listheader li.listheaderremove {
   width: 7%;
   line-height: 26px;
   margin: 0; }
+
+.primaryremove {
+  padding: 0 6px; }
 
 #addgoalform, #adduserform {
   display: none;
