@@ -4006,8 +4006,6 @@ textarea {
 #incentivebox {
   display: none;
   position: absolute;
-  top: -10px;
-  right: 25px;
   z-index: 5100;
   width: 270px;
   height: 320px;
