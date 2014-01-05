@@ -228,9 +228,10 @@ makeSampleGoals = ->
 this uses delegate because the lines of info are dynamically placed and won't respond to a simple click. It highlights the clicked User and displays his goals
 ###
 $(".users").delegate "li", "click", ->
+  username = $(this).closest('li').data("username")
+  localStorage.setItem("username", username)
   document.location.href='goals.php'
   $(".goalsection").html('')
-  username = $(this).closest('li').data("username")
   $.getJSON (username + "primary.json"), (data) ->
     localStorage.setItem "primarygoals", JSON.stringify(data)
   $.getJSON (username + ".json"), (data) ->

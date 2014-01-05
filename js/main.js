@@ -314,9 +314,10 @@ this uses delegate because the lines of info are dynamically placed and won't re
 
 
 $(".users").delegate("li", "click", function() {
+  username = $(this).closest('li').data("username");
+  localStorage.setItem("username", username);
   document.location.href = 'goals.php';
   $(".goalsection").html('');
-  username = $(this).closest('li').data("username");
   $.getJSON(username + "primary.json", function(data) {
     return localStorage.setItem("primarygoals", JSON.stringify(data));
   });
