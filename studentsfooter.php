@@ -18,7 +18,6 @@
 <script src="js/bootstrap/bootstrap-collapse.js"></script>
 <script src="js/bootstrap/bootstrap-button.js"></script>
 <script src="js/bootstrap/bootstrap-modal.js"></script>
-<script src="http://code.highcharts.com/highcharts.js"></script>
 <!--<script src="js/jquery.tinysort.min.js"></script>-->
 <!--<script src="js/offline.min.js"></script>-->
 
@@ -32,64 +31,12 @@
             }
         });
 
-// need to run a check every 24 hours to update recurring goals; this triggers once every 30 minutes to cover the chance that they closed the browser window and reopened at a random time
-        var interval = 0;
-        interval = window.setTimeout(function () {
-            interval = window.setInterval(function () {
-                console.log('here is another interval')
-                var now = (new Date()).getTime();
-                var lastTime = 0;
-                var lastTimeStr = localStorage['daycheck'];
-                if (lastTimeStr) lastTime = parseInt(lastTimeStr, 10);
-                if (now - lastTime > 24*60*60*1000) {
-                    resetCompleted();
-                    localStorage['daycheck'] = ""+now;
-                }
-
-            }, 60 * 60 * 1000);
-        }, interval);
-
-        var username;
-
-        if (localStorage.getItem("username") === null) {
-            username = prompt("What is your username?");
-            localStorage.setItem("username", username);
-        }
-
         if (localStorage.getItem("users") === null) {
             users = '[]'
             localStorage.setItem("users", users);
         }
 
-        var setnewtime = (new Date()).getTime();
-        var daycheck = ""+setnewtime;
-        if (localStorage.getItem("daycheck") === null) {
-            localStorage.setItem("daycheck", daycheck);
-        }
-
-        username = localStorage.getItem('username');
-
-        $.getJSON(username + "user.json", function(data) {
-            localStorage.setItem("user", JSON.stringify(data));
-            user = JSON.parse(localStorage.getItem('user'));
-            notify = user.notify;
-            return localStorage.setItem("notify", notify)
-        });
-
-        $.getJSON(username + "primary.json", function(data) {
-            return localStorage.setItem("primarygoals", JSON.stringify(data));
-        });
-
-        $.getJSON(username + ".json", function(data) {
-            localStorage.setItem("goals", JSON.stringify(data));
-            $("#goalcontent").show();
-            $("#addgoal").show();
-            $("#studentname").html(username + " Goals");
-            return displayMyGoalList();
-        });
-
-
-
+        displayUserList();
     })
 
 </script>

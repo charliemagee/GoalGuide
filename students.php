@@ -10,14 +10,21 @@ require_once("header.php");
             <div class="clearfix"></div>
 
 
-            <div><span class="ascending">A to Z</span> | <span class="descending">Z to A</span></div>
             <div id="usercontent">
+                <ul id="listheader">
+                    <li class="listheaderusername">Username</li>
+                    <li class="listheaderuserfullname">Full Name</li>
+                    <li class="listheaderpassword">Password</li>
+                    <li class="listheadernotifications">Notifications</li>
+                    <li class="listheaderuserremove">Remove User</li>
+                </ul>
+                <div class="clearfix"></div>
                 <ul class="users">
 
                 </ul>
             </div>
 
-        </div> <!-- main content -->
+    </div> <!-- main content -->
 
         <div id="createModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="createLabel" aria-hidden="true">
             <div class="modal-header">
@@ -43,12 +50,6 @@ require_once("header.php");
                             <label class="control-label" for="thelastname">Last name</label>
                             <div class="controls">
                                 <input type="text" id="thelastname" class="input-small textempty" placeholder="Last Name">
-                            </div>
-                        </div>
-                        <div class="control-group">
-                            <label class="control-label" for="theemail">Email address</label>
-                            <div class="controls">
-                                <input type="email" id="theemail" class="input-small textempty" placeholder="you@example.com">
                             </div>
                         </div>
                         <div class="control-group">
@@ -83,8 +84,7 @@ require_once("header.php");
             </div>
         </div>
 
-    </div>
 <?
 //include the footer
-require_once("footer.php");
+require_once("studentsfooter.php");
 ?>

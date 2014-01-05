@@ -1,9 +1,7 @@
 {
-"datecreated": "2013-10-15",
-"email": "jimmy@example.com",
-"firstname": "Jimmy",
-"lastname": "Smith",
-"username": "jimmysmith",
-"password": "foobar",
-"notify": "barbour@4j.lane.edu"
+    "username": "jimmysmith",
+    "firstname": "Jimmy",
+    "lastname": "Smith",
+    "password": "foobar",
+    "notify": "barbour@4j.lane.edu"
 }

@@ -4129,6 +4129,12 @@ textarea {
 .goalsection {
   display: none; }
 
+#usercontent {
+  width: 100%; }
+
+.users {
+  display: block; }
+
 #yescontent ul#yes, #maybecontent ul#maybe, #usercontent ul.users {
   margin: 0;
   padding: 0;
@@ -4248,6 +4254,27 @@ ul#listheader li.listheaderremove, ul#primarylistheader li.listheaderremove {
   float: right;
   width: 7%;
   padding-right: 7px; }
+
+ul#listheader li.listheaderusername {
+  margin-left: 15px; }
+
+ul#listheader li.listheaderuserremove {
+  float: right; }
+
+ul#listheader li.listheaderusername, ul#listheader li.listheaderpassword, .username, .password {
+  float: left;
+  width: 15%;
+  text-align: left; }
+
+ul#listheader li.listheaderuserfullname, .userfullname {
+  float: left;
+  width: 20%;
+  text-align: left; }
+
+ul#listheader li.listheadernotifications, .notifications {
+  float: left;
+  width: 35%;
+  text-align: left; }
 
 #daysoftheweek, #daysoftheweekA, #daysoftheweekB, #daysoftheweekC {
   display: none; }

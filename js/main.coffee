@@ -49,6 +49,7 @@ goals = []
 primarygoals = []
 newinfocreated = ''
 newgoal = {}
+newprimarygoal = {}
 goalmessage = ''
 
 ###
@@ -64,49 +65,19 @@ init = ->
 
 # check once a day for recurring goals
 resetCompleted = ->
-  x = new Date();
-  now = x.getHours(); # setting a variable for the hour of the day, taking it from the Date object
-  storedHour = parseInt(localStorage.getItem("daycheck"), 10) or 0 # grabbing the stored hour of the day
-  diff = now - storedHour
-  if diff > 20 #if the difference is more than 20 hours, then run the function to reset the completed goals, based on the day of the week
-    goals = JSON.parse(localStorage["goals"])
-    dayToday = createDayToday()
-    updateStatus = 'inprogress'
-    $.each goals, (i, goal) ->
-      dateString = '"' + (goal.goal.recurring) + '"'
-      if (goal.goal.status = 'completed') && (dateString.search(dayToday) != -1)
-        goal.goal.status = updateStatus
-    localStorage.setItem "goals", JSON.stringify(goals)
-    goalChange()
-    displayMyGoalList()
+  goals = JSON.parse(localStorage["goals"])
+  dayToday = createDayToday()
+  updateStatus = "inprogress"
+  $.each goals, (i, goal) ->
+    dateString = "\"" + goal.goal.recurring + "\""
+    goal.goal.status = updateStatus  if (goal.goal.status = "completed") and (dateString.search(dayToday) isnt -1)
+  localStorage.setItem "goals", JSON.stringify(goals)
+  goalChange()
+  displayMyGoalList()
+
 
 ###
- this function displays the list of users with a bit of fade for visual interest
-###
-displayUserList = ->
-  users = JSON.parse(localStorage["users"])
-  newHTML = []
-  $.each users, (index, user) ->
-    newHTML.push """<li data-username='#{ user.user.username }' data-userguid='#{ user.user.userguid }' data-notify='#{ user.user.notify }' data-firstname='#{ user.user.firstname }'><span class='userfullname'>#{ user.user.firstname } #{ user.user.lastname }</span><span><button type="button" class="btn btn-mini btn-danger pull-right removeuser"><b>X</b> </button></span></li>"""
-
-  $(".users").css(
-    "-ms-filter": "progid:DXImageTransform.Microsoft.Alpha(Opacity=1)"
-    "-moz-opacity": 1
-    "-khtml-opacity": 1
-    opacity: 1
-    visibility: "hidden"
-  ).fadeOut 0, ->
-    $(".users").html newHTML.join("")
-    $(".users").css(visibility: "visible").fadeIn(200)
-
-
-$('#adduser').click ->
-  $("#addgoalform").hide()
-  $("#addprimarygoalform").hide()
-  $("#adduserform").show()
-
-###
-  create a user guid
+  create a guid
 ###
 createGuid = ->
   "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace /[xy]/g, (c) ->
@@ -142,27 +113,148 @@ createDayToday = ->
   currentDay = new Date().getDay()
 
 ###
+ this function displays the list of users with a bit of fade for visual interest
+###
+displayUserList = ->
+  users = JSON.parse(localStorage["users"])
+  newHTML = []
+  $.each users, (index, user) ->
+    newHTML.push """<li data-username='#{ user.username }' data-notify='#{ user.notify }'>
+          <span class='username'>#{ user.username }</span>
+          <span class='userfullname'>#{ user.firstname } #{ user.lastname }</span>
+          <span class='password'>#{ user.password }</span>
+          <span class='notifications'>#{ user.notify }</span>
+          <span><button type="button" class="btn btn-mini btn-danger pull-right removeuser"><b>X</b> </button></span></li>"""
+  $(".users").css(
+    "-ms-filter": "progid:DXImageTransform.Microsoft.Alpha(Opacity=1)"
+    "-moz-opacity": 1
+    "-khtml-opacity": 1
+    opacity: 1
+    visibility: "hidden"
+  ).fadeOut 0, ->
+    $(".users").html newHTML.join("")
+    $(".users").css(visibility: "visible").fadeIn(200)
+
+$('#adduser').click ->
+  $("#addgoalform").hide()
+  $("#addprimarygoalform").hide()
+  $("#adduserform").show()
+
+###
  this creates an array of UserGoals that is empty, adds the User to the usersArray, resaves the usersArray with the new info, then clears the form
 ###
 $('#saveuser').click ->
   datecreated = new Date().toString()
-  userguid = createGuid()
-  localStorage.setItem userguid + "Goals", ""
-  users[userguid] = {
+  username = $('#theusername').val()
+  localStorage.setItem("username", username)
+  user = {
+    username: $('#theusername').val(),
     firstname: $('#thefirstname').val(),
     lastname: $('#thelastname').val(),
-    email: $('#theemail').val(),
     password: $('#thepassword').val(),
-    datecreated: datecreated,
-    username: $('#theusername').val(),
-    userguid: userguid,
-    notify: $('#thenotifications').val(),
+    notify: $('#thenotifications').val()
   }
+  users = JSON.parse(localStorage["users"])
+  users.push(user)
   localStorage.setItem "users", JSON.stringify(users)
+  makeNewUser()
+  displayUserList()
+
+makeSampleGoals = ->
+  mygoaldate = createInfoDate()
+  newgoal =
+    goal:
+      goalguid: createGuid()
+      category: 'school'
+      datecreated: datecreated
+      goal: 'This is a Blank Goal.'
+      icon: 'gift'
+      status: "inprogress"
+      infotype: ''
+      infocreated: []
+      myinfo: []
+      recurring: ''
+      completedmessage: 'Yay! You completed the Blank Goal.'
+      deadline: ''
+      incentivepic: ''
+      incentivetext: ''
+      username: username
+  goals.push(newgoal)
+  localStorage.setItem "goals", JSON.stringify(goals)
+  newprimarygoal =
+    primarygoal:
+      goalguid: createGuid()
+      category: 'school'
+      datecreated: datecreated
+      goal: 'This is a blank Primary Goal.'
+      icon: 'gift'
+      status: "inprogress"
+      username: username
+      subA:
+        goalguid: createGuid()
+        goal: 'This is the First SubGoal'
+        icon: 'alarm'
+        status: "inprogress"
+        infotype: ''
+        recurring: ''
+        completedmessage: 'Yay! You completed the blank First Sub Goal.'
+        deadline: ''
+      subB:
+        goalguid: createGuid()
+        goal: 'This is the Second SubGoal'
+        icon: 'umbrella'
+        status: "inprogress"
+        infotype: ''
+        recurring: ''
+        completedmessage: 'Yay! You completed the blank Second Sub Goal.'
+        deadline: ''
+      subC:
+        goalguid: createGuid()
+        goal: 'This is the Third SubGoal'
+        icon: 'silverware'
+        status: "inprogress"
+        infotype: ''
+        recurring: ''
+        completedmessage: 'Yay! You completed the blank Third Sub Goal.'
+        deadline: ''
+  primarygoals.push(newprimarygoal)
+  localStorage.setItem "primarygoals", JSON.stringify(primarygoals)
   $("#adduserform").hide()
   $('.textempty').val('')
-  logSummary()
-  displayUserList()
+  goalChange()
+  primarygoalChange()
+
+###
+this uses delegate because the lines of info are dynamically placed and won't respond to a simple click. It highlights the clicked User and displays his goals
+###
+$(".users").delegate "li", "click", ->
+  document.location.href='goals.php'
+  $(".goalsection").html('')
+  username = $(this).closest('li').data("username")
+  $.getJSON (username + "primary.json"), (data) ->
+    localStorage.setItem "primarygoals", JSON.stringify(data)
+  $.getJSON (username + ".json"), (data) ->
+    localStorage.setItem "goals", JSON.stringify(data)
+  $(this).addClass("active").siblings("li").removeClass "active"
+  if (goalType == 'solo')
+    $("#goalcontent").show()
+    $('#primarygoalcontent').hide()
+  else
+    $("#goalcontent").hide()
+    $('#primarygoalcontent').show()
+  $("#adduser").show()
+  $("#addgoalform").hide()
+  $("#adduserform").hide()
+  $("#school").addClass('active')
+  userguid = $(this).closest('li').data("userguid")
+  firstname = $(this).closest('li').data('firstname')
+  notify = $(this).closest('li').data('notify')
+  if (goalType == 'solo')
+    $("#addgoal").show()
+    displayMyGoalList()
+  else
+    $("#addprimarygoal").show()
+    displayprimaryGoals()
 
 $('#addgoal').click ->
   $("#addgoalform").show()
@@ -214,7 +306,6 @@ $('#savegoal').click ->
       deadline: $("#thedeadline").val()
       incentivepic: $("input[name=incentivepic]:checked").val()
       incentivetext: $("#theincentivetext").val()
-      userguid: userguid
       username: username
   goals.push(newgoal)
   localStorage.setItem "goals", JSON.stringify(goals)
@@ -240,7 +331,7 @@ $('#saveprimarygoal').click ->
   daysOfWeekC = $("#daysoftheweekC input[name=days]:checked").map(->
     $(this).val()
   ).get()
-  newgoal =
+  newprimarygoal =
     primarygoal:
       goalguid: createGuid()
       category: $("#theprimarycategory").val().toLowerCase()
@@ -276,7 +367,7 @@ $('#saveprimarygoal').click ->
         recurring: daysOfWeekC
         completedmessage: $("#thecompleteC").val()
         deadline: $("#thedeadlineC").val()
-  primarygoals.push(newgoal)
+  primarygoals.push(newprimarygoal)
   localStorage.setItem "primarygoals", JSON.stringify(primarygoals)
   $("#addgoalform").hide()
   $("#daysoftheweek").hide()
@@ -284,38 +375,6 @@ $('#saveprimarygoal').click ->
   $('.uncheckit input').removeAttr('checked')
   primarygoalChange()
   displayprimaryGoals()
-
-
-###
-this uses delegate because the lines of info are dynamically placed and won't respond to a simple click. It highlights the clicked User and displays his goals
-###
-$(".users").delegate "li", "click", ->
-  $(".goalsection").html('')
-  username = $(this).closest('li').data("username")
-  $.getJSON (username + "primary.json"), (data) ->
-    localStorage.setItem "primarygoals", JSON.stringify(data)
-  $.getJSON (username + ".json"), (data) ->
-    localStorage.setItem "goals", JSON.stringify(data)
-  $(this).addClass("active").siblings("li").removeClass "active"
-  if (goalType == 'solo')
-    $("#goalcontent").show()
-    $('#primarygoalcontent').hide()
-  else
-    $("#goalcontent").hide()
-    $('#primarygoalcontent').show()
-  $("#adduser").show()
-  $("#addgoalform").hide()
-  $("#adduserform").hide()
-  $("#school").addClass('active')
-  userguid = $(this).closest('li').data("userguid")
-  firstname = $(this).closest('li').data('firstname')
-  notify = $(this).closest('li').data('notify')
-  if (goalType == 'solo')
-    $("#addgoal").show()
-    displayMyGoalList()
-  else
-    $("#addprimarygoal").show()
-    displayprimaryGoals()
 
 $(".category").click ->
   goalCategory = $(this).data("category")
@@ -843,17 +902,25 @@ emailCompletion = ->
   notify = localStorage.getItem('notify')
   console.log username + goalmessage + ' has been sent to ' + notify
 
-goalChange = ->
-  # Copy local-storage into variable.
-#  key = undefined
+makeNewUser = ->
   postThis = {}
-#  i = 0
-#  len = localStorage.length
-#
-#  while i < len
-#    key = localStorage.key(i)
-#    postThis[key] = "" + localStorage.getItem(key)
-#    i++
+
+  # Use ajax to ask PHP to save this to a logfile
+  postThis.username = localStorage.getItem("username")
+  username = localStorage.getItem('username');
+  postThis.userid = username
+  $.ajax
+    url: "newUser.php"
+    type: "POST"
+    data: postThis
+    success: (response, textStatus, jqXHR) ->
+      console.log("Yay, the save worked!");
+      makeSampleGoals()
+    error: (jqXHR, textStatus, errorThrown) ->
+      console.log("Didn't work so good...");
+
+goalChange = ->
+  postThis = {}
 
   # Use ajax to ask PHP to save this to a logfile
   postThis.goals = localStorage.getItem("goals")
@@ -869,16 +936,7 @@ goalChange = ->
       console.log("Didn't work so good...");
 
 primarygoalChange = ->
-  # Copy local-storage into variable.
-#  key = undefined
   postThis = {}
-  #  i = 0
-  #  len = localStorage.length
-  #
-  #  while i < len
-  #    key = localStorage.key(i)
-  #    postThis[key] = "" + localStorage.getItem(key)
-  #    i++
 
   # Use ajax to ask PHP to save this to a logfile
   postThis.primarygoals = localStorage.getItem("primarygoals")
