@@ -392,7 +392,17 @@ displayMyGoalList = ->
   goals = JSON.parse(localStorage["goals"])
   $.each goals, (i, goal) ->
     newinfocreated = JSON.stringify(goal.goal.infocreated)
+#    this next chunk of lines is to convert a js Date to match the html5 datepicker date, then compare to see if deadline is missed
+    now = new Date()
+    year = now.getFullYear()
+    month = now.getMonth()+1
+    if month <= 9 then month = '0' + month
+    day = now.getDate()
+    if day <= 9 then day = '0' + day
+    compareDate = year + '-' + month + '-' + day
     if (goal.goal.category is goalCategory)
+      if (goal.goal.deadline) and (goal.goal.status is 'inprogress') and (goal.goal.deadline < compareDate)
+        goal.goal.status = 'missed'
       if (goal.goal.status is 'completed')
         completedHTML.push """<li class='#{ goal.goal.status }' data-info='#{ goal.goal.infotype }' data-goalguid='#{ goal.goal.goalguid }' data-incentivetext='#{ goal.goal.incentivetext }' data-incentivepic='#{ goal.goal.incentivepic }' >
                           <span class='goaltitle'><i class='fa-large icon-#{ goal.goal.icon }'></i>#{ goal.goal.goal }</span>

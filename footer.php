@@ -11,7 +11,7 @@
 </div>     <!-- wrapper -->
 
 <script src="js/jquery-1.8.3.min.js"></script>
-<script src="js/jquery-ui-1.10.0.custom.min.js"></script>
+<!--<script src="js/jquery-ui-1.10.0.custom.min.js"></script>-->
 <script src="js/main.js"></script>
 <script src="js/bootstrap/bootstrap-alert.js"></script>
 <script src="js/bootstrap/bootstrap-transition.js"></script>
@@ -32,11 +32,22 @@
             }
         });
 
+
+        $(window).focus(function() {
+            var now = (new Date()).getTime();
+            var lastTime = 0;
+            var lastTimeStr = localStorage['daycheck'];
+            if (lastTimeStr) lastTime = parseInt(lastTimeStr, 10);
+            if (now - lastTime > 24*60*60*1000) {
+                resetCompleted();
+                localStorage['daycheck'] = ""+now;
+            }
+        })
+
 // need to run a check every 24 hours to update recurring goals; this triggers once every 30 minutes to cover the chance that they closed the browser window and reopened at a random time
         var interval = 0;
         interval = window.setTimeout(function () {
             interval = window.setInterval(function () {
-                console.log('here is another interval')
                 var now = (new Date()).getTime();
                 var lastTime = 0;
                 var lastTimeStr = localStorage['daycheck'];

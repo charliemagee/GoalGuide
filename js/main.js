@@ -502,8 +502,23 @@ displayMyGoalList = function() {
   missedHTML = [];
   goals = JSON.parse(localStorage["goals"]);
   $.each(goals, function(i, goal) {
+    var compareDate, day, month, now, year;
     newinfocreated = JSON.stringify(goal.goal.infocreated);
+    now = new Date();
+    year = now.getFullYear();
+    month = now.getMonth() + 1;
+    if (month <= 9) {
+      month = '0' + month;
+    }
+    day = now.getDate();
+    if (day <= 9) {
+      day = '0' + day;
+    }
+    compareDate = year + '-' + month + '-' + day;
     if (goal.goal.category === goalCategory) {
+      if (goal.goal.deadline && (goal.goal.status === 'inprogress') && (goal.goal.deadline < compareDate)) {
+        goal.goal.status = 'missed';
+      }
       if (goal.goal.status === 'completed') {
         return completedHTML.push("<li class='" + goal.goal.status + "' data-info='" + goal.goal.infotype + "' data-goalguid='" + goal.goal.goalguid + "' data-incentivetext='" + goal.goal.incentivetext + "' data-incentivepic='" + goal.goal.incentivepic + "' >\n<span class='goaltitle'><i class='fa-large icon-" + goal.goal.icon + "'></i>" + goal.goal.goal + "</span>\n<span class='goaldeadline'>" + goal.goal.deadline + "</span>\n<span class='goalremove'><button type='button' class='btn btn-mini btn-danger removegoal'><b>X</b></button></span>\n<span class='goalstatus' data-goal='" + goal.goal.goal + "' ><input type='checkbox' checked/></span>\n<span><i class='fa-large icon-stats chartbutton' data-infocreated='" + newinfocreated + "' data-myinfo='[" + goal.goal.myinfo + "]' data-goal='" + goal.goal.goal + "'></i></span></li>");
       } else if (goal.goal.status === "inprogress") {
