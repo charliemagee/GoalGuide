@@ -107,13 +107,13 @@ $red-light: #f6d3d3;
   top: -50px;
   left: 20px;
   z-index: 5000;
-  width: 800px;
+  width: 560px;
   height: 400px;
   background: black;
 }
 #thischart {
   margin: 20px auto 0;
-  width: 760px;
+  width: 520px;
   height: 356px;
   background: #fffce9;
 }
@@ -131,7 +131,7 @@ $red-light: #f6d3d3;
 .closechart {
   position: absolute;
   top: 20px;
-  right: 0px;
+  right: 5px;
   z-index: 5010;
 }
 #incentivebox {
@@ -139,7 +139,7 @@ $red-light: #f6d3d3;
   position: absolute;
   z-index: 5100;
   width: 270px;
-  height: 320px;
+  height: 325px;
   border: 1px solid #ddd;
   background-color: lighten($green-main, 15%);
   @include border-radius(4px);
@@ -565,6 +565,13 @@ ul#listheader li.listheadernotifications, .notifications {
 .user {
   position: relative;
   float: left;
+}
+.username {
+  color: $blue-dark;
+}
+.username:hover {
+  color: lighten($blue-dark, 15%);
+  cursor: hand;
 }
 .clear {
   clear: both;

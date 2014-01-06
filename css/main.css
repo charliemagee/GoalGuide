@@ -3005,7 +3005,7 @@ a.thumbnail:hover {
   -moz-box-sizing: border-box;
   box-sizing: border-box; }
 
-/*!
+/*
  * Bootstrap Responsive v2.1.0
  *
  * Copyright 2012 Twitter, Inc
@@ -3975,13 +3975,13 @@ textarea {
   top: -50px;
   left: 20px;
   z-index: 5000;
-  width: 800px;
+  width: 560px;
   height: 400px;
   background: black; }
 
 #thischart {
   margin: 20px auto 0;
-  width: 760px;
+  width: 520px;
   height: 356px;
   background: #fffce9; }
 
@@ -4000,7 +4000,7 @@ textarea {
 .closechart {
   position: absolute;
   top: 20px;
-  right: 0px;
+  right: 5px;
   z-index: 5010; }
 
 #incentivebox {
@@ -4008,7 +4008,7 @@ textarea {
   position: absolute;
   z-index: 5100;
   width: 270px;
-  height: 320px;
+  height: 325px;
   border: 1px solid #ddd;
   background-color: #aee0ab;
   -webkit-border-radius: 4px;
@@ -4409,6 +4409,13 @@ ul#listheader li.listheadernotifications, .notifications {
 .user {
   position: relative;
   float: left; }
+
+.username {
+  color: #2c77cb; }
+
+.username:hover {
+  color: #669ede;
+  cursor: hand; }
 
 .clear {
   clear: both; }

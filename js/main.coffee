@@ -45,6 +45,7 @@ daysOfWeek = []
 daysOfWeekA = []
 daysOfWeekB = []
 daysOfWeekC = []
+users = []
 goals = []
 primarygoals = []
 newinfocreated = ''
@@ -227,7 +228,7 @@ makeSampleGoals = ->
 ###
 this uses delegate because the lines of info are dynamically placed and won't respond to a simple click. It highlights the clicked User and displays his goals
 ###
-$(".users").delegate "li", "click", ->
+$(".users").delegate "li > span.username", "click", ->
   username = $(this).closest('li').data("username")
   localStorage.setItem("username", username)
   document.location.href='goals.php'
@@ -746,32 +747,24 @@ $(".primarygoals").delegate "input[type=checkbox]", "click", ->
 ###
 find and remove user function
 ###
-$('.users').delegate "button", "click", ->
-  userguid = $(this).data("removeguid")
+$('.users').delegate "button.removeuser", "click", ->
+  username = $(this).closest('li').data("username")
   shouldRemove = confirm("Are you sure you want to remove this student?")
-  if shouldRemove
-    findAndRemove()
-  else
+  if !shouldRemove
     false
+  else
+    i = 0
 
-findAndRemove = ->
-  delete users[userguid]
-  localStorage.setItem "users", JSON.stringify(users)
-  localStorage.removeItem(userguid + "Goals")
-  $('.goals').empty()
-  logSummary()
-  displayUserList()
-  findAndRemoveUserGoals(goals, 'userguid', userguid)
-
-###
-find and remove users goals when user is removed
-###
-findAndRemoveUserGoals = (array, property, value) ->
-  $.each array, (index, result) ->
-    #Remove from array
-    array.splice index, 1  if result[property] is value
-    localStorage.setItem "goals", JSON.stringify(goals)
-    logSummary()
+    while i < users.length
+      if users[i].username is username
+        users.splice i, 1
+        break
+      i++
+    localStorage.setItem "users", JSON.stringify(users)
+    localStorage.removeItem("user")
+    localStorage.removeItem("goals")
+    localStorage.removeItem("primarygoals")
+    displayUserList()
 
 ###
   delete a goal
