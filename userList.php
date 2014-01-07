@@ -1,6 +1,5 @@
 <?
 if ($_POST) {
-    $user = $_POST['userid'];  // ADDED THIS LINE AND CHANGED NEXT TO GET STUFF INTO THE USERS OWN FILE
     $logFile = dirname($_SERVER['SCRIPT_FILENAME']) . "/userlist.json";
     if (!file_exists($logFile)) {
         touch($logFile);

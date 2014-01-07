@@ -231,7 +231,6 @@ $('#saveuser').click(function() {
     password: $('#thepassword').val(),
     notify: $('#thenotifications').val()
   };
-  users = JSON.parse(localStorage["users"]);
   users.push(user);
   localStorage.setItem("users", JSON.stringify(users));
   makeNewUser();
@@ -1024,6 +1023,7 @@ userListChange = function() {
   var postThis;
   postThis = {};
   postThis.users = localStorage.getItem("users");
+  username = localStorage.getItem('username');
   return $.ajax({
     url: "userList.php",
     type: "POST",

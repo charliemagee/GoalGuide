@@ -155,7 +155,6 @@ $('#saveuser').click ->
     password: $('#thepassword').val(),
     notify: $('#thenotifications').val()
   }
-  users = JSON.parse(localStorage["users"])
   users.push(user)
   localStorage.setItem "users", JSON.stringify(users)
   makeNewUser()
@@ -939,6 +938,7 @@ userListChange = ->
 
   # Use ajax to ask PHP to save this to a logfile
   postThis.users = localStorage.getItem("users")
+  username = localStorage.getItem('username');
   $.ajax
     url: "userList.php"
     type: "POST"
