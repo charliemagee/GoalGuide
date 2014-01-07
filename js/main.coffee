@@ -159,6 +159,7 @@ $('#saveuser').click ->
   users.push(user)
   localStorage.setItem "users", JSON.stringify(users)
   makeNewUser()
+  userListChange()
   displayUserList()
 
 makeSampleGoals = ->
@@ -930,6 +931,20 @@ makeNewUser = ->
     success: (response, textStatus, jqXHR) ->
       console.log("Yay, the save worked!");
       makeSampleGoals()
+    error: (jqXHR, textStatus, errorThrown) ->
+      console.log("Didn't work so good...");
+
+userListChange = ->
+  postThis = {}
+
+  # Use ajax to ask PHP to save this to a logfile
+  postThis.users = localStorage.getItem("users")
+  $.ajax
+    url: "userList.php"
+    type: "POST"
+    data: postThis
+    success: (response, textStatus, jqXHR) ->
+      console.log("Yay, the save worked!");
     error: (jqXHR, textStatus, errorThrown) ->
       console.log("Didn't work so good...");
 
