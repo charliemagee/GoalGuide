@@ -67,10 +67,15 @@
             localStorage.setItem("username", username);
         }
 
-        if (localStorage.getItem("users") === null) {
-            users = '[]'
-            localStorage.setItem("users", users);
-        }
+//        if (localStorage.getItem("users") === null) {
+//            users = '[]'
+//            localStorage.setItem("users", users);
+//        }
+
+
+        $.getJSON("userlist.json", function(data) {
+            return localStorage.setItem("users", JSON.stringify(data));
+        });
 
         var setnewtime = (new Date()).getTime();
         var daycheck = ""+setnewtime;
