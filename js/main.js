@@ -1023,7 +1023,7 @@ userListChange = function() {
   var postThis;
   postThis = {};
   postThis.users = localStorage.getItem("users");
-  username = localStorage.getItem('username');
+  console.log(users);
   return $.ajax({
     url: "userList.php",
     type: "POST",

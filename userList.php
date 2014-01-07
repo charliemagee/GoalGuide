@@ -7,7 +7,6 @@ if ($_POST) {
     }
     $newStr = ($_POST);
     $toPost = str_replace('\\', '', $newStr);
-    $bunchgoals = array_pop($toPost);
     file_put_contents($logFile, $toPost);
     echo "OK";
     return;

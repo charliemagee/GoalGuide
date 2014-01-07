@@ -889,7 +889,6 @@ showCongrats = ->
   let's log it
 ###
 logSummary = ->
-
   # Copy local-storage into variable.
   key = undefined
   postThis = {}
@@ -938,7 +937,7 @@ userListChange = ->
 
   # Use ajax to ask PHP to save this to a logfile
   postThis.users = localStorage.getItem("users")
-  username = localStorage.getItem('username');
+  console.log users
   $.ajax
     url: "userList.php"
     type: "POST"
