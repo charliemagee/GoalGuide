@@ -63,7 +63,7 @@
         var username;
 
         if (localStorage.getItem("username") === null) {
-            username = prompt("What is your username?");
+            var username = prompt("What is your username?");
             localStorage.setItem("username", username);
         }
 
@@ -77,14 +77,14 @@
 
         $.getJSON(username + "user.json", function(data) {
             localStorage.setItem("user", JSON.stringify(data));
-            user = JSON.parse(localStorage.getItem('user'));
-            notify = user.notify;
-            firstname = user.firstname;
-            capfirstname = capitaliseFirstLetter(firstname)
-            function capitaliseFirstLetter(string) {
-                return string.charAt(0).toUpperCase() + string.slice(1);
-            };
-            localStorage.setItem("firstname", capfirstname)
+            var user = JSON.parse(localStorage.getItem('user'));
+            var notify = user.notify;
+            var firstname = user.firstname;
+//            var capfirstname = capitaliseFirstLetter(firstname)
+//            function capitaliseFirstLetter(string) {
+//                return string.charAt(0).toUpperCase() + string.slice(1);
+//            };
+            localStorage.setItem("firstname", firstname)
             return localStorage.setItem("notify", notify)
         });
 

@@ -30,6 +30,7 @@ currentDay = ''
 dateString = ''
 future = ''
 firstname = ''
+capfirstname = ''
 notify = ''
 goal = ''
 emailGoal = ''
@@ -51,6 +52,7 @@ primarygoals = []
 newinfocreated = ''
 newgoal = {}
 newprimarygoal = {}
+user = {}
 goalmessage = ''
 
 ###
@@ -120,7 +122,7 @@ displayUserList = ->
   users = JSON.parse(localStorage["users"])
   newHTML = []
   $.each users, (index, user) ->
-    newHTML.push """<li data-username='#{ user.username }' data-notify='#{ user.notify }'>
+    newHTML.push """<li data-username='#{ user.username }' data-notify='#{ user.notify }' data-firstname='#{ user.firstname }'>
           <span class='username'>#{ user.username }</span>
           <span class='userfullname'>#{ user.firstname } #{ user.lastname }</span>
           <span class='password'>#{ user.password }</span>
@@ -231,6 +233,12 @@ this uses delegate because the lines of info are dynamically placed and won't re
 $(".users").delegate "li > span.username", "click", ->
   username = $(this).closest('li').data("username")
   localStorage.setItem("username", username)
+  firstname = $(this).closest('li').data("firstname")
+  localStorage.setItem("firstname", firstname)
+#  capfirstname = capitaliseFirstLetter(firstname)
+#  capitaliseFirstLetter(string) = ->
+#    string.charAt(0).toUpperCase() + string.slice(1)
+#  localStorage.setItem("firstname", firstname)
   document.location.href='goals.php'
   $(".goalsection").html('')
   $.getJSON (username + "primary.json"), (data) ->
@@ -248,8 +256,6 @@ $(".users").delegate "li > span.username", "click", ->
   $("#addgoalform").hide()
   $("#adduserform").hide()
   $("#school").addClass('active')
-  firstname = $(this).closest('li').data('firstname')
-  notify = $(this).closest('li').data('notify')
   if (goalType == 'solo')
     $("#addgoal").show()
     displayMyGoalList()
@@ -900,8 +906,6 @@ emailCompletion = ->
     data: postThis
     success: (response, textStatus, jqXHR) ->
       console.log "Yay, the email notify worked!"
-      makeSampleGoals()
-
     error: (jqXHR, textStatus, errorThrown) ->
       console.log "Didn't work so good..."
 
