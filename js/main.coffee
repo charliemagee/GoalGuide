@@ -248,7 +248,6 @@ $(".users").delegate "li > span.username", "click", ->
   $("#addgoalform").hide()
   $("#adduserform").hide()
   $("#school").addClass('active')
-  userguid = $(this).closest('li').data("userguid")
   firstname = $(this).closest('li').data('firstname')
   notify = $(this).closest('li').data('notify')
   if (goalType == 'solo')
@@ -472,7 +471,6 @@ $(".goalsinprogress").delegate "input[type=checkbox]", "click", ->
     mygoaldate = createInfoDate()
     updateStatus = 'completed'
     incentivepic = 'url("' + $(this).closest('li').data('incentivepic') + '")'
-    console.log incentivepic
     $.each goals, (index, goal) ->
       if goal.goal.goalguid is goalguid
         if goal.goal.infotype is 'text'
@@ -480,7 +478,8 @@ $(".goalsinprogress").delegate "input[type=checkbox]", "click", ->
           goal.goal.infocreated.push mygoaldate
         goal.goal.status = updateStatus
         goal.goal.datecompleted = mygoaldate
-        goalmessage = ' has completed this goal: ' + goal.goal.goal
+        goalmessage = firstname + ' has completed this goal: ' + goal.goal.goal
+        localStorage.setItem("goalmessage", JSON.stringify(goalmessage))
         false # break the each
     localStorage.setItem "goals", JSON.stringify(goals)
     $(this).find('.info').val('')
@@ -703,7 +702,8 @@ $(".primarygoals").delegate "input[type=checkbox]", "click", ->
             primarygoal.primarygoal.subA.infocreated.push mygoaldate
           primarygoal.primarygoal.subA.status = updateStatus
           primarygoal.primarygoal.subA.datecompleted = mygoaldate
-          goalmessage = ' has completed this goal: ' + primarygoal.primarygoal.subA.goal
+          goalmessage = firstname + ' has completed this goal: ' + primarygoal.primarygoal.subA.goal
+          localStorage.setItem("goalmessage", JSON.stringify(goalmessage))
           false # break the each
         else if primarygoal.primarygoal.subB.goalguid is goalguid
           if primarygoal.primarygoal.subB.infotype is 'text'
@@ -711,7 +711,8 @@ $(".primarygoals").delegate "input[type=checkbox]", "click", ->
             primarygoal.primarygoal.subB.infocreated.push mygoaldate
           primarygoal.primarygoal.subB.status = updateStatus
           primarygoal.primarygoal.subB.datecompleted = mygoaldate
-          goalmessage = ' has completed this goal: ' + primarygoal.primarygoal.subB.goal
+          goalmessage = firstname + ' has completed this goal: ' + primarygoal.primarygoal.subB.goal
+          localStorage.setItem("goalmessage", JSON.stringify(goalmessage))
           false # break the each
         else if primarygoal.primarygoal.subC.goalguid is goalguid
           if primarygoal.primarygoal.subC.infotype is 'text'
@@ -719,12 +720,14 @@ $(".primarygoals").delegate "input[type=checkbox]", "click", ->
             primarygoal.primarygoal.subC.infocreated.push mygoaldate
           primarygoal.primarygoal.subC.status = updateStatus
           primarygoal.primarygoal.subC.datecompleted = mygoaldate
-          goalmessage = ' has completed this goal: ' + primarygoal.primarygoal.subC.goal
+          goalmessage = firstname + ' has completed this goal: ' + primarygoal.primarygoal.subC.goal
+          localStorage.setItem("goalmessage", JSON.stringify(goalmessage))
           false # break the each
       localStorage.setItem "primarygoals", JSON.stringify(primarygoals)
       emailCompletion()
       $(this).find('.info').val('')
       $(this).closest('li').removeClass("inprogress missed").addClass("completed").prop("checked", true)
+      emailCompletion(goalmessage)
       primarygoalChange()
       displayprimaryGoals()
   else
@@ -885,40 +888,26 @@ showCongrats = ->
   $("#incentivebox").fadeIn "slow"
   setTimeout "$('#incentivebox').hide();", 5000
 
-###
-  let's log it
-###
-logSummary = ->
-  # Copy local-storage into variable.
-  key = undefined
+
+emailCompletion = ->
   postThis = {}
-  i = 0
-  len = localStorage.length
-
-  while i < len
-    key = localStorage.key(i)
-    postThis[key] = "" + localStorage.getItem(key)
-    i++
-
-  # Use ajax to ask PHP to save this to a logfile
+  postThis.notify = localStorage.getItem("notify")
+  postThis.goalmessage = localStorage.getItem("goalmessage")
+  console.log goalmessage
   $.ajax
-    url: "logSummary.php"
+    url: "goalNotify.php"
     type: "POST"
     data: postThis
     success: (response, textStatus, jqXHR) ->
-      console.log("Hooray, it worked!");
-    error: (jqXHR, textStatus, errorThrown) ->
-      console.log("Didn't work so good...");
+      console.log "Yay, the email notify worked!"
+      makeSampleGoals()
 
-emailCompletion = ->
-  username = localStorage.getItem('username')
-  notify = localStorage.getItem('notify')
-  console.log username + goalmessage + ' has been sent to ' + notify
+    error: (jqXHR, textStatus, errorThrown) ->
+      console.log "Didn't work so good..."
+
 
 makeNewUser = ->
   postThis = {}
-
-  # Use ajax to ask PHP to save this to a logfile
   postThis.username = localStorage.getItem("username")
   username = localStorage.getItem('username');
   postThis.userid = username
@@ -927,15 +916,13 @@ makeNewUser = ->
     type: "POST"
     data: postThis
     success: (response, textStatus, jqXHR) ->
-      console.log("Yay, the save worked!");
+      console.log("Yay, make new user worked!");
       makeSampleGoals()
     error: (jqXHR, textStatus, errorThrown) ->
-      console.log("Didn't work so good...");
+      console.log("Make new user didn't work so good...")
 
 userListChange = ->
   postThis = {}
-
-  # Use ajax to ask PHP to save this to a logfile
   postThis.users = localStorage.getItem("users")
   console.log users
   $.ajax
@@ -943,14 +930,12 @@ userListChange = ->
     type: "POST"
     data: postThis
     success: (response, textStatus, jqXHR) ->
-      console.log("Yay, the save worked!");
+      console.log("Yay, the userList save worked!")
     error: (jqXHR, textStatus, errorThrown) ->
-      console.log("Didn't work so good...");
+      console.log("UserList save didn't work so good...")
 
 goalChange = ->
   postThis = {}
-
-  # Use ajax to ask PHP to save this to a logfile
   postThis.goals = localStorage.getItem("goals")
   username = localStorage.getItem('username');
   postThis.userid = username
@@ -959,14 +944,12 @@ goalChange = ->
     type: "POST"
     data: postThis
     success: (response, textStatus, jqXHR) ->
-      console.log("Yay, the save worked!");
+      console.log("Yay, the goalChange save worked!")
     error: (jqXHR, textStatus, errorThrown) ->
-      console.log("Didn't work so good...");
+      console.log("GoalChange save didn't work so good...")
 
 primarygoalChange = ->
   postThis = {}
-
-  # Use ajax to ask PHP to save this to a logfile
   postThis.primarygoals = localStorage.getItem("primarygoals")
   username = localStorage.getItem('username');
   postThis.userid = username
@@ -975,6 +958,6 @@ primarygoalChange = ->
     type: "POST"
     data: postThis
     success: (response, textStatus, jqXHR) ->
-      console.log("Yay, the save worked!");
+      console.log("Yay, the primaryGoal save worked!")
     error: (jqXHR, textStatus, errorThrown) ->
-      console.log("Didn't work so good...");
+      console.log("PrimaryGoal save didn't work so good...")
