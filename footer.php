@@ -67,12 +67,6 @@
             localStorage.setItem("username", username);
         }
 
-        if (localStorage.getItem("users") === null) {
-            users = '[]'
-            localStorage.setItem("users", users);
-        }
-
-
         var setnewtime = (new Date()).getTime();
         var daycheck = ""+setnewtime;
         if (localStorage.getItem("daycheck") === null) {
@@ -85,8 +79,16 @@
             localStorage.setItem("user", JSON.stringify(data));
             user = JSON.parse(localStorage.getItem('user'));
             notify = user.notify;
+            firstname = user.firstname;
+            capfirstname = capitaliseFirstLetter(firstname)
+            function capitaliseFirstLetter(string) {
+                return string.charAt(0).toUpperCase() + string.slice(1);
+            };
+            localStorage.setItem("firstname", capfirstname)
             return localStorage.setItem("notify", notify)
         });
+
+        firstname = localStorage.getItem('firstname');
 
         $.getJSON(username + "primary.json", function(data) {
             return localStorage.setItem("primarygoals", JSON.stringify(data));
@@ -96,7 +98,7 @@
             localStorage.setItem("goals", JSON.stringify(data));
             $("#goalcontent").show();
             $("#addgoal").show();
-            $("#studentname").html(username + " Goals");
+            $("#studentname").html(firstname + "\'s" + " Goals");
             return displayMyGoalList();
         });
 

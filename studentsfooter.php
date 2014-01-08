@@ -31,13 +31,12 @@
             }
         });
 
-        if (localStorage.getItem("users") === null) {
-            $.getJSON("userlist.json", function(data) {
-                return localStorage.setItem("users", JSON.stringify(data));
-            });
-        }
+        $.getJSON("userlist.json", function(data) {
+            localStorage.setItem("users", JSON.stringify(data));
+            return displayUserList();
+        });
 
-        displayUserList();
+
     })
 
 </script>
