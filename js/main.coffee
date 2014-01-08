@@ -795,6 +795,28 @@ $(".goalsection").delegate "button", "click", ->
     goalChange()
     displayMyGoalList()
 
+###
+  delete a primarygoal
+###
+$(".primarygoals").delegate "button", "click", ->
+  goalguid = $(this).closest('li').data("goalguid")
+  console.log goalguid
+  shouldRemove = confirm("Are you sure you want to remove this goal?")
+  if !shouldRemove
+    false
+  else
+    i = 0
+
+    while i < primarygoals.length
+      if primarygoals[i].primarygoal.goalguid and primarygoals[i].primarygoal.goalguid is goalguid
+        console.log 'found it'
+        primarygoals.splice i, 1
+        break
+      i++
+    localStorage.setItem "primarygoals", JSON.stringify(primarygoals)
+    primarygoalChange()
+    displayprimaryGoals()
+
 
 $('#therecurring').click ->
   $('#daysoftheweek').toggle(this.checked)
@@ -894,7 +916,7 @@ showCongrats = ->
   $("#incentivebox").fadeIn "slow"
   setTimeout "$('#incentivebox').hide();", 5000
 
-
+# show the email about a goal completion
 emailCompletion = ->
   postThis = {}
   postThis.notify = localStorage.getItem("notify")
@@ -908,7 +930,6 @@ emailCompletion = ->
       console.log "Yay, the email notify worked!"
     error: (jqXHR, textStatus, errorThrown) ->
       console.log "Didn't work so good..."
-
 
 makeNewUser = ->
   postThis = {}

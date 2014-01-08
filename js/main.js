@@ -859,6 +859,34 @@ $(".goalsection").delegate("button", "click", function() {
   }
 });
 
+/*
+  delete a primarygoal
+*/
+
+
+$(".primarygoals").delegate("button", "click", function() {
+  var i, shouldRemove;
+  goalguid = $(this).closest('li').data("goalguid");
+  console.log(goalguid);
+  shouldRemove = confirm("Are you sure you want to remove this goal?");
+  if (!shouldRemove) {
+    return false;
+  } else {
+    i = 0;
+    while (i < primarygoals.length) {
+      if (primarygoals[i].primarygoal.goalguid && primarygoals[i].primarygoal.goalguid === goalguid) {
+        console.log('found it');
+        primarygoals.splice(i, 1);
+        break;
+      }
+      i++;
+    }
+    localStorage.setItem("primarygoals", JSON.stringify(primarygoals));
+    primarygoalChange();
+    return displayprimaryGoals();
+  }
+});
+
 $('#therecurring').click(function() {
   return $('#daysoftheweek').toggle(this.checked);
 });
