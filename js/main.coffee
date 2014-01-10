@@ -1,11 +1,7 @@
 ###global console ###
 
-showUserList = ''
 username = ''
 password = ''
-userguid = ''
-goalTitle = ''
-showThatGoalList = ''
 deadline = ''
 infocreated = []
 myinfo = []
@@ -20,23 +16,17 @@ checkinginfotype = ''
 mytitle = ''
 data = []
 datecreated = ''
-dataDate = ''
 getDate = (d) ->
   new Date(d.createdDate)
 dayToday = ''
-currentDate = ''
-setDate = ''
-futureDate = ''
 currentDay = ''
 dateString = ''
-future = ''
 firstname = ''
 capfirstname = ''
 notify = ''
 goal = ''
 emailGoal = ''
 updateStatus = ''
-updateGoal = ''
 index = ''
 goalguid = ''
 goalinfo = []
