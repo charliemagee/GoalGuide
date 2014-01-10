@@ -219,61 +219,16 @@ $red-light: #f6d3d3;
 .push-right-savegoal {
   margin-left: 160px;
 }
-.push-down {
-  margin-top: 3px;
-}
-
-// --- Create New Modal ---------------------
-
-.activity {
-  float: left;
-  margin: 0 10px 5px 0;
-  width: 100%;
-}
-.activities {
-  padding: .5em 0 1em 0;
-}
 #activityholder {
   float: left;
   width: 8rem;
   height: 10.5rem;
   margin: 1rem;
 }
-#dateholder {
-  display: none;
-  float: left;
-  margin: 3rem 1rem 0 1rem;
-}
-#datepicker {
-  width: 15rem;
-  padding: 1rem;
-  font-family: AmaranthBold;
-  font-size: 2.4rem;
-  line-height: 2.8rem;
-}
-#activityholderimage {
-  width: 8rem;
-  height: 8rem;
-  background: #b2e1c9;
-  @include border-radius(16px);
-}
-#changeactivitybtn {
-  margin-left: .7rem;
-  display: none;
-}
-#activitylist {
-  clear: both;
-  padding-top: 2rem;
-}
 #calendar {
   clear: both;
   display: none;
   padding-top: 2rem;
-}
-#sendinvitationsbtn {
-  float: right;
-  display: none;
-  margin: 2.8rem 2rem 0 0;
 }
 #thanks {
   display: none;
@@ -298,7 +253,7 @@ $red-light: #f6d3d3;
   display: block;
 }
 
-#yescontent ul#yes, #maybecontent ul#maybe, #usercontent ul.users {
+#usercontent ul.users {
   margin:0;
   padding:0;
   list-style-type: none;
@@ -372,15 +327,6 @@ $red-light: #f6d3d3;
   border-left: 4px solid darken($green-main, 20%);
   border-right: 4px solid darken($green-main, 20%);
 }
-#user1, #user2, #user3, #user4 {
-  display: none;
-}
-.ascending, .descending {
-  color: #0d8ab9;
-}
-#user1.display, #user2.display, #user3.display, #user4.display {
-  display: block;
-}
 ul#listheader, ul#primarylistheader {
   margin:0;
   padding:0;
@@ -393,16 +339,10 @@ ul#listheader li, ul#primarylistheader li {
   line-height: 20px;
   text-align: center;
 }
-//ul#listheader li.listheadercategory {
-//  width: 5%;
-//  color: #0d8ab9;
-//  margin-left: 20px;
-//}
 ul#listheader li.listheadertitle, ul#primarylistheader li.listheadertitle {
   width: 55%;
   float: left;
   text-align: center;
-//  margin-left: -10px;
 }
 ul#listheader li.listheaderdeadline, ul#primarylistheader li.listheaderdeadline {
   float: left;
@@ -448,18 +388,6 @@ ul#listheader li.listheadernotifications, .notifications {
 #daysoftheweek, #daysoftheweekA, #daysoftheweekB, #daysoftheweekC {
   display: none;
 }
-//.goalcategory {
-//  width: 10%;
-//  height: 26px;
-//  float: left;
-//  text-align: left;
-//  margin-right: 4%;
-//}
-//.goalcategory p {
-//  font-size: 16px;
-//  margin-left: 23px;
-//  padding-top: 3px;
-//}
 .personal, .Personal {
   background-image: url('../images/personalicon.png');
   background-repeat: no-repeat;
@@ -572,9 +500,6 @@ ul#listheader li.listheadernotifications, .notifications {
   margin: 5px 20px 0 0;
   width: 65px;
 }
-//.incentive img {
-//  width: 60px;
-//}
 .checkboxinfo {
   display: block;
   margin: -13px 0 0 20px;
@@ -582,20 +507,6 @@ ul#listheader li.listheadernotifications, .notifications {
   font-size: 13px;
   line-height: 14px;
 }
-.primarygoal, .sologoal {
-}
-#theicon {
-  margin-left: 180px;
-}
-.clock {
-  font-size: 1.7rem;
-  color: $green-dark;
-}
-.hiddenclock {
-  position: absolute;
-  left: -10000rem;
-}
-
 .user {
   position: relative;
   float: left;
@@ -663,24 +574,6 @@ p {
   font-weight: normal;
   text-align: center;
 }
-.oneout {
-  position: relative;
-  margin: 5px 0 20px 0px;
-  padding: 10px;
-  height: 114px;
-  width: 100%;
-  list-style-type: none;
-  -webkit-box-shadow: 0px 0px 10px #4d4d4d;
-  -moz-box-shadow: 0px 0px 10px #4d4d4d;
-  box-shadow: 0px 0px 10px #4d4d4d;
-  -webkit-border-radius: 12px;
-  -moz-border-radius: 12px;
-  -khtml-border-radius: 12px;  
-  border-radius: 12px;
-  border: solid 2px $green-dark;
-  background-color: #ffffd6;
-}
-
 
 /* tweaks to bootstrap */
 .navbar h3 a {
@@ -688,32 +581,16 @@ p {
   font-size: 30px !important;
   margin: 0 0 0 20px;
 }
-
 .navbar h3 a:hover {
   color: black !important;
   text-decoration: none;
 }
-
 .btn-small, .btn-medium, .btn-large, .btn-huge {
   font-family: 'AmaranthRegular', Arial, sans-serif;
   font-weight: normal !important;
 }
-
 a {
   text-decoration: none !important;
-}
-.whitetype {
-  color:white;
-}
-
-.hero-unit {
-  position: relative;
-  padding: 25px 20px;
-  margin-bottom: 30px;
-  -webkit-border-radius: 20px;
-     -moz-border-radius: 20px;
-          border-radius: 20px;
-  border: solid 6px white;
 }
 
 /* footer */
