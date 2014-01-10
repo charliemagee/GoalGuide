@@ -121,13 +121,28 @@ resetCompleted = function() {
 };
 
 checkId = function() {
-  return $('#checkid').show();
+  $('#checkid').show();
+  return setTimeout((function() {
+    return $('#theloginusername').focus();
+  }), 500);
 };
 
 $("#checkid").keydown(function(event) {
   if (event.keyCode === 13) {
     return $("#loginbutton").trigger("click");
   }
+});
+
+$("#logoutbutton").click(function() {
+  $('#logout').hide();
+  localStorage.removeItem('firstname');
+  localStorage.removeItem('goals');
+  localStorage.removeItem('notify');
+  localStorage.removeItem('primarygoals');
+  localStorage.removeItem('secret');
+  localStorage.removeItem('username');
+  localStorage.removeItem('users');
+  return location.reload();
 });
 
 $('#loginbutton').click(function() {
@@ -148,6 +163,7 @@ $('#loginbutton').click(function() {
 });
 
 loadmyFiles = function() {
+  $('#logout').show();
   username = localStorage.getItem("username");
   $.getJSON(username + "user.json", function(data) {
     var capitaliseFirstLetter;

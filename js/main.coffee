@@ -71,9 +71,23 @@ resetCompleted = ->
 
 checkId = ->
   $('#checkid').show()
+  setTimeout (->
+    $('#theloginusername').focus()
+  ), 500
 
 $("#checkid").keydown (event) ->
   $("#loginbutton").trigger "click"  if event.keyCode is 13
+
+$("#logoutbutton").click ->
+  $('#logout').hide()
+  localStorage.removeItem('firstname')
+  localStorage.removeItem('goals')
+  localStorage.removeItem('notify')
+  localStorage.removeItem('primarygoals')
+  localStorage.removeItem('secret')
+  localStorage.removeItem('username')
+  localStorage.removeItem('users')
+  location.reload()
 
 $('#loginbutton').click ->
   users = JSON.parse(localStorage["users"])
@@ -90,6 +104,7 @@ $('#loginbutton').click ->
       $('#errorlogin').show()
 
 loadmyFiles = ->
+  $('#logout').show()
   username = localStorage.getItem("username")
   $.getJSON username + "user.json", (data) ->
     capitaliseFirstLetter = (string) ->

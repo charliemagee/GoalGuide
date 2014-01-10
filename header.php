@@ -45,6 +45,9 @@
 
     <header id="mainheader">
     </header>
+    <div id="logout">
+        <button type="button" id="logoutbutton" class="btn btn-success btn-medium">Logout</button>
+    </div>
     <nav id="main-nav" role="navigation">
         <div class="navbar">
             <div class="navbar-inner">

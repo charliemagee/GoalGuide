@@ -3984,6 +3984,19 @@ textarea {
   color: red;
   font-size: 16px; }
 
+#logout {
+  display: none;
+  position: relative;
+  margin: -70px 0 20px 1060px;
+  width: 63px;
+  padding: 10px;
+  background-color: #e4f4e3;
+  -webkit-box-shadow: 0px 0px 5px 3px rgba(10, 10, 10, 0.15);
+  box-shadow: 0px 0px 5px 3px rgba(10, 10, 10, 0.15);
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px; }
+
 .sampleimages {
   margin: -15px 0 0 30px; }
 
