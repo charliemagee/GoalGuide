@@ -2,6 +2,7 @@
 
 showUserList = ''
 username = ''
+password = ''
 userguid = ''
 goalTitle = ''
 showThatGoalList = ''
@@ -78,6 +79,50 @@ resetCompleted = ->
   goalChange()
   displayMyGoalList()
 
+checkId = ->
+  $('#checkid').show()
+
+$("#checkid").keydown (event) ->
+  $("#loginbutton").trigger "click"  if event.keyCode is 13
+
+$('#loginbutton').click ->
+  users = JSON.parse(localStorage["users"])
+  username = $("#theloginusername").val()
+  password = $("#theloginpassword").val()
+  $.each users, (i, user) ->
+    if user.username is username and user.password is password
+      $('#checkid').hide()
+      localStorage.setItem("secret", "this is a secret")
+      localStorage.setItem("username", username)
+      localStorage.removeItem("users")
+      loadmyFiles()
+    else
+      $('#errorlogin').show()
+
+loadmyFiles = ->
+  username = localStorage.getItem("username")
+  $.getJSON username + "user.json", (data) ->
+    capitaliseFirstLetter = (string) ->
+      string.charAt(0).toUpperCase() + string.slice(1)
+    localStorage.setItem "user", JSON.stringify(data)
+    user = JSON.parse(localStorage.getItem("user"))
+    notify = user.notify
+    firstname = user.firstname
+    capfirstname = capitaliseFirstLetter(firstname)
+    localStorage.setItem "firstname", capfirstname
+    localStorage.setItem "notify", notify
+    localStorage.removeItem("user")
+
+  $.getJSON username + "primary.json", (data) ->
+    localStorage.setItem "primarygoals", JSON.stringify(data)
+
+  $.getJSON username + ".json", (data) ->
+    localStorage.setItem "goals", JSON.stringify(data)
+    $("#goalcontent").show()
+    $("#addgoal").show()
+    firstname = localStorage.getItem("firstname")
+    $("#studentname").html firstname + "'s" + " Goals"
+    displayMyGoalList()
 
 ###
   create a guid
@@ -233,8 +278,9 @@ this uses delegate because the lines of info are dynamically placed and won't re
 $(".users").delegate "li > span.username", "click", ->
   username = $(this).closest('li').data("username")
   localStorage.setItem("username", username)
-  firstname = $(this).closest('li').data("firstname")
-  localStorage.setItem("firstname", firstname)
+  firstname = localStorage.getItem('firstname')
+#  firstname = $(this).closest('li').data("firstname")
+#  localStorage.setItem("firstname", firstname)
 #  capfirstname = capitaliseFirstLetter(firstname)
 #  capitaliseFirstLetter(string) = ->
 #    string.charAt(0).toUpperCase() + string.slice(1)
@@ -773,6 +819,7 @@ $('.users').delegate "button.removeuser", "click", ->
     localStorage.removeItem("user")
     localStorage.removeItem("goals")
     localStorage.removeItem("primarygoals")
+    userListChange()
     displayUserList()
 
 ###

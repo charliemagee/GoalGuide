@@ -5,6 +5,28 @@ require_once("header.php");
 
     <div id="content">
 
+    <div id="checkid">
+        <h3 class="detailsLabel">Please Login</h3>
+        <div id="errorlogin">Your username and password combination is incorrect. Please try again.</div>
+        <form class="form-horizontal">
+            <div class="control-group">
+                <label class="control-label" for="theloginusername">Username:</label>
+                <div class="controls">
+                    <input type="text" id="theloginusername" class="input-small textempty" required>
+                </div>
+            </div>
+            <div class="control-group">
+                <label class="control-label" for="theloginpassword">Password:</label>
+                <div class="controls">
+                    <input type="password" id="theloginpassword" class="input-small textempty" required>
+                </div>
+            </div>
+            <div class="savinggoals push-right-savegoal">
+                <button type="button" id="loginbutton" class="btn btn-success btn-medium">Login</button>
+            </div>
+        </form>
+    </div>
+
     <div id="main" class='columnfull'>
         <h2 id="studentname" class="pull-left">Goals</h2>
         <div class="btn-group pull-left push-right" data-toggle="buttons-radio">

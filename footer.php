@@ -60,11 +60,16 @@
             }, 60 * 60 * 1000);
         }, interval);
 
-        var username;
+
+        $.getJSON("userlist.json", function(data) {
+            localStorage.setItem("users", JSON.stringify(data));
+            return displayUserList();
+        });
 
         if (localStorage.getItem("username") === null) {
-            var username = prompt("What is your username?");
-            localStorage.setItem("username", username);
+            return checkId();
+        } else {
+            return loadmyFiles();
         }
 
         var setnewtime = (new Date()).getTime();
@@ -72,37 +77,6 @@
         if (localStorage.getItem("daycheck") === null) {
             localStorage.setItem("daycheck", daycheck);
         }
-
-        username = localStorage.getItem('username');
-
-        $.getJSON(username + "user.json", function(data) {
-            localStorage.setItem("user", JSON.stringify(data));
-            var user = JSON.parse(localStorage.getItem('user'));
-            var notify = user.notify;
-            var firstname = user.firstname;
-//            var capfirstname = capitaliseFirstLetter(firstname)
-//            function capitaliseFirstLetter(string) {
-//                return string.charAt(0).toUpperCase() + string.slice(1);
-//            };
-            localStorage.setItem("firstname", firstname)
-            return localStorage.setItem("notify", notify)
-        });
-
-        firstname = localStorage.getItem('firstname');
-
-        $.getJSON(username + "primary.json", function(data) {
-            return localStorage.setItem("primarygoals", JSON.stringify(data));
-        });
-
-        $.getJSON(username + ".json", function(data) {
-            localStorage.setItem("goals", JSON.stringify(data));
-            $("#goalcontent").show();
-            $("#addgoal").show();
-            $("#studentname").html(firstname + "\'s" + " Goals");
-            return displayMyGoalList();
-        });
-
-
 
     })
 

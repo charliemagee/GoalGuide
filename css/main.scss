@@ -64,10 +64,7 @@ $red-light: #f6d3d3;
   background: white;
   -webkit-box-shadow:  0px 0px 5px 3px rgba(10, 10, 10, .15);
   box-shadow:  0px 0px 5px 3px rgba(10, 10, 10, .15);
-  -webkit-border-radius: 16px;
-  -moz-border-radius: 16px;
-  -khtml-border-radius: 16px;
-  border-radius: 16px;
+  @include border-radius(16px);
 }
 .columnfull {
   float: left;
@@ -88,6 +85,32 @@ $red-light: #f6d3d3;
 .columnright {
   float: right;
   width: 45%;
+}
+#checkid {
+  display: none;
+  position: absolute;
+  top: 10%;
+  left: 40%;
+  width: 320px;
+  padding: 20px;
+  z-index: 500;
+  background-color: lighten($green-main, 30%);
+  -webkit-box-shadow:  0px 0px 5px 3px rgba(10, 10, 10, .15);
+  box-shadow:  0px 0px 5px 3px rgba(10, 10, 10, .15);
+  @include border-radius(10px);
+}
+#checkid input {
+  width: 130px;
+  margin-bottom: -5px;
+}
+#errorlogin {
+  display: none;
+  background: white;
+  width: 300px;
+  padding: 10px;
+  margin-bottom: 10px;
+  color: red;
+  font-size: 16px;
 }
 .sampleimages {
   margin: -15px 0 0 30px;
