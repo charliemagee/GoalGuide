@@ -44,22 +44,34 @@
 <div id="wrapper" class="container">
 
 <div id="nav">
-        <div id="categorywrapper">
-            <div id="home"><h1 class="dropdown"><i class="fa-regular icon-home" ></i><br/>Home</h1></div>
-            <div id="school" data-category="school"><h1 class="dropdown"><i class="fa-regular icon-book" ></i><br/>School</h1></div>
-            <div id="work" data-category="work"><h1 class="dropdown"><i class="fa-regular icon-boss" ></i><br/>Work</h1></div>
-            <div id="personal" data-category="personal"><h1 class="dropdown"><i class="fa-regular icon-basketball" ></i><br/>Personal</h1></div>
+        <div id="menuwrapper">
+            <div id="homemenu"><h1 class="dropdown"><i class="fa-regular icon-home" ></i><br/>Home</h1></div>
+            <div id="schoolmenu" data-category="school"><h1 class="dropdown"><i class="fa-regular icon-book" ></i><br/>School</h1></div>
+            <div id="workmenu" data-category="work"><h1 class="dropdown"><i class="fa-regular icon-boss" ></i><br/>Work</h1></div>
+            <div id="personalmenu" data-category="personal"><h1 class="dropdown"><i class="fa-regular icon-basketball" ></i><br/>Personal</h1></div>
         </div>
+        <div id="home"><h1 class="dropdown"><i class="fa-regular icon-home" ></i><br/>Home</h1></div>
+        <div id="school" data-category="school"><h1 class="dropdown"><i class="fa-regular icon-book" ></i><br/>School</h1></div>
+        <div id="work" data-category="work"><h1 class="dropdown"><i class="fa-regular icon-boss" ></i><br/>Work</h1></div>
+        <div id="personal" data-category="personal"><h1 class="dropdown"><i class="fa-regular icon-basketball" ></i><br/>Personal</h1></div>
         <div id="schoolwrapper">
             <div id="schoolhead" data-category="school"><h1 class="dropdown"><i class="fa-regular icon-book" ></i><br/>School</h1></div>
-            <div id="schoolprimary"><h1 class="dropdown"><i class="fa-regular icon-stack" ></i><br/>Primary</h1></div>
-            <div id="schoolsolo"><h1 class="dropdown"><i class="fa-regular icon-bell" ></i><br/>Solo</h1></div>
-        </div>
-        <div id="schoolprimarywrapper">
-            <div id="schoolprimarygoals"><h1 class="dropdown"><i class="fa-regular icon-stack" ></i><i class="fa-regular icon-star" ></i><br/>Primary Goals</h1></div>
-        </div>
-        <div id="schoolsolowrapper">
-            <div id="schoolsologoals"><h1 class="dropdown"><i class="fa-regular icon-bell" ></i><i class="fa-regular icon-star" ></i><br/>Solo Goals</h1></div>
+            <div id="schoolprimary">
+                <div id="schoolprimarygoals">
+                    <div class="primarybartop"></div>
+                    <div class="primarybarsecond"></div>
+                    <div class="primarybarsecond"></div>
+                    <div class="primarybarthird"></div>
+                </div>
+            </div>
+            <div id="schoolsolo">
+                <div id="schoolsologoals">
+                    <div class="solobartop"></div>
+                    <div class="solobarsecond"></div>
+                    <div class="solobarsecond"></div>
+                    <div class="solobarthird"></div>
+                </div>
+            </div>
         </div>
 </div>
 
