@@ -8,11 +8,11 @@
     <meta http-equiv="cleartype" content="on">
 
     <!-- For device.js -->
-    <link rel="alternate" href="index.html" id="desktop"
+    <link rel="alternate" href="goals.php" id="desktop"
           media="only screen and (touch-enabled: 0)">
-    <link rel="alternate" href="m.index.html" id="phone"
+    <link rel="alternate" href="mobile.goals.php" id="phone"
           media="only screen and (max-device-width: 640px)">
-    <link rel="alternate" href="tablet.index.html" id="tablet"
+    <link rel="alternate" href="goals.php" id="tablet"
           media="only screen and (min-device-width: 641px)">
 
     <meta name="viewport" content="width=device-width">
