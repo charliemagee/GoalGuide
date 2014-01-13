@@ -47,6 +47,8 @@ user = {}
 goalmessage = ''
 
 
+initStudentPage = ->
+
 # check once a day for recurring goals
 resetCompleted = ->
   goals = JSON.parse(localStorage["goals"])

@@ -46,15 +46,16 @@ newprimarygoal = {}
 user = {}
 goalmessage = ''
 
-###
-  this checks localStorage for data. If none, use the arrays above.
-###
-init = ->
-#  password = prompt("What is your password?")
-#  if password is "JoshBCog"
-  $.getJSON ("users.json"), (data) ->
-    localStorage.setItem "users", JSON.stringify(data)
-    displayUserList()
+
+
+initStudentPage = ->
+  password = prompt("What is your password?")
+  if password is "JoshB"
+    $.getJSON ("userlist.json"), (data) ->
+      localStorage.setItem "users", JSON.stringify(data)
+      displayUserList()
+  else
+    document.location.href='goals.php'
 
 
 # check once a day for recurring goals
