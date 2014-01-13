@@ -8,12 +8,12 @@
     <meta http-equiv="cleartype" content="on">
 
     <!-- For device.js -->
-    <link rel="alternate" href="goals.php" id="desktop"
-          media="only screen and (touch-enabled: 0)">
-    <link rel="alternate" href="mobile.goals.php" id="phone"
-          media="only screen and (max-device-width: 640px)">
-    <link rel="alternate" href="goals.php" id="tablet"
-          media="only screen and (min-device-width: 641px)">
+<!--    <link rel="alternate" href="goals.php" id="desktop"-->
+<!--          media="only screen and (touch-enabled: 0)">-->
+<!--    <link rel="alternate" href="mobile.goals.php" id="phone"-->
+<!--          media="only screen and (max-device-width: 640px)">-->
+<!--    <link rel="alternate" href="goals.php" id="tablet"-->
+<!--          media="only screen and (min-device-width: 641px)">-->
 
     <meta name="viewport" content="width=device-width">
 
@@ -26,9 +26,9 @@
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" type="text/css" href="css/fonts/fonts.css" />
     <link rel="stylesheet" type="text/css" href="css/fonts/icomoon.css" />
-<!--    <link rel="stylesheet" href="css/offline.css">-->
+    <link rel="stylesheet" href="css/offline.css">
     <link rel="stylesheet" href="css/main.css">
-    <script src="js/vendor/device.min.js"></script>
+<!--    <script src="js/vendor/device.min.js"></script>-->
 </head>
 <body>
 

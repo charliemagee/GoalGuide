@@ -143,6 +143,24 @@ $('#schoolhead').click ->
 $('#schoolprimaryinprogress').click ->
   $('.goalscompleted').show()
 
+$('#primarymenu').click ->
+  console.log 'clicked'
+  $('#goalscontainer').animate
+    left: '322px'
+  , 'fast'
+  $('#primarygoalscontainer').animate
+    left: '0px'
+  , 'slow'
+
+$('#solomenu').click ->
+  console.log 'clicked'
+  $('#primarygoalscontainer').animate
+    left: '322px'
+  , 'fast'
+  $('#goalscontainer').animate
+    left: '0px'
+  , 'slow'
+
 
 $(".category").click ->
   goalCategory = $(this).data("category")

@@ -207,6 +207,26 @@ $('#schoolprimaryinprogress').click(function() {
   return $('.goalscompleted').show();
 });
 
+$('#primarymenu').click(function() {
+  console.log('clicked');
+  $('#goalscontainer').animate({
+    left: '322px'
+  }, 'fast');
+  return $('#primarygoalscontainer').animate({
+    left: '0px'
+  }, 'slow');
+});
+
+$('#solomenu').click(function() {
+  console.log('clicked');
+  $('#primarygoalscontainer').animate({
+    left: '322px'
+  }, 'fast');
+  return $('#goalscontainer').animate({
+    left: '0px'
+  }, 'slow');
+});
+
 $(".category").click(function() {
   goalCategory = $(this).data("category");
   return displayMyGoalList();

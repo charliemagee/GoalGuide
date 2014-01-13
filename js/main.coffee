@@ -50,7 +50,7 @@ goalmessage = ''
 
 initStudentPage = ->
   password = prompt("What is your password?")
-  if password is "JoshB"
+  if password is "JoshB654#"
     $.getJSON ("userlist.json"), (data) ->
       localStorage.setItem "users", JSON.stringify(data)
       displayUserList()

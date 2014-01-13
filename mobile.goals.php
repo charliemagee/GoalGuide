@@ -92,8 +92,8 @@
 <!--        </form>-->
 <!--    </div> <!-- end checkid -->
 
-    <div id="main">
-        <div id="goalscontainer">
+<!--    <div id="main">-->
+        <div id="goalscontainer" class="move-inside">
             <ul class="goalsinprogress goalsection">
 
             </ul>
@@ -119,7 +119,7 @@
 <!--        <div class="congratsmessageholder">-->
 <!--            <div class="congratsmessage"></div>-->
 <!--        </div>-->
-    </div> <!-- end main -->
+<!--    </div> <!-- end main -->
     <footer>
         <span class="copyright">&copy;2013 Cognitopia Software, LLC</span>
         <!--  <ul>

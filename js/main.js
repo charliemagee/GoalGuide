@@ -95,7 +95,7 @@ goalmessage = '';
 
 initStudentPage = function() {
   password = prompt("What is your password?");
-  if (password === "JoshB") {
+  if (password === "JoshB654#") {
     return $.getJSON("userlist.json", function(data) {
       localStorage.setItem("users", JSON.stringify(data));
       return displayUserList();
