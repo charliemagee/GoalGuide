@@ -114,8 +114,9 @@ $red-light: #f6d3d3;
 }
 #logout {
   display: none;
+  float: right;
   position: relative;
-  margin: -70px 0 20px 1060px;
+  margin: -70px 30px 0 0;
   width: 63px;
   padding: 10px;
   background-color: lighten($green-main, 30%);
