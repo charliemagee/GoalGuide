@@ -164,20 +164,21 @@ $('#loginbutton').click(function() {
 
 loadmyFiles = function() {
   $('#logout').show();
+  console.log('inside the function');
   username = localStorage.getItem("username");
   $.getJSON(username + "user.json", function(data) {
-    var capitaliseFirstLetter;
-    capitaliseFirstLetter = function(string) {
-      return string.charAt(0).toUpperCase() + string.slice(1);
-    };
     localStorage.setItem("user", JSON.stringify(data));
     user = JSON.parse(localStorage.getItem("user"));
+    console.log(user);
     notify = user.notify;
+    console.log('loading files');
+    console.log('notify');
     firstname = user.firstname;
-    capfirstname = capitaliseFirstLetter(firstname);
-    localStorage.setItem("firstname", capfirstname);
+    console.log('firstname');
+    localStorage.setItem("firstname", firstname);
     localStorage.setItem("notify", notify);
-    return localStorage.removeItem("user");
+    localStorage.removeItem("user");
+    return localStorage.removeItem("users");
   });
   $.getJSON(username + "primary.json", function(data) {
     return localStorage.setItem("primarygoals", JSON.stringify(data));
@@ -290,6 +291,7 @@ $('#saveuser').click(function() {
   };
   users.push(user);
   localStorage.setItem("users", JSON.stringify(users));
+  localStorage.setItem('user', JSON.stringify(user));
   makeNewUser();
   userListChange();
   return displayUserList();
@@ -375,7 +377,8 @@ this uses delegate because the lines of info are dynamically placed and won't re
 $(".users").delegate("li > span.username", "click", function() {
   username = $(this).closest('li').data("username");
   localStorage.setItem("username", username);
-  firstname = localStorage.getItem('firstname');
+  firstname = $(this).closest('li').data("firstname");
+  localStorage.setItem("firstname", firstname);
   document.location.href = 'goals.php';
   $(".goalsection").html('');
   $.getJSON(username + "primary.json", function(data) {
@@ -1074,7 +1077,7 @@ emailCompletion = function() {
 makeNewUser = function() {
   var postThis;
   postThis = {};
-  postThis.username = localStorage.getItem("username");
+  postThis.user = localStorage.getItem("user");
   username = localStorage.getItem('username');
   postThis.userid = username;
   return $.ajax({

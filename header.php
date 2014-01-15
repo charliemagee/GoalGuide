@@ -26,7 +26,7 @@
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" type="text/css" href="css/fonts/fonts.css" />
     <link rel="stylesheet" type="text/css" href="css/fonts/icomoon.css" />
-    <link rel="stylesheet" href="css/offline.css">
+<!--    <link rel="stylesheet" href="css/offline.css">-->
     <link rel="stylesheet" href="css/main.css">
 <!--    <script src="js/vendor/device.min.js"></script>-->
 </head>

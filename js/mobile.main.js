@@ -164,7 +164,9 @@ loadmyFiles = function() {
     user = JSON.parse(localStorage.getItem("user"));
     notify = user.notify;
     firstname = user.firstname;
+    console.log('firstname');
     capfirstname = capitaliseFirstLetter(firstname);
+    console.log('capfirstname');
     localStorage.setItem("firstname", capfirstname);
     localStorage.setItem("notify", notify);
     return localStorage.removeItem("user");
