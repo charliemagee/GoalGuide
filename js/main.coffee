@@ -49,6 +49,14 @@ goalmessage = ''
 
 
 initStudentPage = ->
+  localStorage.removeItem('firstname')
+  localStorage.removeItem('goals')
+  localStorage.removeItem('goalmessage')
+  localStorage.removeItem('notify')
+  localStorage.removeItem('primarygoals')
+  localStorage.removeItem('secret')
+  localStorage.removeItem('username')
+  localStorage.removeItem('users')
   password = prompt("What is your password?")
   if password is "JoshB654#"
     $.getJSON ("userlist.json"), (data) ->

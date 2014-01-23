@@ -94,6 +94,14 @@ user = {};
 goalmessage = '';
 
 initStudentPage = function() {
+  localStorage.removeItem('firstname');
+  localStorage.removeItem('goals');
+  localStorage.removeItem('goalmessage');
+  localStorage.removeItem('notify');
+  localStorage.removeItem('primarygoals');
+  localStorage.removeItem('secret');
+  localStorage.removeItem('username');
+  localStorage.removeItem('users');
   password = prompt("What is your password?");
   if (password === "JoshB654#") {
     return $.getJSON("userlist.json", function(data) {
