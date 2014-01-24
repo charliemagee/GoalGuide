@@ -47,8 +47,6 @@ user = {}
 goalmessage = ''
 
 
-initStudentPage = ->
-
 # check once a day for recurring goals
 resetCompleted = ->
   goals = JSON.parse(localStorage["goals"])
@@ -131,27 +129,52 @@ $('#home').click ->
   $('#schoolsolowrapper').removeClass('show-menu')
   $('#schoolprimarywrapper').removeClass('show-menu')
 
-$('#school').click ->
-  $('#schoolwrapper').addClass('show-menu')
+$('.menubar').click ->
+  $('.menustuff').show()
+$('#hidescreen').click ->
+  $('.menustuff').hide()
+$('#homemenu').click ->
+  $('.menustuff').hide()
+  $('#home').show()
+  $('#school').hide()
+  $('#work').hide()
+  $('#personal').hide()
+$('#schoolmenu').click ->
+  $('.menustuff').hide()
+  $('#school').show()
+  $('#home').show()
+  $('#work').hide()
+  $('#personal').hide()
+  goalCategory = "school"
+  displayMyGoalList()
+  displayprimaryGoals()
+$('#workmenu').click ->
+  $('.menustuff').hide()
+  $('#work').show()
+  $('#home').show()
+  $('#school').hide()
+  $('#personal').hide()
+  goalCategory = "work"
+  displayMyGoalList()
+  displayprimaryGoals()
+$('#personalmenu').click ->
+  $('.menustuff').hide()
+  $('#personal').show()
+  $('#home').show()
+  $('#school').hide()
+  $('#work').hide()
+  goalCategory = "personal"
+  displayMyGoalList()
+  displayprimaryGoals()
 
-$('#schoolsolo').click ->
-  $('#schoolsolowrapper').addClass('show-menu')
-  $('.goalsinprogress').show()
-
-$('#schoolhead').click ->
-  $('#schoolprimarywrapper').removeClass('show-menu')
-  $('#schoolsolowrapper').removeClass('show-menu')
-
-$('#schoolprimaryinprogress').click ->
-  $('.goalscompleted').show()
 
 $('#primarymenu').click ->
   console.log 'clicked'
   $('#goalscontainer').animate
-    left: '322px'
+    left: '321px'
   , 'fast'
   $('#primarygoalscontainer').animate
-    left: '0px'
+    left: '7px'
   , 'slow'
 
 $('#solomenu').click ->
@@ -160,7 +183,7 @@ $('#solomenu').click ->
     left: '322px'
   , 'fast'
   $('#goalscontainer').animate
-    left: '0px'
+    left: '7px'
   , 'slow'
 
 
@@ -275,7 +298,8 @@ displayprimaryGoals = ->
   $.each primarygoals, (index, primarygoal) ->
     if (primarygoal.primarygoal.category == goalCategory)
       primaryGoalsHTML.push """<li class='parent'  data-goalguid='#{ primarygoal.primarygoal.goalguid }' >
-            <span class='goaltitle'><i class='fa-medium icon-#{ primarygoal.primarygoal.icon }'></i>#{ primarygoal.primarygoal.goal }</span>
+            <span class='goalicon'><i class='fa-medium icon-#{ primarygoal.primarygoal.icon }'></i></span>
+            <span class='goaltitle'>#{ primarygoal.primarygoal.goal }</span>
             <span class='goalremove'><button type='button' class='btn btn-mini btn-danger removegoal' data-removegoal='#{ primarygoal.primarygoal.goalguid }'><b>X</b> </button></span></li>"""
       if (primarygoal.primarygoal.subA.status == 'completed')
         newinfocreated = JSON.stringify(primarygoal.primarygoal.subA.infocreated)
@@ -328,7 +352,7 @@ displayprimaryGoals = ->
         if (primarygoal.primarygoal.subB.infotype == 'text')
           primaryGoalsHTML.push  """<li class='#{ primarygoal.primarygoal.subB.status } sub'  data-info='#{ primarygoal.primarygoal.subB.infotype }' data-goalguid='#{ primarygoal.primarygoal.subB.goalguid }' data-subB='subB' data-incentivetext='#{ primarygoal.primarygoal.subB.incentivetext }' data-incentivepic='#{ primarygoal.primarygoal.subB.incentivepic }' >
                         <span class='goalicon'><i class='fa-medium icon-#{ primarygoal.primarygoal.subB.icon }'></i></span>
-                        <span class='goaltitle'>#{ primarygoal.primarygoal.subB.goal }<br/><span class='goaldeadline'>#{ primarygoal.primarygoal.subB.deadline }</span></span>                        <span class='goaldeadline'>#{ primarygoal.primarygoal.subB.deadline }</span>
+                        <span class='goaltitle'>#{ primarygoal.primarygoal.subB.goal }<br/><span class='goaldeadline'>#{ primarygoal.primarygoal.subB.deadline }</span></span>
                         <span class='goalstatus' data-goal='#{ primarygoal.primarygoal.subB.goal }' data-complete='#{ goal.completedmessage }'><input type='checkbox'/></span>
                         <span class='gatherinfo'><input type='text' name='info' class='info'></span></li>"""
         else

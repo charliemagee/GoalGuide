@@ -102,15 +102,10 @@ initStudentPage = function() {
   localStorage.removeItem('secret');
   localStorage.removeItem('username');
   localStorage.removeItem('users');
-  password = prompt("What is your password?");
-  if (password === "JoshB654#") {
-    return $.getJSON("userlist.json", function(data) {
-      localStorage.setItem("users", JSON.stringify(data));
-      return displayUserList();
-    });
-  } else {
-    return document.location.href = 'goals.php';
-  }
+  return $.getJSON("userlist.json", function(data) {
+    localStorage.setItem("users", JSON.stringify(data));
+    return displayUserList();
+  });
 };
 
 resetCompleted = function() {

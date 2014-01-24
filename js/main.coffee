@@ -57,13 +57,13 @@ initStudentPage = ->
   localStorage.removeItem('secret')
   localStorage.removeItem('username')
   localStorage.removeItem('users')
-  password = prompt("What is your password?")
-  if password is "JoshB654#"
-    $.getJSON ("userlist.json"), (data) ->
-      localStorage.setItem "users", JSON.stringify(data)
-      displayUserList()
-  else
-    document.location.href='goals.php'
+#  password = prompt("What is your password?")
+#  if password is "JoshB654#"
+  $.getJSON ("userlist.json"), (data) ->
+    localStorage.setItem "users", JSON.stringify(data)
+    displayUserList()
+#  else
+#    document.location.href='goals.php'
 
 
 # check once a day for recurring goals

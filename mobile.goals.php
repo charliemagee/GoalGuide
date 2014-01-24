@@ -40,31 +40,33 @@
 <script src="scripts/vendor/es5-shim.min.js"></script>
 <script src="scripts/vendor/json3.min.js"></script>
 <![endif]-->
+
+<div id="menuwrapper" class="menustuff">
+    <div id="homemenu"><h1 class="dropdown"><i class="fa-regular icon-home" ></i><br/>Home</h1></div>
+    <div id="schoolmenu" data-category="school"><h1 class="dropdown"><i class="fa-regular icon-book" ></i><br/>School</h1></div>
+    <div id="workmenu" data-category="work"><h1 class="dropdown"><i class="fa-regular icon-boss" ></i><br/>Work</h1></div>
+    <div id="personalmenu" data-category="personal"><h1 class="dropdown"><i class="fa-regular icon-basketball" ></i><br/>Personal</h1></div>
+</div>
 <div id="nav">
-    <div id="menuwrapper">
-        <div id="homemenu"><h1 class="dropdown"><i class="fa-regular icon-home" ></i><br/>Home</h1></div>
-        <div id="schoolmenu" data-category="school"><h1 class="dropdown"><i class="fa-regular icon-book" ></i><br/>School</h1></div>
-        <div id="workmenu" data-category="work"><h1 class="dropdown"><i class="fa-regular icon-boss" ></i><br/>Work</h1></div>
-        <div id="personalmenu" data-category="personal"><h1 class="dropdown"><i class="fa-regular icon-basketball" ></i><br/>Personal</h1></div>
-    </div>
-    <div id="home"><h1 class="dropdown"><i class="fa-regular icon-home" ></i><br/>Home</h1></div>
-    <div id="school" data-category="school"><h1 class="dropdown"><i class="fa-regular icon-book" ></i><br/>School</h1></div>
-    <div id="work" data-category="work"><h1 class="dropdown"><i class="fa-regular icon-boss" ></i><br/>Work</h1></div>
-    <div id="personal" data-category="personal"><h1 class="dropdown"><i class="fa-regular icon-basketball" ></i><br/>Personal</h1></div>
-    <div id="primarymenu">
-        <div class="primarybartop"></div>
-        <div class="primarybarsecond"></div>
-        <div class="primarybarsecond"></div>
-        <div class="primarybarthird"></div>
-    </div>
+    <div id="home" class="menubar"><h1 class="dropdown"><i class="fa-regular icon-home" ></i><br/>Home</h1></div>
+    <div id="school" class="menubar" data-category="school"><h1 class="dropdown"><i class="fa-regular icon-book" ></i><br/>School</h1></div>
+    <div id="work" class="menubar" data-category="work"><h1 class="dropdown"><i class="fa-regular icon-boss" ></i><br/>Work</h1></div>
+    <div id="personal" class="menubar" data-category="personal"><h1 class="dropdown"><i class="fa-regular icon-basketball" ></i><br/>Personal</h1></div>
     <div id="solomenu">
         <div class="solobartop"></div>
         <div class="solobarsecond"></div>
         <div class="solobarthird"></div>
         <div class="solobarthird"></div>
     </div>
+    <div id="primarymenu">
+        <div class="primarybartop"></div>
+        <div class="primarybarsecond"></div>
+        <div class="primarybarsecond"></div>
+        <div class="primarybarthird"></div>
+    </div>
 </div>
-<div id="wrapper">
+<div id="hidescreen" class="menustuff"></div>
+<div id="content">
 
     <!--    <div id="logout">-->
     <!--        <button type="button" id="logoutbutton" class="btn btn-success btn-medium">Logout</button>-->
@@ -121,7 +123,7 @@
 <!--        </div>-->
 <!--    </div> <!-- end main -->
     <footer>
-        <span class="copyright">&copy;2013 Cognitopia Software, LLC</span>
+        <span>&copy;2013 Cognitopia Software, LLC</span>
         <!--  <ul>
            <li><a href="index.html">Desktop</a></li>
            <li><a href="tablet.index.html">Tablet</a></li>
