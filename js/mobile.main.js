@@ -109,10 +109,14 @@ resetCompleted = function() {
 };
 
 checkId = function() {
-  $('#checkid').show();
-  return setTimeout((function() {
-    return $('#theloginusername').focus();
-  }), 500);
+  if (localStorage.getItem('username') !== null) {
+    return loadmyFiles();
+  } else {
+    $('#checkid').show();
+    return setTimeout((function() {
+      return $('#theloginusername').focus();
+    }), 500);
+  }
 };
 
 /*
@@ -173,10 +177,12 @@ $('#loginbutton').click(function() {
   password = $("#theloginpassword").val();
   return $.each(users, function(i, user) {
     if (user.username === username && user.password === password) {
-      $('#checkid').hide();
+      $('#loginsection').hide();
       localStorage.setItem("secret", "this is a secret");
       localStorage.setItem("username", username);
       localStorage.removeItem("users");
+      $('#logout').show();
+      $('#checkid').hide();
       return loadmyFiles();
     } else {
       return $('#errorlogin').show();
@@ -185,7 +191,6 @@ $('#loginbutton').click(function() {
 });
 
 loadmyFiles = function() {
-  $('#logout').show();
   username = localStorage.getItem("username");
   $.getJSON(username + "user.json", function(data) {
     var capitaliseFirstLetter;
@@ -210,6 +215,14 @@ loadmyFiles = function() {
     $("#addgoal").show();
     firstname = localStorage.getItem("firstname");
     $("#studentname").html(firstname + "'s" + " Goals");
+    $('#goalscontainer').show();
+    $('#primarygoalscontainer').show();
+    $('#school').show();
+    $('#logout').show();
+    $('#checkid').hide();
+    $('#home').hide();
+    $('#work').hide();
+    $('#personal').hide();
     displayMyGoalList();
     return displayprimaryGoals();
   });
@@ -232,15 +245,21 @@ $('#hidescreen').click(function() {
 $('#homemenu').click(function() {
   $('.menustuff').hide();
   $('#home').show();
+  $('#loginsection').show();
   $('#school').hide();
   $('#work').hide();
-  return $('#personal').hide();
+  $('#personal').hide();
+  $('#goalscontainer').hide();
+  return $('#primarygoalscontainer').hide();
 });
 
 $('#schoolmenu').click(function() {
   $('.menustuff').hide();
+  $('#loginsection').hide();
+  $('#goalscontainer').show();
+  $('#primarygoalscontainer').show();
   $('#school').show();
-  $('#home').show();
+  $('#home').hide();
   $('#work').hide();
   $('#personal').hide();
   goalCategory = "school";
@@ -250,8 +269,11 @@ $('#schoolmenu').click(function() {
 
 $('#workmenu').click(function() {
   $('.menustuff').hide();
+  $('#loginsection').hide();
+  $('#goalscontainer').show();
+  $('#primarygoalscontainer').show();
   $('#work').show();
-  $('#home').show();
+  $('#home').hide();
   $('#school').hide();
   $('#personal').hide();
   goalCategory = "work";
@@ -261,8 +283,11 @@ $('#workmenu').click(function() {
 
 $('#personalmenu').click(function() {
   $('.menustuff').hide();
+  $('#loginsection').hide();
+  $('#goalscontainer').show();
+  $('#primarygoalscontainer').show();
   $('#personal').show();
-  $('#home').show();
+  $('#home').hide();
   $('#school').hide();
   $('#work').hide();
   goalCategory = "personal";

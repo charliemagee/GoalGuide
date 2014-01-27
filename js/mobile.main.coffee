@@ -60,10 +60,13 @@ resetCompleted = ->
   displayMyGoalList()
 
 checkId = ->
-  $('#checkid').show()
-  setTimeout (->
-    $('#theloginusername').focus()
-  ), 500
+  if localStorage.getItem('username') isnt null
+    loadmyFiles()
+  else
+    $('#checkid').show()
+    setTimeout (->
+      $('#theloginusername').focus()
+    ), 500
 
 ###
   create a date for the goal info input
@@ -112,16 +115,17 @@ $('#loginbutton').click ->
   password = $("#theloginpassword").val()
   $.each users, (i, user) ->
     if user.username is username and user.password is password
-      $('#checkid').hide()
+      $('#loginsection').hide()
       localStorage.setItem("secret", "this is a secret")
       localStorage.setItem("username", username)
       localStorage.removeItem("users")
+      $('#logout').show()
+      $('#checkid').hide()
       loadmyFiles()
     else
       $('#errorlogin').show()
 
 loadmyFiles = ->
-  $('#logout').show()
   username = localStorage.getItem("username")
   $.getJSON username + "user.json", (data) ->
     capitaliseFirstLetter = (string) ->
@@ -144,6 +148,14 @@ loadmyFiles = ->
     $("#addgoal").show()
     firstname = localStorage.getItem("firstname")
     $("#studentname").html firstname + "'s" + " Goals"
+    $('#goalscontainer').show()
+    $('#primarygoalscontainer').show()
+    $('#school').show()
+    $('#logout').show()
+    $('#checkid').hide()
+    $('#home').hide()
+    $('#work').hide()
+    $('#personal').hide()
     displayMyGoalList()
     displayprimaryGoals()
 
@@ -161,13 +173,19 @@ $('#hidescreen').click ->
 $('#homemenu').click ->
   $('.menustuff').hide()
   $('#home').show()
+  $('#loginsection').show()
   $('#school').hide()
   $('#work').hide()
   $('#personal').hide()
+  $('#goalscontainer').hide()
+  $('#primarygoalscontainer').hide()
 $('#schoolmenu').click ->
   $('.menustuff').hide()
+  $('#loginsection').hide()
+  $('#goalscontainer').show()
+  $('#primarygoalscontainer').show()
   $('#school').show()
-  $('#home').show()
+  $('#home').hide()
   $('#work').hide()
   $('#personal').hide()
   goalCategory = "school"
@@ -175,8 +193,11 @@ $('#schoolmenu').click ->
   displayprimaryGoals()
 $('#workmenu').click ->
   $('.menustuff').hide()
+  $('#loginsection').hide()
+  $('#goalscontainer').show()
+  $('#primarygoalscontainer').show()
   $('#work').show()
-  $('#home').show()
+  $('#home').hide()
   $('#school').hide()
   $('#personal').hide()
   goalCategory = "work"
@@ -184,8 +205,11 @@ $('#workmenu').click ->
   displayprimaryGoals()
 $('#personalmenu').click ->
   $('.menustuff').hide()
+  $('#loginsection').hide()
+  $('#goalscontainer').show()
+  $('#primarygoalscontainer').show()
   $('#personal').show()
-  $('#home').show()
+  $('#home').hide()
   $('#school').hide()
   $('#work').hide()
   goalCategory = "personal"

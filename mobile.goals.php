@@ -72,33 +72,34 @@
 <div id="hidescreen" class="menustuff"></div>
 <div id="content">
 
-    <!--    <div id="logout">-->
-    <!--        <button type="button" id="logoutbutton" class="btn btn-success btn-medium">Logout</button>-->
-    <!--    </div>-->
-<!---->
-<!--    <div id="checkid">-->
-<!--        <h3 class="detailsLabel">Please Login</h3>-->
-<!--        <div id="errorlogin">Your username and password combination is incorrect. Please try again.</div>-->
-<!--        <form class="form-horizontal">-->
-<!--            <div class="control-group">-->
-<!--                <label class="control-label" for="theloginusername">Username:</label>-->
-<!--                <div class="controls">-->
-<!--                    <input type="text" id="theloginusername" class="input-small textempty" required>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--            <div class="control-group">-->
-<!--                <label class="control-label" for="theloginpassword">Password:</label>-->
-<!--                <div class="controls">-->
-<!--                    <input type="password" id="theloginpassword" class="input-small textempty" required>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--            <div class="savinggoals push-right-savegoal">-->
-<!--                <button type="button" id="loginbutton" class="btn btn-success btn-medium">Login</button>-->
-<!--            </div>-->
-<!--        </form>-->
-<!--    </div> <!-- end checkid -->
+    <div id="loginsection">
+        <div id="logout">
+            <button type="button" id="logoutbutton" class="btn btn-success btn-medium">Logout</button>
+        </div>
 
-<!--    <div id="main">-->
+        <div id="checkid">
+            <h4 class="detailsLabel">Please Login</h4>
+            <div id="errorlogin">Your username and password combination is incorrect. Please try again.</div>
+            <form class="form-horizontal">
+                <div class="control-group">
+                    <label class="control-label" for="theloginusername">Username:</label>
+                    <div class="controls">
+                        <input type="text" id="theloginusername" class="input-small textempty" required>
+                    </div>
+                </div>
+                <div class="control-group">
+                    <label class="control-label" for="theloginpassword">Password:</label>
+                    <div class="controls">
+                        <input type="password" id="theloginpassword" class="input-small textempty" required>
+                    </div>
+                </div>
+                <div class="savinggoals push-right-savegoal">
+                    <button type="button" id="loginbutton" class="btn btn-success btn-medium">Login</button>
+                </div>
+            </form>
+        </div> <!-- end checkid -->
+    </div>
+
         <div id="goalscontainer" class="move-inside">
             <ul class="goalsinprogress goalsection">
 
@@ -125,7 +126,6 @@
 <!--        <div class="congratsmessageholder">-->
 <!--            <div class="congratsmessage"></div>-->
 <!--        </div>-->
-<!--    </div> <!-- end main -->
     <footer>
         <span>&copy;2013 Cognitopia Software, LLC</span>
         <!--  <ul>
