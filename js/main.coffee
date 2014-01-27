@@ -45,8 +45,7 @@ newgoal = {}
 newprimarygoal = {}
 user = {}
 goalmessage = ''
-
-
+saywhat = ''
 
 initStudentPage = ->
   localStorage.removeItem('firstname')
@@ -57,13 +56,22 @@ initStudentPage = ->
   localStorage.removeItem('secret')
   localStorage.removeItem('username')
   localStorage.removeItem('users')
-#  password = prompt("What is your password?")
-#  if password is "JoshB654#"
-  $.getJSON ("userlist.json"), (data) ->
-    localStorage.setItem "users", JSON.stringify(data)
-    displayUserList()
-#  else
-#    document.location.href='goals.php'
+  if localStorage.getItem('beenhere') is 'donethat'
+    $.getJSON ("userlist.json"), (data) ->
+      localStorage.setItem "users", JSON.stringify(data)
+      localStorage.setItem "beenhere", "donethat"
+      saywhat = localStorage.getItem('beenhere')
+      displayUserList()
+  else
+    password = prompt("What is your password?")
+    if password is "JoshB654#"
+      $.getJSON ("userlist.json"), (data) ->
+        localStorage.setItem "users", JSON.stringify(data)
+        localStorage.setItem "beenhere", "donethat"
+        saywhat = localStorage.getItem('beenhere')
+        displayUserList()
+    else
+      document.location.href='index.php'
 
 
 # check once a day for recurring goals

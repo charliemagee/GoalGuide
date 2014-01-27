@@ -272,7 +272,7 @@ $('#personalmenu').click(function() {
 
 $('#primarymenu').click(function() {
   $('#goalscontainer').animate({
-    left: '321px'
+    left: '500px'
   }, 'fast');
   return $('#primarygoalscontainer').animate({
     left: '7px'
@@ -281,7 +281,7 @@ $('#primarymenu').click(function() {
 
 $('#solomenu').click(function() {
   $('#primarygoalscontainer').animate({
-    left: '322px'
+    left: '500px'
   }, 'fast');
   return $('#goalscontainer').animate({
     left: '7px'

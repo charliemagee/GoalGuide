@@ -195,7 +195,7 @@ $('#personalmenu').click ->
 
 $('#primarymenu').click ->
   $('#goalscontainer').animate
-    left: '321px'
+    left: '500px'
   , 'fast'
   $('#primarygoalscontainer').animate
     left: '7px'
@@ -203,7 +203,7 @@ $('#primarymenu').click ->
 
 $('#solomenu').click ->
   $('#primarygoalscontainer').animate
-    left: '322px'
+    left: '500px'
   , 'fast'
   $('#goalscontainer').animate
     left: '7px'
