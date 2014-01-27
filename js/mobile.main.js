@@ -177,12 +177,10 @@ $('#loginbutton').click(function() {
   password = $("#theloginpassword").val();
   return $.each(users, function(i, user) {
     if (user.username === username && user.password === password) {
-      $('#loginsection').hide();
+      $('#checkid').hide();
       localStorage.setItem("secret", "this is a secret");
       localStorage.setItem("username", username);
       localStorage.removeItem("users");
-      $('#logout').show();
-      $('#checkid').hide();
       return loadmyFiles();
     } else {
       return $('#errorlogin').show();
@@ -218,7 +216,7 @@ loadmyFiles = function() {
     $('#goalscontainer').show();
     $('#primarygoalscontainer').show();
     $('#school').show();
-    $('#logout').show();
+    $('#logout').hide();
     $('#checkid').hide();
     $('#home').hide();
     $('#work').hide();
@@ -245,7 +243,11 @@ $('#hidescreen').click(function() {
 $('#homemenu').click(function() {
   $('.menustuff').hide();
   $('#home').show();
-  $('#loginsection').show();
+  if (localStorage.getItem('username') !== null) {
+    $('#logout').show();
+  } else {
+    $('#checkid').show();
+  }
   $('#school').hide();
   $('#work').hide();
   $('#personal').hide();
@@ -255,7 +257,8 @@ $('#homemenu').click(function() {
 
 $('#schoolmenu').click(function() {
   $('.menustuff').hide();
-  $('#loginsection').hide();
+  $('#checkid').hide();
+  $('#logout').hide();
   $('#goalscontainer').show();
   $('#primarygoalscontainer').show();
   $('#school').show();
@@ -269,7 +272,8 @@ $('#schoolmenu').click(function() {
 
 $('#workmenu').click(function() {
   $('.menustuff').hide();
-  $('#loginsection').hide();
+  $('#checkid').hide();
+  $('#logout').hide();
   $('#goalscontainer').show();
   $('#primarygoalscontainer').show();
   $('#work').show();
@@ -283,7 +287,8 @@ $('#workmenu').click(function() {
 
 $('#personalmenu').click(function() {
   $('.menustuff').hide();
-  $('#loginsection').hide();
+  $('#checkid').hide();
+  $('#logout').hide();
   $('#goalscontainer').show();
   $('#primarygoalscontainer').show();
   $('#personal').show();

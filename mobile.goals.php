@@ -72,7 +72,6 @@
 <div id="hidescreen" class="menustuff"></div>
 <div id="content">
 
-    <div id="loginsection">
         <div id="logout">
             <button type="button" id="logoutbutton" class="btn btn-success btn-medium">Logout</button>
         </div>
@@ -98,7 +97,6 @@
                 </div>
             </form>
         </div> <!-- end checkid -->
-    </div>
 
         <div id="goalscontainer" class="move-inside">
             <ul class="goalsinprogress goalsection">
@@ -114,18 +112,18 @@
             </ul>
 
         </div>
-<!--        <div id="chartbox">-->
-<!--            <span class="goalremove closechart hidechart"><button type="button" class="btn btn-mini btn-danger" ><b>X</b> </button></span>-->
-<!--            <div id="thischart"></div>-->
-<!--        </div>-->
+        <div id="chartbox">
+            <span class="goalremove closechart hidechart"><button type="button" class="btn btn-mini btn-danger" ><b>X</b> </button></span>
+            <div id="thischart"></div>
+        </div>
 <!--        <div id="incentivebox">-->
 <!--            <div id="incentivepic"></div>-->
 <!--            <div id="incentivetext"></div>-->
 <!--        </div>-->
-<!--        <div class="chart-backdrop hidechart"></div>-->
-<!--        <div class="congratsmessageholder">-->
-<!--            <div class="congratsmessage"></div>-->
-<!--        </div>-->
+        <div class="chart-backdrop hidechart"></div>
+        <div class="congratsmessageholder">
+            <div class="congratsmessage"></div>
+        </div>
     <footer>
         <span>&copy;2013 Cognitopia Software, LLC</span>
         <!--  <ul>

@@ -115,12 +115,10 @@ $('#loginbutton').click ->
   password = $("#theloginpassword").val()
   $.each users, (i, user) ->
     if user.username is username and user.password is password
-      $('#loginsection').hide()
+      $('#checkid').hide()
       localStorage.setItem("secret", "this is a secret")
       localStorage.setItem("username", username)
       localStorage.removeItem("users")
-      $('#logout').show()
-      $('#checkid').hide()
       loadmyFiles()
     else
       $('#errorlogin').show()
@@ -151,7 +149,7 @@ loadmyFiles = ->
     $('#goalscontainer').show()
     $('#primarygoalscontainer').show()
     $('#school').show()
-    $('#logout').show()
+    $('#logout').hide()
     $('#checkid').hide()
     $('#home').hide()
     $('#work').hide()
@@ -173,7 +171,10 @@ $('#hidescreen').click ->
 $('#homemenu').click ->
   $('.menustuff').hide()
   $('#home').show()
-  $('#loginsection').show()
+  if localStorage.getItem('username') != null
+    $('#logout').show()
+  else
+    $('#checkid').show()
   $('#school').hide()
   $('#work').hide()
   $('#personal').hide()
@@ -181,7 +182,8 @@ $('#homemenu').click ->
   $('#primarygoalscontainer').hide()
 $('#schoolmenu').click ->
   $('.menustuff').hide()
-  $('#loginsection').hide()
+  $('#checkid').hide()
+  $('#logout').hide()
   $('#goalscontainer').show()
   $('#primarygoalscontainer').show()
   $('#school').show()
@@ -193,7 +195,8 @@ $('#schoolmenu').click ->
   displayprimaryGoals()
 $('#workmenu').click ->
   $('.menustuff').hide()
-  $('#loginsection').hide()
+  $('#checkid').hide()
+  $('#logout').hide()
   $('#goalscontainer').show()
   $('#primarygoalscontainer').show()
   $('#work').show()
@@ -205,7 +208,8 @@ $('#workmenu').click ->
   displayprimaryGoals()
 $('#personalmenu').click ->
   $('.menustuff').hide()
-  $('#loginsection').hide()
+  $('#checkid').hide()
+  $('#logout').hide()
   $('#goalscontainer').show()
   $('#primarygoalscontainer').show()
   $('#personal').show()
