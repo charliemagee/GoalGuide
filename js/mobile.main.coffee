@@ -65,6 +65,33 @@ checkId = ->
     $('#theloginusername').focus()
   ), 500
 
+###
+  create a date for the goal info input
+###
+createInfoDate = ->
+  d = new Date()
+  month = new Array()
+  month[0] = "Jan"
+  month[1] = "Feb"
+  month[2] = "Mar"
+  month[3] = "April"
+  month[4] = "May"
+  month[5] = "June"
+  month[6] = "July"
+  month[7] = "Aug"
+  month[8] = "Sept"
+  month[9] = "Oct"
+  month[10] = "Nov"
+  month[11] = "Dec"
+  n = month[d.getMonth()]
+  newcreated = n + ' ' + d.getDate()
+
+###
+  create a date for recurring goal check
+###
+createDayToday = ->
+  currentDay = new Date().getDay()
+
 $("#checkid").keydown (event) ->
   $("#loginbutton").trigger "click"  if event.keyCode is 13
 
@@ -103,9 +130,7 @@ loadmyFiles = ->
     user = JSON.parse(localStorage.getItem("user"))
     notify = user.notify
     firstname = user.firstname
-    console.log 'firstname'
     capfirstname = capitaliseFirstLetter(firstname)
-    console.log 'capfirstname'
     localStorage.setItem "firstname", capfirstname
     localStorage.setItem "notify", notify
     localStorage.removeItem("user")
@@ -169,7 +194,6 @@ $('#personalmenu').click ->
 
 
 $('#primarymenu').click ->
-  console.log 'clicked'
   $('#goalscontainer').animate
     left: '321px'
   , 'fast'
@@ -178,7 +202,6 @@ $('#primarymenu').click ->
   , 'slow'
 
 $('#solomenu').click ->
-  console.log 'clicked'
   $('#primarygoalscontainer').animate
     left: '322px'
   , 'fast'
@@ -318,8 +341,8 @@ displayprimaryGoals = ->
           primaryGoalsHTML.push  """<li class='#{ primarygoal.primarygoal.subA.status } sub'  data-info='#{ primarygoal.primarygoal.subA.infotype }' data-goalguid='#{ primarygoal.primarygoal.subA.goalguid }' data-subB='subA' data-incentivetext='#{ primarygoal.primarygoal.subA.incentivetext }' data-incentivepic='#{ primarygoal.primarygoal.subA.incentivepic }' >
                         <span class='goalicon'><i class='fa-medium icon-#{ primarygoal.primarygoal.subA.icon }'></i></span>
                         <span class='goaltitle'>#{ primarygoal.primarygoal.subA.goal }<br/><span class='goaldeadline'>#{ primarygoal.primarygoal.subA.deadline }</span></span>
-                        <span class='goalstatus' data-goal='#{ primarygoal.primarygoal.subA.goal }' data-complete='#{ goal.completedmessage }'><input type='checkbox'/></span>
-                        <span class='gatherinfo'><input type='text' name='infoA' class='info'></span></li>"""
+                        <span class='gatherinfo'><input type='text' name='infoA' class='info'></span>
+                        <span class='goalstatus' data-goal='#{ primarygoal.primarygoal.subA.goal }' data-complete='#{ goal.completedmessage }'><input type='checkbox'/></span></li>"""
         else
           primaryGoalsHTML.push """<li class='#{ primarygoal.primarygoal.subA.status } sub'  data-info='#{ primarygoal.primarygoal.subA.infotype }' data-goalguid='#{ primarygoal.primarygoal.subA.goalguid }' data-subB='subA' data-incentivetext='#{ primarygoal.primarygoal.subA.incentivetext }' data-incentivepic='#{ primarygoal.primarygoal.subA.incentivepic }' >
                         <span class='goalicon'><i class='fa-medium icon-#{ primarygoal.primarygoal.subA.icon }'></i></span>
@@ -353,8 +376,8 @@ displayprimaryGoals = ->
           primaryGoalsHTML.push  """<li class='#{ primarygoal.primarygoal.subB.status } sub'  data-info='#{ primarygoal.primarygoal.subB.infotype }' data-goalguid='#{ primarygoal.primarygoal.subB.goalguid }' data-subB='subB' data-incentivetext='#{ primarygoal.primarygoal.subB.incentivetext }' data-incentivepic='#{ primarygoal.primarygoal.subB.incentivepic }' >
                         <span class='goalicon'><i class='fa-medium icon-#{ primarygoal.primarygoal.subB.icon }'></i></span>
                         <span class='goaltitle'>#{ primarygoal.primarygoal.subB.goal }<br/><span class='goaldeadline'>#{ primarygoal.primarygoal.subB.deadline }</span></span>
-                        <span class='goalstatus' data-goal='#{ primarygoal.primarygoal.subB.goal }' data-complete='#{ goal.completedmessage }'><input type='checkbox'/></span>
-                        <span class='gatherinfo'><input type='text' name='info' class='info'></span></li>"""
+                        <span class='gatherinfo'><input type='text' name='info' class='info'></span>
+                        <span class='goalstatus' data-goal='#{ primarygoal.primarygoal.subB.goal }' data-complete='#{ goal.completedmessage }'><input type='checkbox'/></span></li>"""
         else
           primaryGoalsHTML.push """<li class='#{ primarygoal.primarygoal.subB.status } sub'  data-info='#{ primarygoal.primarygoal.subB.infotype }' data-goalguid='#{ primarygoal.primarygoal.subB.goalguid }' data-subB='subB' data-incentivetext='#{ primarygoal.primarygoal.subB.incentivetext }' data-incentivepic='#{ primarygoal.primarygoal.subB.incentivepic }' >
                         <span class='goalicon'><i class='fa-medium icon-#{ primarygoal.primarygoal.subB.icon }'></i></span>
@@ -388,8 +411,8 @@ displayprimaryGoals = ->
           primaryGoalsHTML.push  """<li class='#{ primarygoal.primarygoal.subC.status } sub'  data-info='#{ primarygoal.primarygoal.subC.infotype }' data-goalguid='#{ primarygoal.primarygoal.subC.goalguid }' data-subB='subC' data-incentivetext='#{ primarygoal.primarygoal.subC.incentivetext }' data-incentivepic='#{ primarygoal.primarygoal.subC.incentivepic }' >
                         <span class='goalicon'><i class='fa-medium icon-#{ primarygoal.primarygoal.subC.icon }'></i></span>
                         <span class='goaltitle'>#{ primarygoal.primarygoal.subC.goal }<br/><span class='goaldeadline'>#{ primarygoal.primarygoal.subC.deadline }</span></span>
-                        <span class='goalstatus' data-goal='#{ primarygoal.primarygoal.subC.goal }' data-complete='#{ goal.completedmessage }'><input type='checkbox'/></span>
-                        <span class='gatherinfo'><input type='text' name='info' class='info'></span></li>"""
+                        <span class='gatherinfo'><input type='text' name='info' class='info'></span>
+                        <span class='goalstatus' data-goal='#{ primarygoal.primarygoal.subC.goal }' data-complete='#{ goal.completedmessage }'><input type='checkbox'/></span></li>"""
         else
           primaryGoalsHTML.push """<li class='#{ primarygoal.primarygoal.subC.status } sub'  data-info='#{ primarygoal.primarygoal.subC.infotype }' data-goalguid='#{ primarygoal.primarygoal.subC.goalguid }' data-subB='subC' data-incentivetext='#{ primarygoal.primarygoal.subC.incentivetext }' data-incentivepic='#{ primarygoal.primarygoal.subC.incentivepic }' >
                         <span class='goalicon'><i class='fa-medium icon-#{ primarygoal.primarygoal.subC.icon }'></i></span>
