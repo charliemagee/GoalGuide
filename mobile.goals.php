@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html manifest="goals.appcache">
 <!--[if IEMobile 7 ]>    <html class="no-js iem7"> <![endif]-->
 <!--[if (gt IEMobile 7)|!(IEMobile)]><!--> <html class="no-js"> <!--<![endif]-->
 <head>
@@ -30,7 +30,7 @@
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" type="text/css" href="css/fonts/fonts.css" />
     <link rel="stylesheet" type="text/css" href="css/fonts/icomoon.css" />
-    <link rel="stylesheet" href="css/offline.css">
+<!--    <link rel="stylesheet" href="css/offline.css">-->
     <link rel="stylesheet" href="css/mobile.main.css">
     <script src="js/vendor/device.min.js"></script>
 </head>
@@ -156,7 +156,7 @@
                 var lastTime = 0;
                 var lastTimeStr = localStorage['daycheck'];
                 if (lastTimeStr) lastTime = parseInt(lastTimeStr, 10);
-                if (now - lastTime > 24*60*60*1000) {
+                if (now - lastTime > 60*1000) {
                     resetCompleted();
                     localStorage['daycheck'] = ""+now;
                 }

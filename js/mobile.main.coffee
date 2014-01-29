@@ -49,6 +49,7 @@ goalmessage = ''
 
 # check once a day for recurring goals
 resetCompleted = ->
+  console.log 'reset triggered'
   goals = JSON.parse(localStorage["goals"])
   dayToday = createDayToday()
   updateStatus = "inprogress"
@@ -100,6 +101,7 @@ $("#checkid").keydown (event) ->
 
 $("#logoutbutton").click ->
   $('#logout').hide()
+  console.log 'logged out'
   localStorage.removeItem('firstname')
   localStorage.removeItem('goals')
   localStorage.removeItem('notify')
@@ -110,9 +112,11 @@ $("#logoutbutton").click ->
   location.reload()
 
 $('#loginbutton').click ->
+  console.log 'logged in'
   users = JSON.parse(localStorage["users"])
   username = $("#theloginusername").val()
   password = $("#theloginpassword").val()
+  console.log username + '  ' + password
   $.each users, (i, user) ->
     if user.username is username and user.password is password
       $('#checkid').hide()

@@ -94,6 +94,7 @@ user = {};
 goalmessage = '';
 
 resetCompleted = function() {
+  console.log('reset triggered');
   goals = JSON.parse(localStorage["goals"]);
   dayToday = createDayToday();
   updateStatus = "inprogress";
@@ -161,6 +162,7 @@ $("#checkid").keydown(function(event) {
 
 $("#logoutbutton").click(function() {
   $('#logout').hide();
+  console.log('logged out');
   localStorage.removeItem('firstname');
   localStorage.removeItem('goals');
   localStorage.removeItem('notify');
@@ -172,9 +174,11 @@ $("#logoutbutton").click(function() {
 });
 
 $('#loginbutton').click(function() {
+  console.log('logged in');
   users = JSON.parse(localStorage["users"]);
   username = $("#theloginusername").val();
   password = $("#theloginpassword").val();
+  console.log(username + '  ' + password);
   return $.each(users, function(i, user) {
     if (user.username === username && user.password === password) {
       $('#checkid').hide();
