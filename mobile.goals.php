@@ -30,7 +30,6 @@
     <link rel="stylesheet" href="css/normalize.css">
     <link rel="stylesheet" type="text/css" href="css/fonts/fonts.css" />
     <link rel="stylesheet" type="text/css" href="css/fonts/icomoon.css" />
-<!--    <link rel="stylesheet" href="css/offline.css">-->
     <link rel="stylesheet" href="css/mobile.main.css">
     <script src="js/vendor/device.min.js"></script>
 </head>
@@ -135,10 +134,10 @@
     </footer>
 </div>     <!-- wrapper -->
 
-    <script src="js/jquery-1.8.3.min.js"></script>
-    <script src="js/mobile.main.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     <script src="http://code.highcharts.com/highcharts.js"></script>
     <script src="js/offline.min.js"></script>
+    <script src="js/mobile.main.js"></script>
 
     <script type="text/javascript">
         $(document).ready(function(){

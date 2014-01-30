@@ -271,21 +271,19 @@ displayMyGoalList = ->
         completedHTML.push """<li class='#{ goal.goal.status }' data-info='#{ goal.goal.infotype }' data-goalguid='#{ goal.goal.goalguid }' data-incentivetext='#{ goal.goal.incentivetext }' data-incentivepic='#{ goal.goal.incentivepic }' >
                           <span class='goalicon'><i class='fa-medium icon-#{ goal.goal.icon }'></i></span>
                           <span class='goaltitle'>#{ goal.goal.goal }</span>
-                          <span><i class='fa-medium icon-stats chartbutton' data-infocreated='#{ newinfocreated }' data-myinfo='[#{ goal.goal.myinfo }]' data-goal='#{ goal.goal.goal }'></i></span></li>"""
+                          <span class='goalbuttons'><i class='fa-medium icon-stats chartbutton' data-infocreated='#{ newinfocreated }' data-myinfo='[#{ goal.goal.myinfo }]' data-goal='#{ goal.goal.goal }'></i></span></li>"""
 
       else if (goal.goal.status is "inprogress")
+        console.log 'here again'
         if (goal.goal.infotype is 'text')
           inprogressHTML.push """<li class='#{ goal.goal.status }' data-info='#{ goal.goal.infotype }' data-goalguid='#{ goal.goal.goalguid }' data-incentivetext='#{ goal.goal.incentivetext }' data-incentivepic='#{ goal.goal.incentivepic }' >
                           <span class='goalicon'><i class='fa-medium icon-#{ goal.goal.icon }'></i></span>
                           <span class='goaltitle'>#{ goal.goal.goal }<br/><span class='goaldeadline'>#{ goal.goal.deadline }</span></span>
-                          <span class='gatherinfo'><input type='text' name='info' class='info'/></span>
-                          <span class='goalstatus' data-goal='#{ goal.goal.goal }' data-complete='#{ goal.goal.completedmessage }'><input type='checkbox' /></span></li>"""
+                          <span class='goalbuttons'><span class='gatherinfo'><input type='text' name='info' class='info'/></span><span class='goalstatus' data-goal='#{ goal.goal.goal }' data-complete='#{ goal.goal.completedmessage }'><input type='checkbox' /></span></span></li>"""
         else
           inprogressHTML.push """<li class='#{ goal.goal.status }' data-info='#{ goal.goal.infotype }' data-goalguid='#{ goal.goal.goalguid }' data-incentivetext='#{ goal.goal.incentivetext }' data-incentivepic='#{ goal.goal.incentivepic }' >
                           <span class='goalicon'><i class='fa-medium icon-#{ goal.goal.icon }'></i></span>
-                          <span class='goaltitle'>#{ goal.goal.goal }<br/><span class='goaldeadline'>#{ goal.goal.deadline }</span></span>
-                          <span class='goalstatus' data-goal='#{ goal.goal.goal }' data-complete='#{ goal.goal.completedmessage }'><input type='checkbox' /></span>
-                          <span class='clearfix'></span></li>"""
+                          <span class='goaltitle'>#{ goal.goal.goal }<br/><span class='goaldeadline'>#{ goal.goal.deadline }</span></span><span class='goalbuttons'><span class='goalstatus' data-goal='#{ goal.goal.goal }' data-complete='#{ goal.goal.completedmessage }'><input type='checkbox' /></span></span></li>"""
 
   $(".goalsinprogress").html inprogressHTML.join("")
   $(".goalscompleted").html completedHTML.join("")
