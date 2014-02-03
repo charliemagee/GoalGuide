@@ -552,9 +552,10 @@ $(".goalsinprogress").delegate "input[type=checkbox]", "click", ->
       if goal.goal.goalguid is goalguid
         if goal.goal.infotype is 'text'
           goal.goal.myinfo.push newinfo
-          goal.goal.infocreated.push mygoaldate
+        else
+          goal.goal.myinfo.push 1
+        goal.goal.infocreated.push mygoaldate
         goal.goal.status = updateStatus
-        goal.goal.datecompleted = mygoaldate
         goalmessage = firstname + ' has completed this goal: ' + goal.goal.goal
         localStorage.setItem("goalmessage", JSON.stringify(goalmessage))
         false # break the each
@@ -744,6 +745,7 @@ displayprimaryGoals = ->
     $(".primarygoals").css(visibility: "visible").fadeIn(200)
 
 
+
 # change the class of the li and save the data
 $(".primarygoals").delegate "input[type=checkbox]", "click", ->
   goalguid = $(this).closest('li').data("goalguid")
@@ -776,27 +778,30 @@ $(".primarygoals").delegate "input[type=checkbox]", "click", ->
         if primarygoal.primarygoal.subA.goalguid is goalguid
           if primarygoal.primarygoal.subA.infotype is 'text'
             primarygoal.primarygoal.subA.myinfo.push newinfo
-            primarygoal.primarygoal.subA.infocreated.push mygoaldate
+          else
+            primarygoal.primarygoal.subA.myinfo.push 1
+          primarygoal.primarygoal.subA.infocreated.push mygoaldate
           primarygoal.primarygoal.subA.status = updateStatus
-          primarygoal.primarygoal.subA.datecompleted = mygoaldate
           goalmessage = firstname + ' has completed this goal: ' + primarygoal.primarygoal.subA.goal
           localStorage.setItem("goalmessage", JSON.stringify(goalmessage))
           false # break the each
         else if primarygoal.primarygoal.subB.goalguid is goalguid
           if primarygoal.primarygoal.subB.infotype is 'text'
             primarygoal.primarygoal.subB.myinfo.push newinfo
-            primarygoal.primarygoal.subB.infocreated.push mygoaldate
+          else
+            primarygoal.primarygoal.subB.myinfo.push newinfo
+          primarygoal.primarygoal.subB.infocreated.push mygoaldate
           primarygoal.primarygoal.subB.status = updateStatus
-          primarygoal.primarygoal.subB.datecompleted = mygoaldate
           goalmessage = firstname + ' has completed this goal: ' + primarygoal.primarygoal.subB.goal
           localStorage.setItem("goalmessage", JSON.stringify(goalmessage))
           false # break the each
         else if primarygoal.primarygoal.subC.goalguid is goalguid
           if primarygoal.primarygoal.subC.infotype is 'text'
             primarygoal.primarygoal.subC.myinfo.push newinfo
-            primarygoal.primarygoal.subC.infocreated.push mygoaldate
+          else
+            primarygoal.primarygoal.subC.myinfo.push newinfo
+          primarygoal.primarygoal.subC.infocreated.push mygoaldate
           primarygoal.primarygoal.subC.status = updateStatus
-          primarygoal.primarygoal.subC.datecompleted = mygoaldate
           goalmessage = firstname + ' has completed this goal: ' + primarygoal.primarygoal.subC.goal
           localStorage.setItem("goalmessage", JSON.stringify(goalmessage))
           false # break the each
@@ -926,20 +931,51 @@ $(".goalscompleted").on "click", "i.chartbutton", ->
   infocreated = $(this).data('infocreated')
   myinfo = $(this).data('myinfo')
   mytitle = $(this).data('goal')
-  $ ->
-  $("#thischart").highcharts
-    chart: {}
+  if $(this).closest('li').data('info') == "text"
+    $ ->
+    $("#thischart").highcharts
+      chart: {}
 
-    title:
-      text: mytitle
+      title:
+        text: mytitle
 
-    legend:
-      enabled: false
+      legend:
+        enabled: false
 
-    xAxis:
-      categories: infocreated
+      xAxis:
+        categories: infocreated
 
-    series: [data: myinfo   ]
+      yAxis:
+        minRange: 5
+
+      series: [data: myinfo   ]
+  else
+    $ ->
+    $("#thischart").highcharts
+      chart: {
+        type: 'area'
+      },
+
+      title:
+        text: mytitle
+
+      legend:
+        enabled: false
+
+      xAxis: {
+        categories: infocreated,
+        gridLineColor: '#000'
+      }
+
+      yAxis: {
+        categories: ["No", "Yes", ""],
+        gridLineColor: '#fff',
+        gridLineWidth: 1,
+        max: 1,
+        min: 0
+      }
+
+      series: [data: myinfo   ]
 
 # this is for primary goals
 $(".primarygoals").on "click", "i.chartbutton", ->

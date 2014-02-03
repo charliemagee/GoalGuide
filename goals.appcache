@@ -2,7 +2,6 @@ CACHE MANIFEST
 mobile.goals.php
 js/mobile.main.js
 js/offline.min.js
-js/vendor/device.min.js
 css/mobile.main.css
 css/normalize.css
 css/fonts/fonts.css

@@ -7,15 +7,6 @@
     <meta name="description" content="">
     <meta http-equiv="cleartype" content="on">
 
-    <!-- For device.js -->
-    <link rel="alternate" href="goals.php" id="desktop"
-          media="only screen and (touch-enabled: 0)">
-    <link rel="alternate" href="mobile.goals.php" id="phone"
-          media="only screen and (max-device-width: 640px)">
-    <link rel="alternate" href="goals.php" id="tablet"
-          media="only screen and (min-device-width: 641px)">
-
-
     <meta name="apple-mobile-web-app-capable" content="yes" />
 
     <!-- Mobile viewport optimized: h5bp.com/viewport -->
@@ -31,7 +22,7 @@
     <link rel="stylesheet" type="text/css" href="css/fonts/fonts.css" />
     <link rel="stylesheet" type="text/css" href="css/fonts/icomoon.css" />
     <link rel="stylesheet" href="css/mobile.main.css">
-    <script src="js/vendor/device.min.js"></script>
+
 </head>
 <body>
 

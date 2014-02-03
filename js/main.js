@@ -658,10 +658,11 @@ $(".goalsinprogress").delegate("input[type=checkbox]", "click", function() {
       if (goal.goal.goalguid === goalguid) {
         if (goal.goal.infotype === 'text') {
           goal.goal.myinfo.push(newinfo);
-          goal.goal.infocreated.push(mygoaldate);
+        } else {
+          goal.goal.myinfo.push(1);
         }
+        goal.goal.infocreated.push(mygoaldate);
         goal.goal.status = updateStatus;
-        goal.goal.datecompleted = mygoaldate;
         goalmessage = firstname + ' has completed this goal: ' + goal.goal.goal;
         localStorage.setItem("goalmessage", JSON.stringify(goalmessage));
         return false;
@@ -824,30 +825,33 @@ $(".primarygoals").delegate("input[type=checkbox]", "click", function() {
         if (primarygoal.primarygoal.subA.goalguid === goalguid) {
           if (primarygoal.primarygoal.subA.infotype === 'text') {
             primarygoal.primarygoal.subA.myinfo.push(newinfo);
-            primarygoal.primarygoal.subA.infocreated.push(mygoaldate);
+          } else {
+            primarygoal.primarygoal.subA.myinfo.push(1);
           }
+          primarygoal.primarygoal.subA.infocreated.push(mygoaldate);
           primarygoal.primarygoal.subA.status = updateStatus;
-          primarygoal.primarygoal.subA.datecompleted = mygoaldate;
           goalmessage = firstname + ' has completed this goal: ' + primarygoal.primarygoal.subA.goal;
           localStorage.setItem("goalmessage", JSON.stringify(goalmessage));
           return false;
         } else if (primarygoal.primarygoal.subB.goalguid === goalguid) {
           if (primarygoal.primarygoal.subB.infotype === 'text') {
             primarygoal.primarygoal.subB.myinfo.push(newinfo);
-            primarygoal.primarygoal.subB.infocreated.push(mygoaldate);
+          } else {
+            primarygoal.primarygoal.subB.myinfo.push(newinfo);
           }
+          primarygoal.primarygoal.subB.infocreated.push(mygoaldate);
           primarygoal.primarygoal.subB.status = updateStatus;
-          primarygoal.primarygoal.subB.datecompleted = mygoaldate;
           goalmessage = firstname + ' has completed this goal: ' + primarygoal.primarygoal.subB.goal;
           localStorage.setItem("goalmessage", JSON.stringify(goalmessage));
           return false;
         } else if (primarygoal.primarygoal.subC.goalguid === goalguid) {
           if (primarygoal.primarygoal.subC.infotype === 'text') {
             primarygoal.primarygoal.subC.myinfo.push(newinfo);
-            primarygoal.primarygoal.subC.infocreated.push(mygoaldate);
+          } else {
+            primarygoal.primarygoal.subC.myinfo.push(newinfo);
           }
+          primarygoal.primarygoal.subC.infocreated.push(mygoaldate);
           primarygoal.primarygoal.subC.status = updateStatus;
-          primarygoal.primarygoal.subC.datecompleted = mygoaldate;
           goalmessage = firstname + ' has completed this goal: ' + primarygoal.primarygoal.subC.goal;
           localStorage.setItem("goalmessage", JSON.stringify(goalmessage));
           return false;
@@ -1006,24 +1010,58 @@ $(".goalscompleted").on("click", "i.chartbutton", function() {
   infocreated = $(this).data('infocreated');
   myinfo = $(this).data('myinfo');
   mytitle = $(this).data('goal');
-  $(function() {});
-  return $("#thischart").highcharts({
-    chart: {},
-    title: {
-      text: mytitle
-    },
-    legend: {
-      enabled: false
-    },
-    xAxis: {
-      categories: infocreated
-    },
-    series: [
-      {
-        data: myinfo
-      }
-    ]
-  });
+  if ($(this).closest('li').data('info') === "text") {
+    $(function() {});
+    return $("#thischart").highcharts({
+      chart: {},
+      title: {
+        text: mytitle
+      },
+      legend: {
+        enabled: false
+      },
+      xAxis: {
+        categories: infocreated
+      },
+      yAxis: {
+        minRange: 5
+      },
+      series: [
+        {
+          data: myinfo
+        }
+      ]
+    });
+  } else {
+    $(function() {});
+    return $("#thischart").highcharts({
+      chart: {
+        type: 'area'
+      },
+      title: {
+        text: mytitle
+      },
+      legend: {
+        enabled: false
+      },
+      xAxis: {
+        categories: infocreated,
+        gridLineColor: '#000'
+      },
+      yAxis: {
+        categories: ["No", "Yes", ""],
+        gridLineColor: '#fff',
+        gridLineWidth: 1,
+        max: 1,
+        min: 0
+      },
+      series: [
+        {
+          data: myinfo
+        }
+      ]
+    });
+  }
 });
 
 $(".primarygoals").on("click", "i.chartbutton", function() {

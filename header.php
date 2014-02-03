@@ -27,7 +27,16 @@
     <link rel="stylesheet" type="text/css" href="css/fonts/fonts.css" />
     <link rel="stylesheet" type="text/css" href="css/fonts/icomoon.css" />
     <link rel="stylesheet" href="css/main.css">
+    <!-- All JavaScript at the bottom, except Device.js and this Modernizr build incl. Respond.js
+     Respond is a polyfill for min/max-width media queries. Modernizr enables HTML5 elements & feature detects;
+     for optimal performance, create your own custom Modernizr build: www.modernizr.com/download/ -->
+<!--    <script src="js/modernizr-2.6.1.min.js"></script>-->
     <script src="js/vendor/device.min.js"></script>
+    <script>
+        if (device.mobile()) {
+            window.location.href = 'http://www.cognitopia.com/goalguide/mobile.goals.php';
+        }
+    </script>
 </head>
 <body>
 
