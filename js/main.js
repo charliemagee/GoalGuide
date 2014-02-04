@@ -1036,7 +1036,7 @@ $(".goalscompleted").on("click", "i.chartbutton", function() {
     $(function() {});
     return $("#thischart").highcharts({
       chart: {
-        type: 'area'
+        type: 'line'
       },
       title: {
         text: mytitle
@@ -1078,24 +1078,58 @@ $(".primarygoals").on("click", "i.chartbutton", function() {
   infocreated = $(this).data('infocreated');
   myinfo = $(this).data('myinfo');
   mytitle = $(this).data('goal');
-  $(function() {});
-  return $("#thischart").highcharts({
-    chart: {},
-    title: {
-      text: mytitle
-    },
-    legend: {
-      enabled: false
-    },
-    xAxis: {
-      categories: infocreated
-    },
-    series: [
-      {
-        data: myinfo
-      }
-    ]
-  });
+  if ($(this).closest('li').data('info') === "text") {
+    $(function() {});
+    return $("#thischart").highcharts({
+      chart: {},
+      title: {
+        text: mytitle
+      },
+      legend: {
+        enabled: false
+      },
+      xAxis: {
+        categories: infocreated
+      },
+      yAxis: {
+        minRange: 5
+      },
+      series: [
+        {
+          data: myinfo
+        }
+      ]
+    });
+  } else {
+    $(function() {});
+    return $("#thischart").highcharts({
+      chart: {
+        type: 'line'
+      },
+      title: {
+        text: mytitle
+      },
+      legend: {
+        enabled: false
+      },
+      xAxis: {
+        categories: infocreated,
+        gridLineColor: '#000'
+      },
+      yAxis: {
+        categories: ["No", "Yes", ""],
+        gridLineColor: '#fff',
+        gridLineWidth: 1,
+        max: 1,
+        min: 0
+      },
+      series: [
+        {
+          data: myinfo
+        }
+      ]
+    });
+  }
 });
 
 $('.hidechart').click(function() {

@@ -953,7 +953,7 @@ $(".goalscompleted").on "click", "i.chartbutton", ->
     $ ->
     $("#thischart").highcharts
       chart: {
-        type: 'area'
+        type: 'line'
       },
 
       title:
@@ -992,20 +992,51 @@ $(".primarygoals").on "click", "i.chartbutton", ->
   infocreated = $(this).data('infocreated')
   myinfo = $(this).data('myinfo')
   mytitle = $(this).data('goal')
-  $ ->
-  $("#thischart").highcharts
-    chart: {}
+  if $(this).closest('li').data('info') == "text"
+    $ ->
+    $("#thischart").highcharts
+      chart: {}
 
-    title:
-      text: mytitle
+      title:
+        text: mytitle
 
-    legend:
-      enabled: false
+      legend:
+        enabled: false
 
-    xAxis:
-      categories: infocreated
+      xAxis:
+        categories: infocreated
 
-    series: [data: myinfo   ]
+      yAxis:
+        minRange: 5
+
+      series: [data: myinfo   ]
+  else
+    $ ->
+    $("#thischart").highcharts
+      chart: {
+        type: 'line'
+      },
+
+      title:
+        text: mytitle
+
+      legend:
+        enabled: false
+
+      xAxis: {
+        categories: infocreated,
+        gridLineColor: '#000'
+      }
+
+      yAxis: {
+        categories: ["No", "Yes", ""],
+        gridLineColor: '#fff',
+        gridLineWidth: 1,
+        max: 1,
+        min: 0
+      }
+
+      series: [data: myinfo   ]
 
 
 $('.hidechart').click ->

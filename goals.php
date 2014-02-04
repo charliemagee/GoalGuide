@@ -986,7 +986,7 @@ require_once("header.php");
 
         </div>
         <div class="modal-footer">
-            <!--                <p class="small">This window remains open after saving so that you can quickly create another item.</p>-->
+
         </div>
         </div>
 

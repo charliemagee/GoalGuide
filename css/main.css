@@ -2821,12 +2821,12 @@ input[type="submit"].btn {
 
 .modal {
   position: fixed;
-  top: 40%;
+  top: 0;
   left: 44%;
   z-index: 1050;
   overflow: auto;
   width: 700px;
-  margin: -313px 0 0 -280px;
+  margin: 50px 0 0 -15%;
   background-color: white;
   border: 1px solid #999;
   border: 1px solid rgba(0, 0, 0, 0.3);
@@ -2848,7 +2848,7 @@ input[type="submit"].btn {
     transition: opacity 0.1s linear, top 0.1s ease-out;
     top: -25%; }
   .modal.fade.in {
-    top: 40%; }
+    top: 0; }
 
 .modal-header {
   padding: 9px 15px;
