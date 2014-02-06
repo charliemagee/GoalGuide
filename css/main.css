@@ -4311,6 +4311,9 @@ ul#listheader li.listheadernotifications, .notifications {
 .primaryremove {
   padding: 0 6px; }
 
+#savegoal, #updategoal {
+  display: none; }
+
 #addgoalform, #adduserform {
   display: none;
   margin-bottom: 20px; }

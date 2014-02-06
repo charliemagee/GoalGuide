@@ -122,17 +122,12 @@ $('#loginbutton').click ->
 
 loadmyFiles = ->
   $('#logout').show()
-  console.log 'inside the function'
   username = localStorage.getItem("username")
   $.getJSON username + "user.json", (data) ->
     localStorage.setItem "user", JSON.stringify(data)
     user = JSON.parse(localStorage.getItem("user"))
-    console.log user
     notify = user.notify
-    console.log 'loading files'
-    console.log 'notify'
     firstname = user.firstname
-    console.log 'firstname'
     localStorage.setItem "firstname", firstname
     localStorage.setItem "notify", notify
     localStorage.removeItem("user")
@@ -335,16 +330,14 @@ $(".users").delegate "li > span.username", "click", ->
     displayprimaryGoals()
 
 $('#addgoal').click ->
+  $("#updategoal").hide()
+  $("#savegoal").show()
   $("#addgoalform").show()
-  $("#adduser").show()
-  $("#adduserform").hide()
   $("#addprimarygoalform").hide()
 
 $('#addprimarygoal').click ->
   $("#addprimarygoalform").show()
   $("#addgoalform").hide()
-  $("#adduser").show()
-  $("#adduserform").hide()
 
 $('.sologoal').click ->
   $('.primarycategory').hide()
@@ -482,7 +475,7 @@ displayMyGoalList = ->
         goal.goal.status = 'missed'
       if (goal.goal.status is 'completed')
         completedHTML.push """<li class='#{ goal.goal.status }' data-info='#{ goal.goal.infotype }' data-goalguid='#{ goal.goal.goalguid }' data-incentivetext='#{ goal.goal.incentivetext }' data-incentivepic='#{ goal.goal.incentivepic }' >
-                          <span class='goaltitle'><i class='fa-large icon-#{ goal.goal.icon }'></i>#{ goal.goal.goal }</span>
+                          <span class='goaltitle'><i class='fa-large icon-#{ goal.goal.icon }'></i><a href="#createModal" role="button" data-toggle="modal">#{ goal.goal.goal }</a></span>
                           <span class='goaldeadline'>#{ goal.goal.deadline }</span>
                           <span class='goalremove'><button type='button' class='btn btn-mini btn-danger removegoal'><b>X</b></button></span>
                           <span class='goalstatus' data-goal='#{ goal.goal.goal }' ><input type='checkbox' checked/></span>
@@ -491,28 +484,28 @@ displayMyGoalList = ->
       else if (goal.goal.status is "inprogress")
         if (goal.goal.infotype is 'text')
           inprogressHTML.push """<li class='#{ goal.goal.status }' data-info='#{ goal.goal.infotype }' data-goalguid='#{ goal.goal.goalguid }' data-incentivetext='#{ goal.goal.incentivetext }' data-incentivepic='#{ goal.goal.incentivepic }' >
-                          <span class='goaltitle'><i class='fa-large icon-#{ goal.goal.icon }'></i>#{ goal.goal.goal }</span>
+                          <span class='goaltitle'><i class='fa-large icon-#{ goal.goal.icon }'></i><a href="#createModal" role="button" data-toggle="modal">#{ goal.goal.goal }</a></span>
                           <span class='goaldeadline'>#{ goal.goal.deadline }</span>
                           <span class='goalremove'><button type='button' class='btn btn-mini btn-danger removegoal' ><b>X</b></button></span>
                           <span class='goalstatus' data-goal='#{ goal.goal.goal }' data-complete='#{ goal.goal.completedmessage }'><input type='checkbox' /></span>
                           <span class='gatherinfo'><input type='text' name='info' class='info'/></span></li>"""
         else
           inprogressHTML.push """<li class='#{ goal.goal.status }' data-info='#{ goal.goal.infotype }' data-goalguid='#{ goal.goal.goalguid }' data-incentivetext='#{ goal.goal.incentivetext }' data-incentivepic='#{ goal.goal.incentivepic }' >
-                          <span class='goaltitle'><i class='fa-large icon-#{ goal.goal.icon }'></i>#{ goal.goal.goal }</span>
+                          <span class='goaltitle'><i class='fa-large icon-#{ goal.goal.icon }'></i><a href="#createModal" role="button" data-toggle="modal">#{ goal.goal.goal }</a></span>
                           <span class='goaldeadline'>#{ goal.goal.deadline }</span>
                           <span class='goalremove'><button type='button' class='btn btn-mini btn-danger removegoal' ><b>X</b></button></span>
                           <span class='goalstatus' data-goal='#{ goal.goal.goal }' data-complete='#{ goal.goal.completedmessage }'><input type='checkbox' /></span></li>"""
       else
         if (goal.goal.infotype is 'text')
           missedHTML.push """<li class='#{ goal.goal.status }' data-info='#{ goal.goal.infotype }' data-goalguid='#{ goal.goal.goalguid }' >
-                          <span class='goaltitle'><i class='fa-large icon-#{ goal.goal.icon }'></i>#{ goal.goal.goal }</span>
+                          <span class='goaltitle'><i class='fa-large icon-#{ goal.goal.icon }'></i><a href="#createModal" role="button" data-toggle="modal">#{ goal.goal.goal }</a></span>
                           <span class='goaldeadline'>#{ goal.goal.deadline }</span>
                           <span class='goalremove'><button type='button' class='btn btn-mini btn-danger removegoal' ><b>X</b></button></span>
                           <span class='goalstatus' data-goal='#{ goal.goal.goal }'><input type='checkbox' /></span>
                           <span class='gatherinfo'><input type='text' name='info' class='info'/></span></li>"""
         else
           missedHTML.push """<li class='#{ goal.goal.status }' data-info='#{ goal.goal.infotype }' data-goalguid='#{ goal.goal.goalguid }' >
-                          <span class='goaltitle'><i class='fa-large icon-#{ goal.goal.icon }'></i>#{ goal.goal.goal }</span>
+                          <span class='goaltitle'><i class='fa-large icon-#{ goal.goal.icon }'></i><a href="#createModal" role="button" data-toggle="modal">#{ goal.goal.goal }</a></span>
                           <span class='goaldeadline'>#{ goal.goal.deadline }</span>
                           <span class='goalremove'><button type='button' class='btn btn-mini btn-danger removegoal' ><b>X</b></button></span>
                           <span class='goalstatus' data-goal='#{ goal.goal.goal }'><input type='checkbox' /></span></li>"""
@@ -578,6 +571,67 @@ $(".goalsmissed").delegate "input[type=checkbox]", "click", ->
       goal.goal.status = updateStatus
       false # break the each
   localStorage.setItem "goals", JSON.stringify(goals)
+  goalChange()
+  displayMyGoalList()
+
+$(".goalsection").delegate "a", "click", ->
+  $("#updategoal").show()
+  $("#savegoal").hide()
+  $("#addgoalform").show()
+  $("#addprimarygoalform").hide()
+  goalguid = $(this).closest('li').data("goalguid")
+  $("input[name=goalguid]").val([])
+  $.each goals, (index, goal) ->
+    if goal.goal.goalguid is goalguid
+      categoryforgoal = goal.goal.category
+      categoryforgoal = categoryforgoal.toLowerCase().replace(/\b[a-z]/g, (letter) ->
+        letter.toUpperCase()
+      )
+      $("#thecategory").val(categoryforgoal)
+      $("#thegoal").val(goal.goal.goal)
+      $("input[name=icon]").val([goal.goal.icon])
+      if goal.goal.infotype == 'text'
+        $("#theinfotype").prop('checked', true)
+      else
+        $("#theinfotype").prop('checked', false)
+      if goal.goal.recurring.length == 0
+        $("#therecurring").prop('checked', false)
+      else
+        $("#therecurring").prop('checked', true)
+        $('#daysoftheweek').toggle(this.checked)
+      days = goal.goal.recurring
+      for day in days
+        $("input[name=days][value=" + days[_i] + "]").prop('checked', true)
+      $("#thecomplete").val(goal.goal.completedmessage)
+      $("#thedeadline").val(goal.goal.deadline)
+      $("input[name=incentivepic]").val([goal.goal.incentivepic])
+      $("#theincentivetext").val(goal.goal.incentivetext)
+      $("input[name=goalguid]").val([goalguid])
+      false # break the each
+
+###
+this updates a goal when the user changes something like the goaltitle
+###
+$('#updategoal').click ->
+  daysOfWeek = $("input[name=days]:checked").map(->
+    $(this).val()
+  ).get()
+  $.each goals, (index, goal) ->
+    if goal.goal.goalguid is goalguid
+      goal.goal.category = $("#thecategory").val().toLowerCase()
+      goal.goal.goal = $("#thegoal").val()
+      goal.goal.icon = $("input[name=icon]:checked").val()
+      goal.goal.infotype = $("input[name=theinfotype]:checked").val()
+      goal.goal.recurring = daysOfWeek
+      goal.goal.completedmessage = $("#thecomplete").val()
+      goal.goal.deadline = $("#thedeadline").val()
+      goal.goal.incentivepic = $("input[name=incentivepic]:checked").val()
+      goal.goal.incentivetext = $("#theincentivetext").val()
+      false # break the each
+  localStorage.setItem "goals", JSON.stringify(goals)
+  $("#addgoalform").hide()
+  $("#daysoftheweek").hide()
+  $(".textempty").val('')
   goalChange()
   displayMyGoalList()
 

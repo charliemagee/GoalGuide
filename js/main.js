@@ -185,17 +185,12 @@ $('#loginbutton').click(function() {
 
 loadmyFiles = function() {
   $('#logout').show();
-  console.log('inside the function');
   username = localStorage.getItem("username");
   $.getJSON(username + "user.json", function(data) {
     localStorage.setItem("user", JSON.stringify(data));
     user = JSON.parse(localStorage.getItem("user"));
-    console.log(user);
     notify = user.notify;
-    console.log('loading files');
-    console.log('notify');
     firstname = user.firstname;
-    console.log('firstname');
     localStorage.setItem("firstname", firstname);
     localStorage.setItem("notify", notify);
     localStorage.removeItem("user");
@@ -430,17 +425,15 @@ $(".users").delegate("li > span.username", "click", function() {
 });
 
 $('#addgoal').click(function() {
+  $("#updategoal").hide();
+  $("#savegoal").show();
   $("#addgoalform").show();
-  $("#adduser").show();
-  $("#adduserform").hide();
   return $("#addprimarygoalform").hide();
 });
 
 $('#addprimarygoal').click(function() {
   $("#addprimarygoalform").show();
-  $("#addgoalform").hide();
-  $("#adduser").show();
-  return $("#adduserform").hide();
+  return $("#addgoalform").hide();
 });
 
 $('.sologoal').click(function() {
@@ -601,18 +594,18 @@ displayMyGoalList = function() {
         goal.goal.status = 'missed';
       }
       if (goal.goal.status === 'completed') {
-        return completedHTML.push("<li class='" + goal.goal.status + "' data-info='" + goal.goal.infotype + "' data-goalguid='" + goal.goal.goalguid + "' data-incentivetext='" + goal.goal.incentivetext + "' data-incentivepic='" + goal.goal.incentivepic + "' >\n<span class='goaltitle'><i class='fa-large icon-" + goal.goal.icon + "'></i>" + goal.goal.goal + "</span>\n<span class='goaldeadline'>" + goal.goal.deadline + "</span>\n<span class='goalremove'><button type='button' class='btn btn-mini btn-danger removegoal'><b>X</b></button></span>\n<span class='goalstatus' data-goal='" + goal.goal.goal + "' ><input type='checkbox' checked/></span>\n<span><i class='fa-large icon-stats chartbutton' data-infocreated='" + newinfocreated + "' data-myinfo='[" + goal.goal.myinfo + "]' data-goal='" + goal.goal.goal + "'></i></span></li>");
+        return completedHTML.push("<li class='" + goal.goal.status + "' data-info='" + goal.goal.infotype + "' data-goalguid='" + goal.goal.goalguid + "' data-incentivetext='" + goal.goal.incentivetext + "' data-incentivepic='" + goal.goal.incentivepic + "' >\n<span class='goaltitle'><i class='fa-large icon-" + goal.goal.icon + "'></i><a href=\"#createModal\" role=\"button\" data-toggle=\"modal\">" + goal.goal.goal + "</a></span>\n<span class='goaldeadline'>" + goal.goal.deadline + "</span>\n<span class='goalremove'><button type='button' class='btn btn-mini btn-danger removegoal'><b>X</b></button></span>\n<span class='goalstatus' data-goal='" + goal.goal.goal + "' ><input type='checkbox' checked/></span>\n<span><i class='fa-large icon-stats chartbutton' data-infocreated='" + newinfocreated + "' data-myinfo='[" + goal.goal.myinfo + "]' data-goal='" + goal.goal.goal + "'></i></span></li>");
       } else if (goal.goal.status === "inprogress") {
         if (goal.goal.infotype === 'text') {
-          return inprogressHTML.push("<li class='" + goal.goal.status + "' data-info='" + goal.goal.infotype + "' data-goalguid='" + goal.goal.goalguid + "' data-incentivetext='" + goal.goal.incentivetext + "' data-incentivepic='" + goal.goal.incentivepic + "' >\n<span class='goaltitle'><i class='fa-large icon-" + goal.goal.icon + "'></i>" + goal.goal.goal + "</span>\n<span class='goaldeadline'>" + goal.goal.deadline + "</span>\n<span class='goalremove'><button type='button' class='btn btn-mini btn-danger removegoal' ><b>X</b></button></span>\n<span class='goalstatus' data-goal='" + goal.goal.goal + "' data-complete='" + goal.goal.completedmessage + "'><input type='checkbox' /></span>\n<span class='gatherinfo'><input type='text' name='info' class='info'/></span></li>");
+          return inprogressHTML.push("<li class='" + goal.goal.status + "' data-info='" + goal.goal.infotype + "' data-goalguid='" + goal.goal.goalguid + "' data-incentivetext='" + goal.goal.incentivetext + "' data-incentivepic='" + goal.goal.incentivepic + "' >\n<span class='goaltitle'><i class='fa-large icon-" + goal.goal.icon + "'></i><a href=\"#createModal\" role=\"button\" data-toggle=\"modal\">" + goal.goal.goal + "</a></span>\n<span class='goaldeadline'>" + goal.goal.deadline + "</span>\n<span class='goalremove'><button type='button' class='btn btn-mini btn-danger removegoal' ><b>X</b></button></span>\n<span class='goalstatus' data-goal='" + goal.goal.goal + "' data-complete='" + goal.goal.completedmessage + "'><input type='checkbox' /></span>\n<span class='gatherinfo'><input type='text' name='info' class='info'/></span></li>");
         } else {
-          return inprogressHTML.push("<li class='" + goal.goal.status + "' data-info='" + goal.goal.infotype + "' data-goalguid='" + goal.goal.goalguid + "' data-incentivetext='" + goal.goal.incentivetext + "' data-incentivepic='" + goal.goal.incentivepic + "' >\n<span class='goaltitle'><i class='fa-large icon-" + goal.goal.icon + "'></i>" + goal.goal.goal + "</span>\n<span class='goaldeadline'>" + goal.goal.deadline + "</span>\n<span class='goalremove'><button type='button' class='btn btn-mini btn-danger removegoal' ><b>X</b></button></span>\n<span class='goalstatus' data-goal='" + goal.goal.goal + "' data-complete='" + goal.goal.completedmessage + "'><input type='checkbox' /></span></li>");
+          return inprogressHTML.push("<li class='" + goal.goal.status + "' data-info='" + goal.goal.infotype + "' data-goalguid='" + goal.goal.goalguid + "' data-incentivetext='" + goal.goal.incentivetext + "' data-incentivepic='" + goal.goal.incentivepic + "' >\n<span class='goaltitle'><i class='fa-large icon-" + goal.goal.icon + "'></i><a href=\"#createModal\" role=\"button\" data-toggle=\"modal\">" + goal.goal.goal + "</a></span>\n<span class='goaldeadline'>" + goal.goal.deadline + "</span>\n<span class='goalremove'><button type='button' class='btn btn-mini btn-danger removegoal' ><b>X</b></button></span>\n<span class='goalstatus' data-goal='" + goal.goal.goal + "' data-complete='" + goal.goal.completedmessage + "'><input type='checkbox' /></span></li>");
         }
       } else {
         if (goal.goal.infotype === 'text') {
-          return missedHTML.push("<li class='" + goal.goal.status + "' data-info='" + goal.goal.infotype + "' data-goalguid='" + goal.goal.goalguid + "' >\n<span class='goaltitle'><i class='fa-large icon-" + goal.goal.icon + "'></i>" + goal.goal.goal + "</span>\n<span class='goaldeadline'>" + goal.goal.deadline + "</span>\n<span class='goalremove'><button type='button' class='btn btn-mini btn-danger removegoal' ><b>X</b></button></span>\n<span class='goalstatus' data-goal='" + goal.goal.goal + "'><input type='checkbox' /></span>\n<span class='gatherinfo'><input type='text' name='info' class='info'/></span></li>");
+          return missedHTML.push("<li class='" + goal.goal.status + "' data-info='" + goal.goal.infotype + "' data-goalguid='" + goal.goal.goalguid + "' >\n<span class='goaltitle'><i class='fa-large icon-" + goal.goal.icon + "'></i><a href=\"#createModal\" role=\"button\" data-toggle=\"modal\">" + goal.goal.goal + "</a></span>\n<span class='goaldeadline'>" + goal.goal.deadline + "</span>\n<span class='goalremove'><button type='button' class='btn btn-mini btn-danger removegoal' ><b>X</b></button></span>\n<span class='goalstatus' data-goal='" + goal.goal.goal + "'><input type='checkbox' /></span>\n<span class='gatherinfo'><input type='text' name='info' class='info'/></span></li>");
         } else {
-          return missedHTML.push("<li class='" + goal.goal.status + "' data-info='" + goal.goal.infotype + "' data-goalguid='" + goal.goal.goalguid + "' >\n<span class='goaltitle'><i class='fa-large icon-" + goal.goal.icon + "'></i>" + goal.goal.goal + "</span>\n<span class='goaldeadline'>" + goal.goal.deadline + "</span>\n<span class='goalremove'><button type='button' class='btn btn-mini btn-danger removegoal' ><b>X</b></button></span>\n<span class='goalstatus' data-goal='" + goal.goal.goal + "'><input type='checkbox' /></span></li>");
+          return missedHTML.push("<li class='" + goal.goal.status + "' data-info='" + goal.goal.infotype + "' data-goalguid='" + goal.goal.goalguid + "' >\n<span class='goaltitle'><i class='fa-large icon-" + goal.goal.icon + "'></i><a href=\"#createModal\" role=\"button\" data-toggle=\"modal\">" + goal.goal.goal + "</a></span>\n<span class='goaldeadline'>" + goal.goal.deadline + "</span>\n<span class='goalremove'><button type='button' class='btn btn-mini btn-danger removegoal' ><b>X</b></button></span>\n<span class='goalstatus' data-goal='" + goal.goal.goal + "'><input type='checkbox' /></span></li>");
         }
       }
     }
@@ -690,6 +683,80 @@ $(".goalsmissed").delegate("input[type=checkbox]", "click", function() {
     }
   });
   localStorage.setItem("goals", JSON.stringify(goals));
+  goalChange();
+  return displayMyGoalList();
+});
+
+$(".goalsection").delegate("a", "click", function() {
+  $("#updategoal").show();
+  $("#savegoal").hide();
+  $("#addgoalform").show();
+  $("#addprimarygoalform").hide();
+  goalguid = $(this).closest('li').data("goalguid");
+  $("input[name=goalguid]").val([]);
+  return $.each(goals, function(index, goal) {
+    var categoryforgoal, day, days, _i, _len;
+    if (goal.goal.goalguid === goalguid) {
+      categoryforgoal = goal.goal.category;
+      categoryforgoal = categoryforgoal.toLowerCase().replace(/\b[a-z]/g, function(letter) {
+        return letter.toUpperCase();
+      });
+      $("#thecategory").val(categoryforgoal);
+      $("#thegoal").val(goal.goal.goal);
+      $("input[name=icon]").val([goal.goal.icon]);
+      if (goal.goal.infotype === 'text') {
+        $("#theinfotype").prop('checked', true);
+      } else {
+        $("#theinfotype").prop('checked', false);
+      }
+      if (goal.goal.recurring.length === 0) {
+        $("#therecurring").prop('checked', false);
+      } else {
+        $("#therecurring").prop('checked', true);
+        $('#daysoftheweek').toggle(this.checked);
+      }
+      days = goal.goal.recurring;
+      for (_i = 0, _len = days.length; _i < _len; _i++) {
+        day = days[_i];
+        $("input[name=days][value=" + days[_i] + "]").prop('checked', true);
+      }
+      $("#thecomplete").val(goal.goal.completedmessage);
+      $("#thedeadline").val(goal.goal.deadline);
+      $("input[name=incentivepic]").val([goal.goal.incentivepic]);
+      $("#theincentivetext").val(goal.goal.incentivetext);
+      $("input[name=goalguid]").val([goalguid]);
+      return false;
+    }
+  });
+});
+
+/*
+this updates a goal when the user changes something like the goaltitle
+*/
+
+
+$('#updategoal').click(function() {
+  daysOfWeek = $("input[name=days]:checked").map(function() {
+    return $(this).val();
+  }).get();
+  $.each(goals, function(index, goal) {
+    if (goal.goal.goalguid === goalguid) {
+      goal.goal.category = $("#thecategory").val().toLowerCase();
+      goal.goal.goal = $("#thegoal").val();
+      goal.goal.icon = $("input[name=icon]:checked").val();
+      goal.goal.infotype = $("input[name=theinfotype]:checked").val();
+      goal.goal.recurring = daysOfWeek;
+      goal.goal.completedmessage = $("#thecomplete").val();
+      goal.goal.deadline = $("#thedeadline").val();
+      goal.goal.incentivepic = $("input[name=incentivepic]:checked").val();
+      goal.goal.incentivetext = $("#theincentivetext").val();
+      return false;
+    }
+  });
+  localStorage.setItem("goals", JSON.stringify(goals));
+  $("#addgoalform").hide();
+  $("#daysoftheweek").hide();
+  $(".textempty").val('');
   goalChange();
   return displayMyGoalList();
 });

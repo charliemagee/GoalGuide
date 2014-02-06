@@ -285,25 +285,25 @@ require_once("header.php");
             <label class="control-label" for="thedaysoftheweek">Which Days:</label>
             <div class="controls" name="thedaysoftheweek">
                 <label class="checkbox inline">
-                    <input type="checkbox" name="days" id="inlineCheckbox1" value="1"> Mon
+                    <input type="checkbox" name="days" value="1"> Mon
                 </label>
                 <label class="checkbox inline">
-                    <input type="checkbox" name="days" id="inlineCheckbox2" value="2"> Tue
+                    <input type="checkbox" name="days" value="2"> Tue
                 </label>
                 <label class="checkbox inline">
-                    <input type="checkbox" name="days" id="inlineCheckbox3" value="3"> Wed
+                    <input type="checkbox" name="days" value="3"> Wed
                 </label>
                 <label class="checkbox inline">
-                    <input type="checkbox" name="days" id="inlineCheckbox1" value="4"> Thu
+                    <input type="checkbox" name="days" value="4"> Thu
                 </label>
                 <label class="checkbox inline">
-                    <input type="checkbox" name="days" id="inlineCheckbox2" value="5"> Fri
+                    <input type="checkbox" name="days" value="5"> Fri
                 </label>
                 <label class="checkbox inline">
-                    <input type="checkbox" name="days" id="inlineCheckbox3" value="6"> Sat
+                    <input type="checkbox" name="days" value="6"> Sat
                 </label>
                 <label class="checkbox inline">
-                    <input type="checkbox" name="days" id="inlineCheckbox3" value="0"> Sun
+                    <input type="checkbox" name="days" value="0"> Sun
                 </label>
             </div>
         </div>
@@ -340,19 +340,21 @@ require_once("header.php");
                     </li>
                     <li>
                         <label class="radio">
-                            <input type="radio" name="incentivepic" value="images/ps4-sm.jpg"><img src="images/ps4-sm.jpg" class="thumbnail">
+                            <input type="radio" name="incentivepic" value="images/ps4.jpg"><img src="images/ps4-sm.jpg" class="thumbnail">
                         </label>
                     </li>
                     <li>
                         <label class="radio">
-                            <input type="radio" name="incentivepic" value="images/pizza-sm.jpg"><img src="images/pizza-sm.jpg" class="thumbnail">
+                            <input type="radio" name="incentivepic" value="images/pizza.jpg"><img src="images/pizza-sm.jpg" class="thumbnail">
                         </label>
                     </li>
                 </ul>
             </div>
         </div>
+        <input type="hidden" name="goalguid" value="">
         <div class="savinggoals push-right-savegoal">
             <button type="button" id="savegoal" data-dismiss="modal" class="btn btn-success btn-medium"><i class="fa-large icon-checkmark" ></i>&nbsp;&nbsp;Save Goal</a></button>
+            <button type="button" id="updategoal" data-dismiss="modal" class="btn btn-success btn-medium"><i class="fa-large icon-checkmark" ></i>&nbsp;&nbsp;Update Goal</a></button>
             <button type="button" id="savegoalcancel"  data-dismiss="modal" class="btn btn-danger btn-medium"><i class="fa-large icon-remove" ></i>&nbsp;&nbsp;Cancel</a></button>
         </div>
         </form>
