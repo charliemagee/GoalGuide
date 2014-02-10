@@ -56,6 +56,7 @@ require_once("header.php");
                 <li class="listheaderremove">Delete</li>
                 <li class="listheaderstatus">Completed?</li>
                 <li class="listheadergatherinfo">Data</li>
+                <li class="listheaderchart">Chart</li>
             </ul>
             <div class="clearfix"></div>
             <ul class="goalsinprogress goalsection">
@@ -75,6 +76,7 @@ require_once("header.php");
                 <li class="listheaderremove">Delete</li>
                 <li class="listheaderstatus">Completed?</li>
                 <li class="listheadergatherinfo">Data</li>
+                <li class="listheaderchart">Chart</li>
             </ul>
             <div class="clearfix"></div>
             <ul class="primarygoals">
