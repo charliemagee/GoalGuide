@@ -690,6 +690,8 @@ $(".goalsmissed").delegate("input[type=checkbox]", "click", function() {
 $(".goalsection").delegate("a", "click", function() {
   $("#updategoal").show();
   $("#savegoal").hide();
+  $(".detailsLabelupdate").show();
+  $(".detailsLabel").hide();
   $("#addgoalform").show();
   $("#addprimarygoalform").hide();
   goalguid = $(this).closest('li').data("goalguid");
@@ -756,6 +758,8 @@ $('#updategoal').click(function() {
   localStorage.setItem("goals", JSON.stringify(goals));
   $("#addgoalform").hide();
   $("#daysoftheweek").hide();
+  $(".detailsLabelupdate").hide();
+  $(".detailsLabel").show();
   $(".textempty").val('');
   goalChange();
   return displayMyGoalList();

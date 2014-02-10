@@ -4093,6 +4093,9 @@ textarea {
   font-family: 'AmaranthBold', Arial, sans-serif;
   text-align: center; }
 
+.detailsLabelupdate {
+  display: none; }
+
 .push-right {
   margin-left: 20px; }
 

@@ -212,7 +212,9 @@ $red-light: #f6d3d3;
   font-family: 'AmaranthBold', Arial, sans-serif;
   text-align: center;
 }
-
+.detailsLabelupdate {
+  display: none;
+}
 // --- position tweaks ---------------------
 .push-right {
   margin-left: 20px;

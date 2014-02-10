@@ -105,6 +105,7 @@ require_once("header.php");
 
         <div id="addgoalform">
         <h3 class="detailsLabel">Create New Goal</h3>
+        <h3 class="detailsLabelupdate">Edit This Goal</h3>
         <form class="form-horizontal">
         <div class="control-group">
             <label class="control-label" for="thecategory">Category</label>
