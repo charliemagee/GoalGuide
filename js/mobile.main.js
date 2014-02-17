@@ -601,7 +601,7 @@ $('#modalclose').click(function() {
 */
 
 
-$(".goalscompleted").on("click", "i.chartbutton", function() {
+$(".goalsection").on("click", "i.chartbutton", function() {
   $("#chartbox").show();
   $("#incentivebox").css('top', -10);
   $("#incentivebox").css('right', 25);

@@ -532,7 +532,7 @@ $('#modalclose').click ->
   let's build a chart
 ###
 # this is for regular goals
-$(".goalscompleted").on "click", "i.chartbutton", ->
+$(".goalsection").on "click", "i.chartbutton", ->
   $("#chartbox").show()
   $("#incentivebox").css('top', -10)
   $("#incentivebox").css('right', 25)
