@@ -147,6 +147,7 @@ loadmyFiles = ->
     localStorage.setItem "firstname", capfirstname
     localStorage.setItem "notify", notify
     localStorage.removeItem("user")
+    localStorage.removeItem("users")
 
   $.getJSON username + "primary.json", (data) ->
     localStorage.setItem "primarygoals", JSON.stringify(data)
@@ -171,13 +172,11 @@ $('#home').click ->
   $('#school').removeClass('currentmenu')
   $('#work').removeClass('currentmenu')
   $('#personal').removeClass('currentmenu')
-  $('#home').addClass('currentmenu')
-  $('#home').siblings.removeClass('currentmenu')
+  $('#goalscontainer').hide()
   if localStorage.getItem('username') != null
     $('#logout').show()
   else
     $('#checkid').show()
-  $('#goalscontainer').hide()
 
 $('#school').click ->
   $('#home').removeClass('currentmenu')
@@ -354,82 +353,221 @@ displayprimaryGoals = ->
   $.each primarygoals, (index, primarygoal) ->
     if (primarygoal.primarygoal.category == goalCategory)
       primaryGoalsHTML.push """<li class='parent'  data-goalguid='#{ primarygoal.primarygoal.goalguid }' >
-            <div class='leftcol'><span class='goalicon'><i class='fa-medium icon-#{ primarygoal.primarygoal.icon }'></i></span></div>
-            <div class='middlecol'><span class='goaltitle'>#{ primarygoal.primarygoal.goal }</span></div>
-            <div class='rightcol'></div></li>"""
+            <div class='goalupper'>
+               <span class='goalicon'><i class='fa-medium details icon-#{ primarygoal.primarygoal.icon }'></i></span>
+               <span class='goaltitle'>#{ primarygoal.primarygoal.goal }</span>
+            </div></li>"""
       if (primarygoal.primarygoal.subA.status == 'completed')
         newinfocreated = JSON.stringify(primarygoal.primarygoal.subA.infocreated)
         (primarygoal.primarygoal.subA.infotype == 'text')
-        primaryGoalsHTML.push """<li class='#{ primarygoal.primarygoal.subA.status } sub' data-info='#{ primarygoal.primarygoal.subA.infotype }' data-goalguid='#{ primarygoal.primarygoal.subA.goalguid }' data-incentivetext='#{ primarygoal.primarygoal.subA.incentivetext }' data-incentivepic='#{ primarygoal.primarygoal.subA.incentivepic }' >
-                        <div class='leftcol'><span class='goalicon'><i class='fa-medium icon-#{ primarygoal.primarygoal.subA.icon }'></i></span>
-                        <span><i class='fa-medium icon-stats chartbutton' data-infocreated='#{ newinfocreated }' data-myinfo='[#{ primarygoal.primarygoal.subA.myinfo }]' data-goal='#{ primarygoal.primarygoal.subA.goal }'></i></span></div>
-                        <div class='middlecol'><span class='goaltitle'>#{ primarygoal.primarygoal.subA.goal }<br/><span class='goaldeadline'>#{ primarygoal.primarygoal.subA.deadline }</span></span></div>
-                        <div class='rightcol'></div></li>"""
+        primaryGoalsHTML.push  """<li class='#{ primarygoal.primarygoal.subA.status } sub' data-info='#{ primarygoal.primarygoal.subA.infotype }' data-goalguid='#{ primarygoal.primarygoal.subA.goalguid }' data-infocreated='#{ newinfocreated }' data-myinfo='[#{ primarygoal.primarygoal.subA.myinfo }]' data-incentivetext='#{ primarygoal.primarygoal.subA.incentivetext }' data-incentivepic='#{ primarygoal.primarygoal.subA.incentivepic }' data-goal='#{ primarygoal.primarygoal.subA.goal }' data-complete='#{ primarygoal.primarygoal.subA.completedmessage }'>
+                          <div class='goalupper'>
+                            <span class='goalicon'><i class='fa-medium details icon-#{ primarygoal.primarygoal.subA.icon }'></i></span>
+                            <span class='goaltitle'>#{ primarygoal.primarygoal.subA.goal }</span>
+                            <span class='thechartbutton'><i class='fa-medium icon-stats chartbutton' ></i></span>
+                          </div>
+                          <div class='goallower'>
+                            <div class='control-group uncheckit' >
+                              <label class='control-label thequestion' for='completedquestion'>Did you complete this goal?</label>
+                              <div class='controls theanswer'>
+                                <label class='radio'>
+                                 <input type='radio' name='completedyes' value='true' checked /> Yes
+                                </label>
+                                <label class='radio'>
+                                 <input type='radio' name='completedno' value='false' /> No
+                                </label>
+                              </div>
+                            </div>
+                          </div></li>"""
       else if (primarygoal.primarygoal.subA.status == "inprogress")
         if (primarygoal.primarygoal.subA.infotype == 'text')
-          primaryGoalsHTML.push  """<li class='#{ primarygoal.primarygoal.subA.status } sub'  data-info='#{ primarygoal.primarygoal.subA.infotype }' data-goalguid='#{ primarygoal.primarygoal.subA.goalguid }' data-subB='subA' data-incentivetext='#{ primarygoal.primarygoal.subA.incentivetext }' data-incentivepic='#{ primarygoal.primarygoal.subA.incentivepic }' >
-                        <div class='leftcol'><span class='goalicon'><i class='fa-medium icon-#{ primarygoal.primarygoal.subA.icon }'></i></span>
-                        <span><i class='fa-medium icon-stats chartbutton' data-infocreated='#{ newinfocreated }' data-myinfo='[#{ primarygoal.primarygoal.subA.myinfo }]' data-goal='#{ primarygoal.primarygoal.subA.goal }'></i></span></div>
-                        <div class='middlecol'><span class='goaltitle'>#{ primarygoal.primarygoal.subA.goal }<br/><span class='goaldeadline'>#{ primarygoal.primarygoal.subA.deadline }</span></span></div>
-                        <div class='rightcol'><span class='gatherinfo'><input type='text' name='infoA' class='info'></span>
-                        <span class='goalstatus' data-goal='#{ primarygoal.primarygoal.subA.goal }' data-complete='#{ goal.completedmessage }'><input type='checkbox'/></span></div></li>"""
+          primaryGoalsHTML.push  """<li class='#{ primarygoal.primarygoal.subA.status } sub' data-info='#{ primarygoal.primarygoal.subA.infotype }' data-goalguid='#{ primarygoal.primarygoal.subA.goalguid }' data-infocreated='#{ newinfocreated }' data-myinfo='[#{ primarygoal.primarygoal.subA.myinfo }]' data-incentivetext='#{ primarygoal.primarygoal.subA.incentivetext }' data-incentivepic='#{ primarygoal.primarygoal.subA.incentivepic }' data-goal='#{ primarygoal.primarygoal.subA.goal }' data-complete='#{ primarygoal.primarygoal.subA.completedmessage }'>
+                          <div class='goalupper'>
+                            <span class='goalicon'><i class='fa-medium details icon-#{ primarygoal.primarygoal.subA.icon }'></i></span>
+                            <span class='goaltitle'>#{ primarygoal.primarygoal.subA.goal }</span>
+                            <span class='thechartbutton'><i class='fa-medium icon-stats chartbutton' ></i></span>
+                          </div>
+                          <div class='goallower'>
+                               <label class='gatherinfo'>
+                                 <input type='number' name='info' class='info' />&nbsp; Enter a number.
+                               </label>
+                            <div class='control-group uncheckit' >
+                              <label class='control-label thequestion' for='completedquestion'>Did you complete this goal?</label>
+                              <div class='controls theanswer'>
+                                <label class='radio'>
+                                 <input type='radio' name='completedyes' value='true' /> Yes
+                                </label>
+                                <label class='radio'>
+                                 <input type='radio' name='completedno' value='false' /> No
+                                </label>
+                              </div>
+                            </div>
+                            <span class='goaldeadline'>Deadline: #{ primarygoal.primarygoal.subA.deadline }</span>
+                          </div></li>"""
         else
-          primaryGoalsHTML.push """<li class='#{ primarygoal.primarygoal.subA.status } sub'  data-info='#{ primarygoal.primarygoal.subA.infotype }' data-goalguid='#{ primarygoal.primarygoal.subA.goalguid }' data-subB='subA' data-incentivetext='#{ primarygoal.primarygoal.subA.incentivetext }' data-incentivepic='#{ primarygoal.primarygoal.subA.incentivepic }' >
-                        <div class='leftcol'><span class='goalicon'><i class='fa-medium icon-#{ primarygoal.primarygoal.subA.icon }'></i></span>
-                        <span><i class='fa-medium icon-stats chartbutton' data-infocreated='#{ newinfocreated }' data-myinfo='[#{ primarygoal.primarygoal.subA.myinfo }]' data-goal='#{ primarygoal.primarygoal.subA.goal }'></i></span></div>
-                        <div class='middlecol'><span class='goaltitle'>#{ primarygoal.primarygoal.subA.goal }<br/><span class='goaldeadline'>#{ primarygoal.primarygoal.subA.deadline }</span></span></div>
-                        <div class='rightcol'><span class='goalstatus' data-goal='#{ primarygoal.primarygoal.subA.goal }' data-complete='#{ goal.completedmessage }'><input type='checkbox'/></span></div></li>"""
+          primaryGoalsHTML.push """<li class='#{ primarygoal.primarygoal.subA.status } sub' data-info='#{ primarygoal.primarygoal.subA.infotype }' data-goalguid='#{ primarygoal.primarygoal.subA.goalguid }' data-infocreated='#{ newinfocreated }' data-myinfo='[#{ primarygoal.primarygoal.subA.myinfo }]' data-incentivetext='#{ primarygoal.primarygoal.subA.incentivetext }' data-incentivepic='#{ primarygoal.primarygoal.subA.incentivepic }' data-goal='#{ primarygoal.primarygoal.subA.goal }' data-complete='#{ primarygoal.primarygoal.subA.completedmessage }'>
+                          <div class='goalupper'>
+                            <span class='goalicon'><i class='fa-medium details icon-#{ primarygoal.primarygoal.subA.icon }'></i></span>
+                            <span class='goaltitle'>#{ primarygoal.primarygoal.subA.goal }</span>
+                            <span class='thechartbutton'><i class='fa-medium icon-stats chartbutton' ></i></span>
+                          </div>
+                          <div class='goallower'>
+                            <div class='control-group uncheckit' >
+                              <label class='control-label thequestion' for='completedquestion'>Did you complete this goal?</label>
+                              <div class='controls theanswer'>
+                                <label class='radio'>
+                                 <input type='radio' name='completedyes' value='true' /> Yes
+                                </label>
+                                <label class='radio'>
+                                 <input type='radio' name='completedno' value='false' /> No
+                                </label>
+                              </div>
+                            </div>
+                            <span class='goaldeadline'>Deadline: #{ primarygoal.primarygoal.subA.deadline }</span>
+                          </div></li>"""
       if (primarygoal.primarygoal.subB.status == 'completed')
         newinfocreated = JSON.stringify(primarygoal.primarygoal.subB.infocreated)
         (primarygoal.primarygoal.subB.infotype == 'text')
-        primaryGoalsHTML.push """<li class='#{ primarygoal.primarygoal.subB.status } sub' data-info='#{ primarygoal.primarygoal.subB.infotype }' data-goalguid='#{ primarygoal.primarygoal.subB.goalguid }' data-incentivetext='#{ primarygoal.primarygoal.subB.incentivetext }' data-incentivepic='#{ primarygoal.primarygoal.subB.incentivepic }' >
-                        <div class='leftcol'><span class='goalicon'><i class='fa-medium icon-#{ primarygoal.primarygoal.subB.icon }'></i></span>
-                        <span><i class='fa-medium icon-stats chartbutton' data-infocreated='#{ newinfocreated }' data-myinfo='[#{ primarygoal.primarygoal.subB.myinfo }]' data-goal='#{ primarygoal.primarygoal.subB.goal }'></i></span></div>
-                        <div class='middlecol'><span class='goaltitle'>#{ primarygoal.primarygoal.subB.goal }<br/><span class='goaldeadline'>#{ primarygoal.primarygoal.subB.deadline }</span></span></div>
-                        <div class='rightcol'></div></li>"""
+        primaryGoalsHTML.push """<li class='#{ primarygoal.primarygoal.subB.status } sub' data-info='#{ primarygoal.primarygoal.subB.infotype }' data-goalguid='#{ primarygoal.primarygoal.subB.goalguid }' data-infocreated='#{ newinfocreated }' data-myinfo='[#{ primarygoal.primarygoal.subB.myinfo }]' data-incentivetext='#{ primarygoal.primarygoal.subB.incentivetext }' data-incentivepic='#{ primarygoal.primarygoal.subB.incentivepic }' data-goal='#{ primarygoal.primarygoal.subB.goal }' data-complete='#{ primarygoal.primarygoal.subB.completedmessage }'>
+                          <div class='goalupper'>
+                            <span class='goalicon'><i class='fa-medium details icon-#{ primarygoal.primarygoal.subB.icon }'></i></span>
+                            <span class='goaltitle'>#{ primarygoal.primarygoal.subB.goal }</span>
+                            <span class='thechartbutton'><i class='fa-medium icon-stats chartbutton' ></i></span>
+                          </div>
+                          <div class='goallower'>
+                            <div class='control-group uncheckit' >
+                              <label class='control-label thequestion' for='completedquestion'>Did you complete this goal?</label>
+                              <div class='controls theanswer'>
+                                <label class='radio'>
+                                 <input type='radio' name='completedyes' value='true' checked /> Yes
+                                </label>
+                                <label class='radio'>
+                                 <input type='radio' name='completedno' value='false' /> No
+                                </label>
+                              </div>
+                            </div>
+                          </div></li>"""
       else if (primarygoal.primarygoal.subB.status == "inprogress")
         if (primarygoal.primarygoal.subB.infotype == 'text')
-          primaryGoalsHTML.push  """<li class='#{ primarygoal.primarygoal.subB.status } sub'  data-info='#{ primarygoal.primarygoal.subB.infotype }' data-goalguid='#{ primarygoal.primarygoal.subB.goalguid }' data-subB='subB' data-incentivetext='#{ primarygoal.primarygoal.subB.incentivetext }' data-incentivepic='#{ primarygoal.primarygoal.subB.incentivepic }' >
-                        <div class='leftcol'><span class='goalicon'><i class='fa-medium icon-#{ primarygoal.primarygoal.subB.icon }'></i></span>
-                        <span><i class='fa-medium icon-stats chartbutton' data-infocreated='#{ newinfocreated }' data-myinfo='[#{ primarygoal.primarygoal.subB.myinfo }]' data-goal='#{ primarygoal.primarygoal.subB.goal }'></i></span></div>
-                        <div class='middlecol'><span class='goaltitle'>#{ primarygoal.primarygoal.subB.goal }<br/><span class='goaldeadline'>#{ primarygoal.primarygoal.subB.deadline }</span></span></div>
-                        <div class='rightcol'><span class='gatherinfo'><input type='text' name='infoA' class='info'></span>
-                        <span class='goalstatus' data-goal='#{ primarygoal.primarygoal.subB.goal }' data-complete='#{ goal.completedmessage }'><input type='checkbox'/></span></div></li>"""
+          primaryGoalsHTML.push  """<li class='#{ primarygoal.primarygoal.subB.status } sub' data-info='#{ primarygoal.primarygoal.subB.infotype }' data-goalguid='#{ primarygoal.primarygoal.subB.goalguid }' data-infocreated='#{ newinfocreated }' data-myinfo='[#{ primarygoal.primarygoal.subB.myinfo }]' data-incentivetext='#{ primarygoal.primarygoal.subB.incentivetext }' data-incentivepic='#{ primarygoal.primarygoal.subB.incentivepic }' data-goal='#{ primarygoal.primarygoal.subB.goal }' data-complete='#{ primarygoal.primarygoal.subB.completedmessage }'>
+                          <div class='goalupper'>
+                            <span class='goalicon'><i class='fa-medium details icon-#{ primarygoal.primarygoal.subB.icon }'></i></span>
+                            <span class='goaltitle'>#{ primarygoal.primarygoal.subB.goal }</span>
+                            <span class='thechartbutton'><i class='fa-medium icon-stats chartbutton' ></i></span>
+                          </div>
+                          <div class='goallower'>
+                               <label class='gatherinfo'>
+                                 <input type='number' name='info' class='info' />&nbsp; Enter a number.
+                               </label>
+                            <div class='control-group uncheckit' >
+                              <label class='control-label thequestion' for='completedquestion'>Did you complete this goal?</label>
+                              <div class='controls theanswer'>
+                                <label class='radio'>
+                                 <input type='radio' name='completedyes' value='true' /> Yes
+                                </label>
+                                <label class='radio'>
+                                 <input type='radio' name='completedno' value='false' /> No
+                                </label>
+                              </div>
+                            </div>
+                            <span class='goaldeadline'>Deadline: #{ primarygoal.primarygoal.subB.deadline }</span>
+                          </div></li>"""
         else
-          primaryGoalsHTML.push """<li class='#{ primarygoal.primarygoal.subB.status } sub'  data-info='#{ primarygoal.primarygoal.subB.infotype }' data-goalguid='#{ primarygoal.primarygoal.subB.goalguid }' data-subB='subB' data-incentivetext='#{ primarygoal.primarygoal.subB.incentivetext }' data-incentivepic='#{ primarygoal.primarygoal.subB.incentivepic }' >
-                        <div class='leftcol'><span class='goalicon'><i class='fa-medium icon-#{ primarygoal.primarygoal.subB.icon }'></i></span>
-                        <span><i class='fa-medium icon-stats chartbutton' data-infocreated='#{ newinfocreated }' data-myinfo='[#{ primarygoal.primarygoal.subB.myinfo }]' data-goal='#{ primarygoal.primarygoal.subB.goal }'></i></span></div>
-                        <div class='middlecol'><span class='goaltitle'>#{ primarygoal.primarygoal.subB.goal }<br/><span class='goaldeadline'>#{ primarygoal.primarygoal.subB.deadline }</span></span></div>
-                        <div class='rightcol'><span class='goalstatus' data-goal='#{ primarygoal.primarygoal.subB.goal }' data-complete='#{ goal.completedmessage }'><input type='checkbox'/></span></div></li>"""
+          primaryGoalsHTML.push """<li class='#{ primarygoal.primarygoal.subB.status } sub' data-info='#{ primarygoal.primarygoal.subB.infotype }' data-goalguid='#{ primarygoal.primarygoal.subB.goalguid }' data-infocreated='#{ newinfocreated }' data-myinfo='[#{ primarygoal.primarygoal.subB.myinfo }]' data-incentivetext='#{ primarygoal.primarygoal.subB.incentivetext }' data-incentivepic='#{ primarygoal.primarygoal.subB.incentivepic }' data-goal='#{ primarygoal.primarygoal.subB.goal }' data-complete='#{ primarygoal.primarygoal.subB.completedmessage }'>
+                          <div class='goalupper'>
+                            <span class='goalicon'><i class='fa-medium details icon-#{ primarygoal.primarygoal.subB.icon }'></i></span>
+                            <span class='goaltitle'>#{ primarygoal.primarygoal.subB.goal }</span>
+                            <span class='thechartbutton'><i class='fa-medium icon-stats chartbutton' ></i></span>
+                          </div>
+                          <div class='goallower'>
+                            <div class='control-group uncheckit' >
+                              <label class='control-label thequestion' for='completedquestion'>Did you complete this goal?</label>
+                              <div class='controls theanswer'>
+                                <label class='radio'>
+                                 <input type='radio' name='completedyes' value='true' /> Yes
+                                </label>
+                                <label class='radio'>
+                                 <input type='radio' name='completedno' value='false' /> No
+                                </label>
+                              </div>
+                            </div>
+                            <span class='goaldeadline'>Deadline: #{ primarygoal.primarygoal.subB.deadline }</span>
+                          </div></li>"""
       if (primarygoal.primarygoal.subC.status == 'completed')
         newinfocreated = JSON.stringify(primarygoal.primarygoal.subC.infocreated)
         (primarygoal.primarygoal.subC.infotype == 'text')
-        primaryGoalsHTML.push """<li class='#{ primarygoal.primarygoal.subC.status } sub' data-info='#{ primarygoal.primarygoal.subC.infotype }' data-goalguid='#{ primarygoal.primarygoal.subC.goalguid }' data-incentivetext='#{ primarygoal.primarygoal.subC.incentivetext }' data-incentivepic='#{ primarygoal.primarygoal.subC.incentivepic }' >
-                        <div class='leftcol'><span class='goalicon'><i class='fa-medium icon-#{ primarygoal.primarygoal.subC.icon }'></i></span>
-                        <span><i class='fa-medium icon-stats chartbutton' data-infocreated='#{ newinfocreated }' data-myinfo='[#{ primarygoal.primarygoal.subC.myinfo }]' data-goal='#{ primarygoal.primarygoal.subC.goal }'></i></span></div>
-                        <div class='middlecol'><span class='goaltitle'>#{ primarygoal.primarygoal.subC.goal }<br/><span class='goaldeadline'>#{ primarygoal.primarygoal.subC.deadline }</span></span></div>
-                        <div class='rightcol'></div></li>"""
+        primaryGoalsHTML.push """<li class='#{ primarygoal.primarygoal.subC.status } sub' data-info='#{ primarygoal.primarygoal.subC.infotype }' data-goalguid='#{ primarygoal.primarygoal.subC.goalguid }' data-infocreated='#{ newinfocreated }' data-myinfo='[#{ primarygoal.primarygoal.subC.myinfo }]' data-incentivetext='#{ primarygoal.primarygoal.subC.incentivetext }' data-incentivepic='#{ primarygoal.primarygoal.subC.incentivepic }' data-goal='#{ primarygoal.primarygoal.subC.goal }' data-complete='#{ primarygoal.primarygoal.subC.completedmessage }'>
+                          <div class='goalupper'>
+                            <span class='goalicon'><i class='fa-medium details icon-#{ primarygoal.primarygoal.subC.icon }'></i></span>
+                            <span class='goaltitle'>#{ primarygoal.primarygoal.subC.goal }</span>
+                            <span class='thechartbutton'><i class='fa-medium icon-stats chartbutton' ></i></span>
+                          </div>
+                          <div class='goallower'>
+                            <div class='control-group uncheckit' >
+                              <label class='control-label thequestion' for='completedquestion'>Did you complete this goal?</label>
+                              <div class='controls theanswer'>
+                                <label class='radio'>
+                                 <input type='radio' name='completedyes' value='true' checked /> Yes
+                                </label>
+                                <label class='radio'>
+                                 <input type='radio' name='completedno' value='false' /> No
+                                </label>
+                              </div>
+                            </div>
+                          </div></li>"""
       else if (primarygoal.primarygoal.subC.status == "inprogress")
         if (primarygoal.primarygoal.subC.infotype == 'text')
-          primaryGoalsHTML.push  """<li class='#{ primarygoal.primarygoal.subC.status } sub'  data-info='#{ primarygoal.primarygoal.subC.infotype }' data-goalguid='#{ primarygoal.primarygoal.subC.goalguid }' data-subB='subC' data-incentivetext='#{ primarygoal.primarygoal.subC.incentivetext }' data-incentivepic='#{ primarygoal.primarygoal.subC.incentivepic }' >
-                        <div class='leftcol'><span class='goalicon'><i class='fa-medium icon-#{ primarygoal.primarygoal.subC.icon }'></i></span>
-                        <span><i class='fa-medium icon-stats chartbutton' data-infocreated='#{ newinfocreated }' data-myinfo='[#{ primarygoal.primarygoal.subC.myinfo }]' data-goal='#{ primarygoal.primarygoal.subC.goal }'></i></span></div>
-                        <div class='middlecol'><span class='goaltitle'>#{ primarygoal.primarygoal.subC.goal }<br/><span class='goaldeadline'>#{ primarygoal.primarygoal.subC.deadline }</span></span></div>
-                        <div class='rightcol'><span class='gatherinfo'><input type='text' name='infoA' class='info'></span>
-                        <span class='goalstatus' data-goal='#{ primarygoal.primarygoal.subC.goal }' data-complete='#{ goal.completedmessage }'><input type='checkbox'/></span></div></li>"""
+          primaryGoalsHTML.push  """<li class='#{ primarygoal.primarygoal.subC.status } sub' data-info='#{ primarygoal.primarygoal.subC.infotype }' data-goalguid='#{ primarygoal.primarygoal.subC.goalguid }' data-infocreated='#{ newinfocreated }' data-myinfo='[#{ primarygoal.primarygoal.subC.myinfo }]' data-incentivetext='#{ primarygoal.primarygoal.subC.incentivetext }' data-incentivepic='#{ primarygoal.primarygoal.subC.incentivepic }' data-goal='#{ primarygoal.primarygoal.subC.goal }' data-complete='#{ primarygoal.primarygoal.subC.completedmessage }'>
+                          <div class='goalupper'>
+                            <span class='goalicon'><i class='fa-medium details icon-#{ primarygoal.primarygoal.subC.icon }'></i></span>
+                            <span class='goaltitle'>#{ primarygoal.primarygoal.subC.goal }</span>
+                            <span class='thechartbutton'><i class='fa-medium icon-stats chartbutton' ></i></span>
+                          </div>
+                          <div class='goallower'>
+                               <label class='gatherinfo'>
+                                 <input type='number' name='info' class='info' />&nbsp; Enter a number.
+                               </label>
+                            <div class='control-group uncheckit' >
+                              <label class='control-label thequestion' for='completedquestion'>Did you complete this goal?</label>
+                              <div class='controls theanswer'>
+                                <label class='radio'>
+                                 <input type='radio' name='completedyes' value='true' /> Yes
+                                </label>
+                                <label class='radio'>
+                                 <input type='radio' name='completedno' value='false' /> No
+                                </label>
+                              </div>
+                            </div>
+                            <span class='goaldeadline'>Deadline: #{ primarygoal.primarygoal.subC.deadline }</span>
+                          </div></li>"""
         else
-          primaryGoalsHTML.push """<li class='#{ primarygoal.primarygoal.subC.status } sub'  data-info='#{ primarygoal.primarygoal.subC.infotype }' data-goalguid='#{ primarygoal.primarygoal.subC.goalguid }' data-subB='subC' data-incentivetext='#{ primarygoal.primarygoal.subC.incentivetext }' data-incentivepic='#{ primarygoal.primarygoal.subC.incentivepic }' >
-                        <div class='leftcol'><span class='goalicon'><i class='fa-medium icon-#{ primarygoal.primarygoal.subC.icon }'></i></span>
-                        <span><i class='fa-medium icon-stats chartbutton' data-infocreated='#{ newinfocreated }' data-myinfo='[#{ primarygoal.primarygoal.subC.myinfo }]' data-goal='#{ primarygoal.primarygoal.subC.goal }'></i></span></div>
-                        <div class='middlecol'><span class='goaltitle'>#{ primarygoal.primarygoal.subC.goal }<br/><span class='goaldeadline'>#{ primarygoal.primarygoal.subC.deadline }</span></span></div>
-                        <div class='rightcol'><span class='goalstatus' data-goal='#{ primarygoal.primarygoal.subC.goal }' data-complete='#{ goal.completedmessage }'><input type='checkbox'/></span></div></li>"""
+          primaryGoalsHTML.push """<li class='#{ primarygoal.primarygoal.subC.status } sub' data-info='#{ primarygoal.primarygoal.subC.infotype }' data-goalguid='#{ primarygoal.primarygoal.subC.goalguid }' data-infocreated='#{ newinfocreated }' data-myinfo='[#{ primarygoal.primarygoal.subC.myinfo }]' data-incentivetext='#{ primarygoal.primarygoal.subC.incentivetext }' data-incentivepic='#{ primarygoal.primarygoal.subC.incentivepic }' data-goal='#{ primarygoal.primarygoal.subC.goal }' data-complete='#{ primarygoal.primarygoal.subC.completedmessage }'>
+                          <div class='goalupper'>
+                            <span class='goalicon'><i class='fa-medium details icon-#{ primarygoal.primarygoal.subC.icon }'></i></span>
+                            <span class='goaltitle'>#{ primarygoal.primarygoal.subC.goal }</span>
+                            <span class='thechartbutton'><i class='fa-medium icon-stats chartbutton' ></i></span>
+                          </div>
+                          <div class='goallower'>
+                            <div class='control-group uncheckit' >
+                              <label class='control-label thequestion' for='completedquestion'>Did you complete this goal?</label>
+                              <div class='controls theanswer'>
+                                <label class='radio'>
+                                 <input type='radio' name='completedyes' value='true' /> Yes
+                                </label>
+                                <label class='radio'>
+                                 <input type='radio' name='completedno' value='false' /> No
+                                </label>
+                              </div>
+                            </div>
+                            <span class='goaldeadline'>Deadline: #{ primarygoal.primarygoal.subC.deadline }</span>
+                          </div></li>"""
     primaryGoalsHTML.push '<span class="clearfix"></span>'
 
   $(".primarygoals").html primaryGoalsHTML.join("")
 
 
 # change the class of the li and save the data
-$(".primarygoals").delegate "input[type=checkbox]", "click", ->
+$(".primarygoals").delegate "input[name='completedyes']", "click", ->
   goalguid = $(this).closest('li').data("goalguid")
   if ( $(this).closest('li').hasClass('completed'))
     $(this).closest('li').removeClass("completed").addClass("inprogress").prop("checked", false)
@@ -449,11 +587,11 @@ $(".primarygoals").delegate "input[type=checkbox]", "click", ->
     displayprimaryGoals()
   else if ( $(this).closest('li').hasClass('inprogress'))
     checkinginfotype = $(this).closest('li').data('info')
-    if ( !$(this).closest('li').find('input[type="text"]').val() ) and (checkinginfotype is 'text')
+    if ( !$(this).closest('li').find('input[type="number"]').val() ) and (checkinginfotype is 'text')
       alert "You have to enter a number before this goal can be completed."
       $(this).removeAttr('checked');
     else
-      newinfo = parseInt($(this).closest('li').find('input[type="text"]').val(), 10)
+      newinfo = parseInt($(this).closest('li').find('input[type="number"]').val(), 10)
       mygoaldate = createInfoDate()
       updateStatus = 'completed'
       $.each primarygoals, (index, primarygoal) ->
@@ -526,6 +664,11 @@ $('#modalclose').click ->
   $('#addgoalform').hide()
   $('#addprimarygoalform').hide()
 
+
+###
+  open and close the details div of a goal
+###
+
 $(".goalsection").on "click", "span.goaltitle", ->
   if $(this).parent().siblings('.goallower').hasClass('showdetails')
     $(this).parent().siblings('.goallower').removeClass('showdetails')
@@ -533,9 +676,20 @@ $(".goalsection").on "click", "span.goaltitle", ->
     $(".goallower").removeClass('showdetails')
     $(this).parent().siblings('.goallower').addClass('showdetails')
   return false
+
+$(".primarygoals").on "click", "span.goaltitle", ->
+  if $(this).parent().siblings('.goallower').hasClass('showdetails')
+    $(this).parent().siblings('.goallower').removeClass('showdetails')
+  else
+    $(".goallower").removeClass('showdetails')
+    $(this).parent().siblings('.goallower').addClass('showdetails')
+  return false
+
+
 ###
   let's build a chart
 ###
+
 # this is for regular goals
 $(".goalsection").on "click", "i.chartbutton", ->
   $("#chartbox").show()
@@ -578,9 +732,9 @@ $(".primarygoals").on "click", "i.chartbutton", ->
   placeincentivetext =  '<p>' + incentivetext + '</p>'
   $("#incentivetext").html(placeincentivetext)
   $("#incentivepic").css('background-image', incentivepic )
-  infocreated = $(this).data('infocreated')
-  myinfo = $(this).data('myinfo')
-  mytitle = $(this).data('goal')
+  infocreated = $(this).closest('li').data('infocreated')
+  myinfo = $(this).closest('li').data('myinfo')
+  mytitle = $(this).closest('li').data('goal')
   $ ->
   $("#thischart").highcharts
     chart: {}
@@ -602,6 +756,10 @@ $('.hidechart').click ->
   $("#incentivebox").hide()
   $(".chart-backdrop").hide()
 
+
+###
+  after a goal is completed, or changed in any way, then update it and email the teacher
+###
 
 # show the congrats message
 showCongrats = ->
