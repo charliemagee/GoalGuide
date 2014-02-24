@@ -1,0 +1,716 @@
+
+@import "mobile_awesome";
+@import "mobile_responsive";
+
+*, *:before, *:after {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 100%;
+  -webkit-text-size-adjust: 100%;
+  -ms-text-size-adjust: 100%;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+body {
+  position: relative;
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.231;
+  background: white;
+  font-family: 'AmaranthRegular', Arial, sans-serif;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+textarea {
+  resize: vertical;
+}
+.menuicon {
+  display: inline-block;
+  padding: 0;
+  margin: 0;
+}
+
+// --- colors ----------------------
+
+$green-dark: #2d8c26;
+$green-main: #79cb73;
+
+$yellow-main: #fcf4b0;
+$gold: #fde64c;
+
+$blue-dark: #2c77cb;
+$blue-light: #d3e7fe;
+
+$red-main: #e30707;
+$red-light: #f6d3d3;
+
+.green {
+  color: $green-dark;
+}
+.blue {
+  color: $blue-dark;
+}
+
+// --- layout ----------------------
+#nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 50px;
+  width: 100%;
+  z-index: 180;
+  background-color: #fdf6ba;
+  border-bottom: 2px solid darkgray;
+}
+#content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  background: #ffffff;
+  width: 100%;
+  height: 100%;
+}
+#goalscontainer, #primarygoalscontainer {
+  width: 97%;
+}
+#goalscontainer {
+  position: fixed;
+  display: none;
+  top: 50px;
+  left: 7px;
+  height: 72%;
+  z-index: 100;
+  margin: 0;
+  padding-bottom: 20px;
+  -webkit-transition: all 0.5s  ease-in-out;
+  -moz-transition: all 0.5s  ease-in-out;
+  -o-transition: all 0.5s  ease-in-out;
+  -ms-transition: all 0.5s  ease-in-out;
+  transition: all 0.5s  ease-in-out;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling:touch;
+}
+.leftcol {
+  float: left;
+  width: 15%;
+}
+.middlecol {
+  float: left;
+  width: 70%;
+}
+.rightcol {
+  float: right;
+  width: 15%;
+}
+.goalupper {
+  display: block;
+  width: 100%;
+  height: 30px;
+  margin: 0 0 5x 0;
+  padding: 0;
+}
+.goallower {
+  display: none;
+  width: 225px;
+  margin: 15px 0 0 33px;
+  padding: 10px 5px 0 10px;
+  background-color: $yellow-main;
+  overflow: hidden;
+  text-transform: none;
+}
+/* footer */
+
+footer {
+  position: fixed;
+  top: 400px;
+  left: 0px;
+  font-family: 'AmaranthRegular', Arial, sans-serif;
+  font-weight: normal !important;
+  font-size:10px !important;
+  line-height: 15px !important;
+  text-align: center;
+  width:100%;
+  height: 15px;
+  color: gray;
+  a {
+    color: darkgray;
+    &:hover {
+      color: black;
+      text-decoration: none;
+    }
+  }
+}
+
+// --- menu stuff ----------------------
+
+#loginsection {
+  display: block;
+}
+#home, #school, #work, #personal  {
+  position: absolute;
+  top: 0;
+  float: left;
+  z-index: 150;
+  display: block;
+  height: 50px;
+  background-color: $yellow-main;
+  padding: 0;
+  margin: 0;
+}
+#home  {
+  left: 0;
+  width: 25%;
+  border-right: 1px solid darkgray;
+}
+#school  {
+  left: 25%;
+  width: 25%;
+  border-right: 1px solid darkgray;
+}
+#work  {
+  left: 50%;
+  width: 25%;
+  border-right: 1px solid darkgray;
+}
+#personal  {
+  left: 75%;
+  width: 25%;
+}
+.currentmenu {
+  background-color: $gold !important;
+}
+#checkid {
+  display: block;
+  position: absolute;
+  top: 20%;
+  left: 20%;
+  width: 175px;
+  padding: 20px;
+  z-index: 500;
+  background-color: lighten($green-main, 30%);
+}
+#checkid input {
+  width: 130px;
+  margin-bottom: -5px;
+}
+.detailsLabel {
+  margin-bottom: 10px;
+}
+.showdetails {
+  display: block;
+}
+.darkenline {
+  background-color: darkgray;
+}
+.goallower label {
+  font-size: 16px;
+}
+#loginbutton {
+  margin-left: -80px;
+}
+#errorlogin {
+  display: none;
+  background: white;
+  width: 300px;
+  padding: 10px;
+  margin-bottom: 10px;
+  color: red;
+  font-size: 16px;
+}
+#logout {
+  display: none;
+  position: absolute;
+  top: 40%;
+  left: 35%;
+  width: 85px;
+  padding: 10px;
+  z-index: 500;
+  background-color: lighten($green-main, 30%);
+}
+.sampleimages {
+  margin: -15px 0 0 30px;
+}
+.success {
+  width: 600px;
+  line-height: 60px;
+  background: $blue-light;
+  display: none;
+}
+#primaryschool, #primarywork, #primarypersonal {
+  display: none;
+}
+#chartbox {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 5000;
+  width: 100%;
+  height: 100%;
+  background: black;
+}
+
+#thischart {
+  margin: 20px auto 0;
+  width: 90%;
+  height: 85%;
+  background: #fffce9;
+}
+.chart-backdrop {
+  display: none;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 50;
+  background-color: black;
+  @include opacity(80);
+}
+.closechart {
+  position: absolute;
+  top: 20px;
+  right: 5px;
+  z-index: 5010;
+}
+#incentivebox {
+  display: none;
+  position: absolute;
+  z-index: 5100;
+  width: 270px;
+  height: 325px;
+  border: 1px solid #ddd;
+  background-color: lighten($green-main, 15%);
+  @include transition(all .2s ease-in-out);
+  overflow: auto;
+}
+#incentivepic {
+  width: 250px;
+  height: 250px;
+  margin: 10px auto 0;
+  //  background: url('../images/pizza.jpg') no-repeat;
+}
+#incentivetext {
+  margin-top: 5px;
+  font-size: 14px;
+  text-align: center;
+}
+.congratsmessageholder {
+  position: absolute;
+  top: -100px;
+  left: 50%;
+}
+.congratsmessage {
+  display: none;
+  position: relative;
+  left: -50%;
+  width: 300px;
+  padding: 50px 35px;
+  background-color: $green-main;
+  border: 5px solid white;
+  font-size: 32px;
+  font-weight: normal;
+  color: black;
+  font-family: 'AmaranthBold', Arial, sans-serif;
+  text-align: center;
+}
+
+// --- position tweaks ---------------------
+.push-right {
+  margin-left: 20px;
+}
+.push-right-savegoal {
+  margin-left: 160px;
+}
+#activityholder {
+  float: left;
+  width: 8rem;
+  height: 10.5rem;
+  margin: 1rem;
+}
+#calendar {
+  clear: both;
+  display: none;
+  padding-top: 2rem;
+}
+#thanks {
+  display: none;
+}
+.thanksmessage {
+  margin: 1.8rem 0 0 2rem;
+  color: black;
+}
+#thanksbtn {
+  float: right;
+  margin: -3.6rem 2rem 0 0;
+}
+
+// --- UL List ---------------------
+ul.goalsinprogress, ul.goalscompleted, ul.primarygoals {
+  display: block;
+  padding: 0;
+  margin: 0;
+  list-style-type: none;
+  width: 100%;
+  text-align: left;
+}
+.goalsinprogress li, .goalscompleted li, .primarygoals li {
+  position: relative;
+  margin: 10px auto;
+  color: black;
+  width: 98%;
+  overflow: hidden;
+  padding: 8px 5px;
+  text-transform: capitalize;
+}
+.goalscompleted li.completed, .primarygoals li.completed {
+  background-color: lighten($green-main, 15%);
+}
+.goalsinprogress li.inprogress, .primarygoals li.inprogress {
+  background-color: $blue-light;
+}
+.primarygoals li.parent {
+  background-color: lightgray;
+}
+.primarygoals li.sub {
+  width: 90%;
+  float: right;
+  margin-top: -5px;
+}
+#daysoftheweek, #daysoftheweekA, #daysoftheweekB, #daysoftheweekC {
+  display: none;
+}
+.personal, .Personal {
+  background-image: url('../images/personalicon.png');
+  background-repeat: no-repeat;
+}
+.work, .Work {
+  background-image: url('../images/workicon.png');
+  background-repeat: no-repeat;
+}
+.school, .School {
+  background-image: url('../images/schoolicon.png');
+  background-repeat: no-repeat;
+}
+.goalicon {
+  float: left;
+  width: 30px;
+  padding: 0 15px 0 0;
+  margin-left: 2px;
+}
+.goaltitle {
+  float: left;
+  font-size: 20px;
+  line-height: 20px;
+  text-align: left;
+  width: 72%;
+}
+.goalbuttons {
+  float: right;
+  width: 30px;
+  padding-right: 5px;
+}
+.goaldeadline {
+  font-size: 16px;
+  line-height: 16px;
+  margin: 0;
+}
+.gatherinfo, .goaldeadline, .goalstatus {
+  float: left;
+  width: 100%;
+  height: 36px;
+}
+.gatherinfo input {
+  float: left;
+  width: 75px;
+  height: 30px;
+  margin: 0 0 5px 0;
+  padding: 0;
+}
+.goalstatus input {
+  float: left;
+  width: 30px;
+  height: 30px;
+  margin: 0;
+  padding: 0;
+}
+.chartbutton {
+  float: right;
+  width: 30px;
+  height: 30px;
+  margin: 0 0 0 10px;
+}
+.goalremove {
+  float: right;
+  width: 7%;
+  line-height: 26px;
+  margin: 0;
+}
+.primaryremove {
+  padding: 0 6px;
+}
+#addgoalform, #adduserform {
+  display: none;
+  margin-bottom: 20px;
+}
+#adduserform input {
+  width: 92%;
+  margin-bottom: -5px;
+}
+#adduserform .form-horizontal .control-group {
+  margin-bottom: 10px;
+}
+
+#addgoalform #thecategory {
+  width: 40%;
+}
+.goalcomplete {
+  width: 90%;
+}
+#addgoalform #thestartdate, #addgoalform #theenddate {
+  width: 40%;
+}
+#addgoal, #addprimarygoal {
+  display: none;
+}
+.icondropdown, .icondropdownsub {
+  margin: 0;
+  padding: 5px 0 0 10px;
+  list-style-type: none;
+  width: 94%;
+  height: 160px;
+  border: solid 1px #e3e3e3;
+  background-color: #f2f2f2;
+}
+.icondropdownsub {
+  height: 80px;
+  overflow: auto;
+}
+.icondropdown li, .icondropdownsub li {
+  display: inline-block;
+  float: left;
+  margin: 5px 0 0 0;
+  width: 68px;
+}
+.incentive {
+  margin: 0;
+  padding: 5px 0 0 10px;
+  list-style-type: none;
+  width: 94%;
+  height: 75px;
+  border: solid 1px #e3e3e3;
+  background-color: #f2f2f2;
+}
+.incentive li {
+  display: inline-block;
+  float: left;
+  margin: 5px 20px 0 0;
+  width: 65px;
+}
+.checkboxinfo {
+  display: block;
+  margin: -13px 0 0 20px;
+  font-family: Arial, sans-serif;
+  font-size: 13px;
+  line-height: 14px;
+}
+.user {
+  position: relative;
+  float: left;
+}
+.username {
+  color: $blue-dark;
+}
+.username:hover {
+  color: lighten($blue-dark, 15%);
+  cursor: hand;
+}
+.clear {
+  clear: both;
+}
+.radio.inline {
+  width: 60px;
+  height: 36px;
+  margin: 0;
+  padding:0;
+}
+
+/* typography */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'AmaranthRegular', Arial, sans-serif;
+  color: black;
+  font-weight: normal;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  -webkit-margin-before: 0;
+  -webkit-margin-after: 0;
+}
+h1 {
+  font-size: 18px;
+  line-height: 18px;
+}
+h2 {
+  font-size: 32px;
+}
+h3 {
+  font-size: 28px;
+}
+h4 {
+  font-size: 24px;
+}
+h5 {
+  font-size: 20px;
+}
+h6 {
+  font-size: 18px;
+}
+p {
+  font-family:  'AmaranthRegular', Arial, sans-serif;
+  font-size: 18px;
+  line-height: 24px;
+}
+.fa-regular {
+  font-size: 20px;
+  vertical-align: middle;
+  padding: 0;
+}
+.fa-medium {
+  font-size: 24px;
+  vertical-align: middle;
+  padding: 0;
+}
+.fa-large {
+  font-size: 36px;
+  vertical-align: middle;
+  padding: 0;
+  margin-bottom: 10px;
+}
+.dropdown {
+  margin-top: 5px;
+}
+.required {
+  color: red;
+}
+.small {
+  font-size: 90%;
+  font-family: Arial, sans-serif;
+  color: black;
+  font-weight: normal;
+  text-align: center;
+}
+input[type='checkbox'] {
+  -webkit-appearance:none;
+  width:30px;
+  height:30px;
+  background: url('../images/checked-no.png');
+  border-radius:5px;
+}
+.thequestion {
+  width: 200px;
+  margin: 0;
+}
+.theanswer {
+  width: 180px;
+  margin: 0 0 0 20px;
+}
+.completedquestion label.radio.inline {
+  width: 40px;
+}
+.checkmessage {
+  margin: 0 0 0 8px;
+  padding: 0;
+  font-weight: 300;
+  font-size: 14px;
+  text-transform: none;
+  vertical-align: middle;
+}
+input[type='checkbox']:checked {
+  background: url('../images/checked-yes.png');
+}
+/* tweaks to bootstrap */
+.navbar h3 a {
+  color: white !important;
+  font-size: 30px !important;
+  margin: 0 0 0 20px;
+}
+.navbar h3 a:hover {
+  color: black !important;
+  text-decoration: none;
+}
+.btn-small, .btn-medium, .btn-large, .btn-huge {
+  font-family: 'AmaranthRegular', Arial, sans-serif;
+  font-weight: normal !important;
+}
+a {
+  text-decoration: none !important;
+}
+
+
+
+
+//// Media Queries -------------------------------------------------------------------
+
+// iPhone 2G-4S Portrait
+@media only screen
+and (min-device-width : 320px)
+and (max-device-width : 480px)
+and (orientation : portrait) {
+
+  #primarygoalscontainer {
+    left: 321px;
+  }
+
+  footer {
+    top: 335px;
+  }
+
+}
+
+// iPhone 2G-4S Landscape
+@media only screen
+and (min-device-width : 320px)
+and (max-device-width : 480px)
+and (orientation : landscape) {
+
+  #goalscontainer {
+    height: 66%;
+  }
+
+  #primarygoalscontainer {
+    left: 481px;
+    height: 66%;
+  }
+
+  footer {
+    top: 290px;
+  }
+
+}
+
+// iPhone 5 Portrait
+@media only screen
+and (min-device-width : 320px)
+and (max-device-width : 568px)
+and (orientation : portrait) {
+
+
+
+}
+
+// iPhone 5 Landscape
+@media only screen
+and (min-device-width : 320px)
+and (max-device-width : 568px)
+and (orientation : landscape) {
+
+
+
+}
