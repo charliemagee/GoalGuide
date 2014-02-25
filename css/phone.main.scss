@@ -2,16 +2,11 @@
 @import "mobile_awesome";
 @import "mobile_responsive";
 
-*, *:before, *:after {
-  -moz-box-sizing: border-box;
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
-}
 
 html {
-  font-size: 100%;
-  -webkit-text-size-adjust: 100%;
-  -ms-text-size-adjust: 100%;
+   font-size: 100%;
+   -webkit-text-size-adjust: 100%;
+   -ms-text-size-adjust: 100%;
   width: 100%;
   height: 100%;
   overflow: hidden;
@@ -41,8 +36,8 @@ textarea {
 $green-dark: #2d8c26;
 $green-main: #79cb73;
 
-$yellow-main: #fcf4b0;
-$gold: #fde64c;
+$yellow-main: #f2e9a3;
+$gold: #ffd200;
 
 $blue-dark: #2c77cb;
 $blue-light: #d3e7fe;
@@ -97,33 +92,38 @@ $red-light: #f6d3d3;
   overflow-x: hidden;
   -webkit-overflow-scrolling:touch;
 }
-.leftcol {
-  float: left;
-  width: 15%;
-}
-.middlecol {
-  float: left;
-  width: 70%;
-}
-.rightcol {
-  float: right;
-  width: 15%;
-}
-.goalupper {
-  display: block;
-  width: 100%;
-  height: 30px;
-  margin: 0 0 5x 0;
-  padding: 0;
-}
-.goallower {
+#primarygoalscontainer {
+  position: fixed;
   display: none;
-  width: 225px;
-  margin: 15px 0 0 33px;
-  padding: 10px 5px 0 10px;
-  background-color: $yellow-main;
-  overflow: hidden;
-  text-transform: none;
+  top: 50px;
+  left: 321px;
+  height: 72%;
+  z-index: 100;
+  margin: 0;
+  padding-bottom: 20px;
+  -webkit-transition: all 0.5s  ease-in-out;
+  -moz-transition: all 0.5s  ease-in-out;
+  -o-transition: all 0.5s  ease-in-out;
+  -ms-transition: all 0.5s  ease-in-out;
+  transition: all 0.5s  ease-in-out;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling:touch;
+}
+
+#goalscontainer.move-inside, #primarygoalscontainer.move-inside {
+  -moz-transform: translateX(-322px) translateY();
+  -webkit-transform:  translateX(-322px) translateY();
+  -o-transform:  translateX(-322px) translateY();
+  -ms-transform:  translateX(-322px) translateY();
+  transform:  translateX(-322px) translateY();
+}
+#goalscontainer.move-outside, #primarygoalscontainer.move-outside {
+  -moz-transform: translateX(322px) translateY();
+  -webkit-transform:  translateX(322px) translateY();
+  -o-transform:  translateX(322px) translateY();
+  -ms-transform:  translateX(322px) translateY();
+  transform:  translateX(322px) translateY();
 }
 /* footer */
 
@@ -149,49 +149,119 @@ footer {
 }
 
 // --- menu stuff ----------------------
-
+#menuwrapper {
+  display: none;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 40%;
+  height: 200px;
+  z-index: 200;
+}
+#hidescreen {
+  display: none;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  background-color: black;
+  zoom: 1;
+  filter: alpha(opacity=80);
+  opacity: 0.8;
+  z-index: 190;
+}
 #loginsection {
   display: block;
+}
+#homemenu, #schoolmenu, #workmenu, #personalmenu {
+  display: block;
+  width: 100%;
+  height: 50px;
+  background-color: #fdf6ba;
+  padding: 3px 0 0 0;
+  margin: 0;
+}
+
+#homemenu, #schoolmenu, #workmenu {
+  border-bottom: 1px solid $green-dark;
 }
 #home, #school, #work, #personal  {
   position: absolute;
   top: 0;
+  left: 0;
   float: left;
   z-index: 150;
-  display: block;
+  display: none;
+  width: 33.3%;
   height: 50px;
-  background-color: $yellow-main;
+  background-color: #fcd85a;
   padding: 0;
   margin: 0;
 }
-#home  {
-  left: 0;
-  width: 25%;
-  border-right: 1px solid darkgray;
-}
-#school  {
-  left: 25%;
-  width: 25%;
-  border-right: 1px solid darkgray;
-}
-#work  {
-  left: 50%;
-  width: 25%;
-  border-right: 1px solid darkgray;
-}
-#personal  {
-  left: 75%;
-  width: 25%;
-}
-.currentmenu {
-  background-color: $gold !important;
-}
-#checkid {
+#home {
   display: block;
+}
+#primarymenu, #solomenu {
+  display: block;
+  float: left;
+  position: absolute;
+  top: 0px;
+  width: 33.3%;
+  height: 50px;
+  background-color: #fdf6ba;
+  padding: 0;
+  margin: 0 0 0 -4px;
+}
+#primarymenu {
+  left: 66.6%;
+}
+#solomenu {
+  left: 33.3%;
+}
+.primarybartop, .primarybarsecond, .primarybarthird, .solobartop, .solobarsecond, .solobarthird {
+  height: 8px;
+  margin-bottom: 3px;
+}
+.primarybartop {
+  width: 90%;
+  margin-left: 5%;
+  margin-top: 5px;
+  background-color: darkgray;
+}
+.primarybarsecond {
+  width: 70%;
+  margin-left: 25%;
+  background-color: $blue-light;
+}
+.primarybarthird {
+  width: 70%;
+  margin-left: 25%;
+  background-color:  lighten($green-main, 15%);
+}
+.solobartop {
+  width: 85%;
+  margin-left: 10%;
+  margin-top: 5px;
+  background-color: $blue-light;
+}
+.solobarsecond {
+  width: 85%;
+  margin-left: 10%;
+  background-color: $blue-light;
+}
+.solobarthird {
+  width: 85%;
+  margin-left: 10%;
+  background-color:  lighten($green-main, 15%);
+}
+
+#checkid {
+  display: none;
   position: absolute;
   top: 20%;
   left: 20%;
-  width: 175px;
+  width: 150px;
   padding: 20px;
   z-index: 500;
   background-color: lighten($green-main, 30%);
@@ -202,15 +272,6 @@ footer {
 }
 .detailsLabel {
   margin-bottom: 10px;
-}
-.showdetails {
-  display: block;
-}
-.darkenline {
-  background-color: darkgray;
-}
-.goallower label {
-  font-size: 16px;
 }
 #loginbutton {
   margin-left: -80px;
@@ -229,7 +290,7 @@ footer {
   position: absolute;
   top: 40%;
   left: 35%;
-  width: 85px;
+  width: 63px;
   padding: 10px;
   z-index: 500;
   background-color: lighten($green-main, 30%);
@@ -402,7 +463,7 @@ ul.goalsinprogress, ul.goalscompleted, ul.primarygoals {
 .goalicon {
   float: left;
   width: 30px;
-  padding: 0 15px 0 0;
+  padding: 0 5px 20px 0;
   margin-left: 2px;
 }
 .goaltitle {
@@ -410,29 +471,32 @@ ul.goalsinprogress, ul.goalscompleted, ul.primarygoals {
   font-size: 20px;
   line-height: 20px;
   text-align: left;
-  width: 72%;
-}
-.primarygoals .goaltitle {
-  width: 70%;
 }
 .goalbuttons {
   float: right;
   width: 30px;
   padding-right: 5px;
 }
+.leftcol {
+  float: left;
+  width: 15%;
+}
+.middlecol {
+  float: left;
+  width: 70%;
+}
+.rightcol {
+  float: right;
+  width: 15%;
+}
 .goaldeadline {
   font-size: 16px;
   line-height: 16px;
   margin: 0;
 }
-.gatherinfo, .goaldeadline, .goalstatus {
-  float: left;
-  width: 100%;
-  height: 36px;
-}
 .gatherinfo input {
   float: left;
-  width: 75px;
+  width: 30px;
   height: 30px;
   margin: 0 0 5px 0;
   padding: 0;
@@ -445,10 +509,11 @@ ul.goalsinprogress, ul.goalscompleted, ul.primarygoals {
   padding: 0;
 }
 .chartbutton {
-  float: right;
+  clear: both;
+  float: left;
   width: 30px;
   height: 30px;
-  margin: 0 0 0 10px;
+  margin: -10px 0 0 0;
 }
 .goalremove {
   float: right;
@@ -550,7 +615,7 @@ h1, h2, h3, h4, h5, h6 {
   font-family: 'AmaranthRegular', Arial, sans-serif;
   color: black;
   font-weight: normal;
-  margin: 0;
+  margin: 0 0 0 8px;
   padding: 0;
   text-align: center;
   -webkit-margin-before: 0;
@@ -583,17 +648,17 @@ p {
 .fa-regular {
   font-size: 20px;
   vertical-align: middle;
-  padding: 0;
+  padding: 0 4px;
 }
 .fa-medium {
   font-size: 24px;
   vertical-align: middle;
-  padding: 0;
+  padding: 0 4px;
 }
 .fa-large {
   font-size: 36px;
   vertical-align: middle;
-  padding: 0;
+  padding: 0 4px;
   margin-bottom: 10px;
 }
 .dropdown {
@@ -615,25 +680,6 @@ input[type='checkbox'] {
   height:30px;
   background: url('../images/checked-no.png');
   border-radius:5px;
-}
-.thequestion {
-  width: 200px;
-  margin: 0;
-}
-.theanswer {
-  width: 180px;
-  margin: 0 0 0 20px;
-}
-.completedquestion label.radio.inline {
-  width: 40px;
-}
-.checkmessage {
-  margin: 0 0 0 8px;
-  padding: 0;
-  font-weight: 300;
-  font-size: 14px;
-  text-transform: none;
-  vertical-align: middle;
 }
 input[type='checkbox']:checked {
   background: url('../images/checked-yes.png');

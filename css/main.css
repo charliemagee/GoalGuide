@@ -2822,11 +2822,10 @@ input[type="submit"].btn {
 .modal {
   position: fixed;
   top: 0;
-  left: 44%;
   z-index: 1050;
   overflow: auto;
   width: 700px;
-  margin: 50px 0 0 -15%;
+  margin: 50px 0 0 0;
   background-color: white;
   border: 1px solid #999;
   border: 1px solid rgba(0, 0, 0, 0.3);
@@ -4050,6 +4049,8 @@ textarea {
   z-index: 5100;
   width: 270px;
   height: 325px;
+  top: 10px;
+  right: 25px;
   border: 1px solid #ddd;
   background-color: #aee0ab;
   -webkit-border-radius: 4px;
@@ -4528,50 +4529,92 @@ footer {
   header#mainheader {
     background: url("../images/gg_logo.png") no-repeat;
     height: 85px;
-    margin-top: -20px; } }
-/* Portrait Tablet To Default Desktop */
+    margin-top: -20px; }
+
+  ul#listheader li, ul#primarylistheader li {
+    font-size: 14px;
+    line-height: 18px; }
+
+  .goalsinprogress li, .goalscompleted li, .goalsmissed li, .primarygoals li {
+    padding: 4px;
+    font-size: 16px;
+    line-height: 20px; }
+
+  .btn-group > .btn-large {
+    font-size: 14px !important; }
+
+  .btn-large {
+    padding: 2px 4px !important; }
+
+  h2 {
+    font-size: 24px; }
+
+  .goaldeadline {
+    font-size: 13px; } }
+/* Tablets And Below */
 @media (min-width: 768px) and (max-width: 979px) {
-  #content {
-    margin: 30px 0 40px 0; }
-
-  .createbtn {
-    float: right;
-    margin: 0 2rem 0 0; }
-
-  #sidebar-img {
-    margin-right: 0 !important; }
-
   header#mainheader {
     background: url("../images/gg_logo.png") no-repeat;
-    height: 90px; } }
-/* Tablets And Below */
-@media (max-width: 767px) {
+    height: 85px;
+    margin-top: -20px; }
+
   #content {
     margin: 20px 0 30px 0; }
 
   #sidebar ul {
     margin-left: 15px; }
 
-  ul li {
-    white-space: pre;
-    /* CSS 2.0 */
-    white-space: pre-wrap;
-    /* CSS 2.1 */
-    white-space: pre-line;
-    /* CSS 3.0 */
-    white-space: -pre-wrap;
-    /* Opera 4-6 */
-    white-space: -o-pre-wrap;
-    /* Opera 7 */
-    white-space: -moz-pre-wrap;
-    /* Mozilla */
-    white-space: -hp-pre-wrap;
-    /* HP Printers */
-    word-wrap: break-word;
-    /* IE 5+ */ }
-
   .navbar .brand {
-    display: none !important; } }
+    display: none !important; }
+
+  .btn-group > .btn-large {
+    font-size: 14px !important; }
+
+  .btn-large {
+    padding: 2px 4px !important; }
+
+  h2 {
+    font-size: 24px; }
+
+  ul#listheader li, ul#primarylistheader li {
+    font-size: 14px;
+    line-height: 18px; }
+
+  .goalsinprogress li, .goalscompleted li, .goalsmissed li, .primarygoals li {
+    padding: 4px;
+    font-size: 16px;
+    line-height: 20px; }
+
+  .goaldeadline {
+    font-size: 13px; }
+
+  #chartbox {
+    left: 0;
+    width: 520px;
+    height: 400px; }
+
+  #thischart {
+    width: 480px; }
+
+  .closechart {
+    right: 10px; }
+
+  #incentivebox {
+    width: 200px;
+    height: 240px;
+    top: 10px;
+    right: 0; }
+
+  #incentivepic {
+    width: 180px;
+    height: 180px;
+    margin: 10px auto 0;
+    background-size: 180px 180px; }
+
+  #incentivetext {
+    margin-top: 5px;
+    font-size: 14px;
+    text-align: center; } }
 /* Default Desktop */
 @media (min-width: 980px) {
   #content {

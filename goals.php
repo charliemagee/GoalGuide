@@ -30,7 +30,6 @@ require_once("header.php");
     <div id="main" class='columnfull'>
         <h2 id="studentname" class="pull-left">Goals</h2>
         <div class="btn-group pull-left push-right" data-toggle="buttons-radio">
-            <!--                <button type="button" id="all" class="btn btn-medium btn-primary"><i class="fa-large icon-stack" ></i> All</button>-->
             <button type="button" id="school" class="btn btn-large btn-primary category active" data-category="school"><i class="fa-large icon-book" ></i> School</button>
             <button type="button" id="work" class="btn btn-large btn-primary category" data-category="work"><i class="fa-large icon-boss" ></i> Work</button>
             <button type="button" id="personal" class="btn btn-large btn-primary category" data-category="personal"><i class="fa-large icon-basketball" ></i> Personal</button>
@@ -45,8 +44,8 @@ require_once("header.php");
         </div>
 
         <!-- Button to create new Goal -->
-        <a href="#createModal" role="button" id="addgoal" class="btn btn-success btn-medium pull-right" data-toggle="modal"><i class="fa icon-checkmark" ></i>&nbsp;&nbsp;Add Goal</a>
-        <a href="#createModal" role="button" id="addprimarygoal" class="btn btn-success btn-medium pull-right" data-toggle="modal"><i class="fa icon-checkmark" ></i>&nbsp;&nbsp;Add Primary Goal</a>
+        <a href="#createModal" role="button" id="addgoal" class="btn btn-success btn-large pull-right" data-toggle="modal"><i class="fa icon-checkmark" ></i>&nbsp;&nbsp;Add Goal</a>
+        <a href="#createModal" role="button" id="addprimarygoal" class="btn btn-success btn-large pull-right" data-toggle="modal"><i class="fa icon-checkmark" ></i>&nbsp;&nbsp;Add Primary Goal</a>
         <div class="clearfix"></div>
 
         <div id="goalcontent">

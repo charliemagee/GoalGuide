@@ -1010,8 +1010,6 @@ $('#modalclose').click ->
 # this is for regular goals
 $(".goalsection").on "click", "i.chartbutton", ->
   $("#chartbox").show()
-  $("#incentivebox").css('top', -10)
-  $("#incentivebox").css('right', 25)
   $("#incentivebox").show()
   $(".chart-backdrop").show()
   incentivetext = $(this).closest('li').data('incentivetext')
@@ -1071,8 +1069,6 @@ $(".goalsection").on "click", "i.chartbutton", ->
 # this is for primary goals
 $(".primarygoals").on "click", "i.chartbutton", ->
   $("#chartbox").show()
-  $("#incentivebox").css('top', -10)
-  $("#incentivebox").css('right', 25)
   $("#incentivebox").show()
   $(".chart-backdrop").show()
   incentivetext = $(this).closest('li').data('incentivetext')
