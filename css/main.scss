@@ -777,6 +777,11 @@ header#mainheader{
     font-size: 14px;
     text-align: center;
   }
+  .modal-body {
+    overflow-y: auto;
+    max-height: 340px;
+    padding: 15px;
+  }
  
 }
 

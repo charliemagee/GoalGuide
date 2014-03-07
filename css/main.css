@@ -4614,7 +4614,12 @@ footer {
   #incentivetext {
     margin-top: 5px;
     font-size: 14px;
-    text-align: center; } }
+    text-align: center; }
+
+  .modal-body {
+    overflow-y: auto;
+    max-height: 340px;
+    padding: 15px; } }
 /* Default Desktop */
 @media (min-width: 980px) {
   #content {
