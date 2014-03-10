@@ -287,9 +287,10 @@ $('#personal').click(function() {
 });
 
 displayMyGoalList = function() {
-  var completedHTML, inprogressHTML;
+  var completedHTML, inprogressHTML, missedHTML;
   completedHTML = [];
   inprogressHTML = [];
+  missedHTML = [];
   goals = JSON.parse(localStorage["goals"]);
   $.each(goals, function(i, goal) {
     var compareDate, day, month, now, year;
@@ -317,11 +318,18 @@ displayMyGoalList = function() {
         } else {
           return inprogressHTML.push("<li class='" + goal.goal.status + "' data-info='" + goal.goal.infotype + "' data-goalguid='" + goal.goal.goalguid + "' data-infocreated='" + newinfocreated + "' data-myinfo='[" + goal.goal.myinfo + "]' data-incentivetext='" + goal.goal.incentivetext + "' data-incentivepic='" + goal.goal.incentivepic + "' data-goal='" + goal.goal.goal + "' data-complete='" + goal.goal.completedmessage + "'>\n<div class='goalupper'>\n  <span class='goalicon'><i class='fa-medium details icon-" + goal.goal.icon + "'></i></span>\n  <span class='goaltitle'>" + goal.goal.goal + "</span>\n  <span class='thechartbutton'><i class='fa-medium icon-stats chartbutton' ></i></span>\n</div>\n<div class='goallower'>\n  <div class='control-group uncheckit' >\n    <label class='control-label thequestion' for='completedquestion'>Did you complete this goal?</label>\n    <div class='controls theanswer'>\n      <label class='radio'>\n       <input type='radio' name='completedyes' value='true' /> Yes\n      </label>\n      <label class='radio'>\n       <input type='radio' name='completedno' value='false' /> No\n      </label>\n    </div>\n  </div>\n  <span class='goaldeadline'>Deadline: " + goal.goal.deadline + "</span>\n</div></li>");
         }
+      } else {
+        if (goal.goal.infotype === 'text') {
+          return missedHTML.push("<li class='" + goal.goal.status + "' data-info='" + goal.goal.infotype + "' data-goalguid='" + goal.goal.goalguid + "' data-infocreated='" + newinfocreated + "' data-myinfo='[" + goal.goal.myinfo + "]' data-incentivetext='" + goal.goal.incentivetext + "' data-incentivepic='" + goal.goal.incentivepic + "' data-goal='" + goal.goal.goal + "' data-complete='" + goal.goal.completedmessage + "'>\n<div class='goalupper'>\n  <span class='goalicon'><i class='fa-medium details icon-" + goal.goal.icon + "'></i></span>\n  <span class='goaltitle'>" + goal.goal.goal + "</span>\n  <span class='thechartbutton'><i class='fa-medium icon-stats chartbutton' ></i></span>\n</div>\n<div class='goallower'>\n     <label class='gatherinfo'>\n       <input type='number' name='info' class='info' />&nbsp; Enter a number.\n     </label>\n  <div class='control-group uncheckit' >\n    <label class='control-label thequestion' for='completedquestion'>Did you complete this goal?</label>\n    <div class='controls theanswer'>\n      <label class='radio'>\n       <input type='radio' name='completedyes' value='true' /> Yes\n      </label>\n      <label class='radio'>\n       <input type='radio' name='completedno' value='false' /> No\n      </label>\n    </div>\n  </div>\n  <span class='goaldeadline'>Deadline: " + goal.goal.deadline + "</span>\n</div></li>");
+        } else {
+          return missedHTML.push("<li class='" + goal.goal.status + "' data-info='" + goal.goal.infotype + "' data-goalguid='" + goal.goal.goalguid + "' data-infocreated='" + newinfocreated + "' data-myinfo='[" + goal.goal.myinfo + "]' data-incentivetext='" + goal.goal.incentivetext + "' data-incentivepic='" + goal.goal.incentivepic + "' data-goal='" + goal.goal.goal + "' data-complete='" + goal.goal.completedmessage + "'>\n<div class='goalupper'>\n  <span class='goalicon'><i class='fa-medium details icon-" + goal.goal.icon + "'></i></span>\n  <span class='goaltitle'>" + goal.goal.goal + "</span>\n  <span class='thechartbutton'><i class='fa-medium icon-stats chartbutton' ></i></span>\n</div>\n<div class='goallower'>\n  <div class='control-group uncheckit' >\n    <label class='control-label thequestion' for='completedquestion'>Did you complete this goal?</label>\n    <div class='controls theanswer'>\n      <label class='radio'>\n       <input type='radio' name='completedyes' value='true' /> Yes\n      </label>\n      <label class='radio'>\n       <input type='radio' name='completedno' value='false' /> No\n      </label>\n    </div>\n  </div>\n  <span class='goaldeadline'>Deadline: " + goal.goal.deadline + "</span>\n</div></li>");
+        }
       }
     }
   });
   $(".goalsinprogress").html(inprogressHTML.join(""));
-  return $(".goalscompleted").html(completedHTML.join(""));
+  $(".goalscompleted").html(completedHTML.join(""));
+  return $(".goalsmissed").html(missedHTML.join(""));
 };
 
 $(".goalscompleted").delegate("input[type=checkbox]", "click", function() {
@@ -341,6 +349,7 @@ $(".goalscompleted").delegate("input[type=checkbox]", "click", function() {
 });
 
 $(".goalsinprogress").delegate("input[name=completedyes]", "click", function() {
+  var nontextinfo;
   checkinginfotype = $(this).closest('li').data('info');
   if ((!$(this).closest('li').find('input[name="info"]').val()) && (checkinginfotype === 'text')) {
     alert("You have to enter a number before this goal can be completed.");
@@ -349,14 +358,18 @@ $(".goalsinprogress").delegate("input[name=completedyes]", "click", function() {
     goalguid = $(this).closest('li').data("goalguid");
     congratulations = $(this).closest('li').data("complete");
     emailGoal = $(this).closest('li').data('goal');
-    newinfo = parseInt($(this).closest('li').find('input[type="number"]').val(), 10);
     mygoaldate = createInfoDate();
+    newinfo = parseInt($(this).closest('li').find('input[type="number"]').val(), 10);
+    nontextinfo = 1;
     updateStatus = 'completed';
     incentivepic = 'url("' + $(this).closest('li').data('incentivepic') + '")';
     $.each(goals, function(index, goal) {
       if (goal.goal.goalguid === goalguid) {
         if (goal.goal.infotype === 'text') {
           goal.goal.myinfo.push(newinfo);
+          goal.goal.infocreated.push(mygoaldate);
+        } else {
+          goal.goal.myinfo.push(nontextinfo);
           goal.goal.infocreated.push(mygoaldate);
         }
         goal.goal.status = updateStatus;
@@ -374,6 +387,31 @@ $(".goalsinprogress").delegate("input[name=completedyes]", "click", function() {
     goalChange();
     return displayMyGoalList();
   }
+});
+
+$(".goalsinprogress").delegate("input[name=completedno]", "click", function() {
+  goalguid = $(this).closest('li').data("goalguid");
+  emailGoal = $(this).closest('li').data('goal');
+  mygoaldate = createInfoDate();
+  newinfo = 0;
+  updateStatus = 'missed';
+  $.each(goals, function(index, goal) {
+    if (goal.goal.goalguid === goalguid) {
+      goal.goal.myinfo.push(newinfo);
+      goal.goal.infocreated.push(mygoaldate);
+      goal.goal.status = updateStatus;
+      goal.goal.datecompleted = mygoaldate;
+      goalmessage = firstname + ' has not completed this goal: ' + goal.goal.goal;
+      localStorage.setItem("goalmessage", JSON.stringify(goalmessage));
+      return false;
+    }
+  });
+  localStorage.setItem("goals", JSON.stringify(goals));
+  $(this).find('.info').val('');
+  $(this).closest('li').removeClass("inprogress completed").addClass("missed").prop("checked", false);
+  emailCompletion(goalmessage);
+  goalChange();
+  return displayMyGoalList();
 });
 
 displayprimaryGoals = function() {

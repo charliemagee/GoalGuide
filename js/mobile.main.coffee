@@ -218,6 +218,7 @@ $('#personal').click ->
 displayMyGoalList = ->
   completedHTML = []
   inprogressHTML = []
+  missedHTML = []
   goals = JSON.parse(localStorage["goals"])
   $.each goals, (i, goal) ->
     newinfocreated = JSON.stringify(goal.goal.infocreated)
@@ -298,9 +299,56 @@ displayMyGoalList = ->
                             </div>
                             <span class='goaldeadline'>Deadline: #{ goal.goal.deadline }</span>
                           </div></li>"""
+      else
+        if (goal.goal.infotype is 'text')
+          missedHTML.push """<li class='#{ goal.goal.status }' data-info='#{ goal.goal.infotype }' data-goalguid='#{ goal.goal.goalguid }' data-infocreated='#{ newinfocreated }' data-myinfo='[#{ goal.goal.myinfo }]' data-incentivetext='#{ goal.goal.incentivetext }' data-incentivepic='#{ goal.goal.incentivepic }' data-goal='#{ goal.goal.goal }' data-complete='#{ goal.goal.completedmessage }'>
+                          <div class='goalupper'>
+                            <span class='goalicon'><i class='fa-medium details icon-#{ goal.goal.icon }'></i></span>
+                            <span class='goaltitle'>#{ goal.goal.goal }</span>
+                            <span class='thechartbutton'><i class='fa-medium icon-stats chartbutton' ></i></span>
+                          </div>
+                          <div class='goallower'>
+                               <label class='gatherinfo'>
+                                 <input type='number' name='info' class='info' />&nbsp; Enter a number.
+                               </label>
+                            <div class='control-group uncheckit' >
+                              <label class='control-label thequestion' for='completedquestion'>Did you complete this goal?</label>
+                              <div class='controls theanswer'>
+                                <label class='radio'>
+                                 <input type='radio' name='completedyes' value='true' /> Yes
+                                </label>
+                                <label class='radio'>
+                                 <input type='radio' name='completedno' value='false' /> No
+                                </label>
+                              </div>
+                            </div>
+                            <span class='goaldeadline'>Deadline: #{ goal.goal.deadline }</span>
+                          </div></li>"""
+        else
+          missedHTML.push """<li class='#{ goal.goal.status }' data-info='#{ goal.goal.infotype }' data-goalguid='#{ goal.goal.goalguid }' data-infocreated='#{ newinfocreated }' data-myinfo='[#{ goal.goal.myinfo }]' data-incentivetext='#{ goal.goal.incentivetext }' data-incentivepic='#{ goal.goal.incentivepic }' data-goal='#{ goal.goal.goal }' data-complete='#{ goal.goal.completedmessage }'>
+                          <div class='goalupper'>
+                            <span class='goalicon'><i class='fa-medium details icon-#{ goal.goal.icon }'></i></span>
+                            <span class='goaltitle'>#{ goal.goal.goal }</span>
+                            <span class='thechartbutton'><i class='fa-medium icon-stats chartbutton' ></i></span>
+                          </div>
+                          <div class='goallower'>
+                            <div class='control-group uncheckit' >
+                              <label class='control-label thequestion' for='completedquestion'>Did you complete this goal?</label>
+                              <div class='controls theanswer'>
+                                <label class='radio'>
+                                 <input type='radio' name='completedyes' value='true' /> Yes
+                                </label>
+                                <label class='radio'>
+                                 <input type='radio' name='completedno' value='false' /> No
+                                </label>
+                              </div>
+                            </div>
+                            <span class='goaldeadline'>Deadline: #{ goal.goal.deadline }</span>
+                          </div></li>"""
 
   $(".goalsinprogress").html inprogressHTML.join("")
   $(".goalscompleted").html completedHTML.join("")
+  $(".goalsmissed").html missedHTML.join("")
 
 
 $(".goalscompleted").delegate "input[type=checkbox]", "click", ->
@@ -326,17 +374,17 @@ $(".goalsinprogress").delegate "input[name=completedyes]", "click", ->
     congratulations = $(this).closest('li').data("complete")
     emailGoal = $(this).closest('li').data('goal')
     mygoaldate = createInfoDate()
+    newinfo = parseInt($(this).closest('li').find('input[type="number"]').val(), 10)
+    nontextinfo = 1
     updateStatus = 'completed'
     incentivepic = 'url("' + $(this).closest('li').data('incentivepic') + '")'
     $.each goals, (index, goal) ->
       if goal.goal.goalguid is goalguid
         if goal.goal.infotype is 'text'
-          newinfo = parseInt($(this).closest('li').find('input[type="number"]').val(), 10)
           goal.goal.myinfo.push newinfo
           goal.goal.infocreated.push mygoaldate
         else
-          newinfo = 1
-          goal.goal.myinfo.push newinfo
+          goal.goal.myinfo.push nontextinfo
           goal.goal.infocreated.push mygoaldate
         goal.goal.status = updateStatus
         goal.goal.datecompleted = mygoaldate

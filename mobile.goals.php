@@ -80,6 +80,9 @@
         <ul class="primarygoals">
 
         </ul>
+        <ul class="goalsmissed goalsection">
+
+        </ul>
     </div>
     <div id="chartbox">
         <span class="goalremove closechart hidechart"><button type="button" class="btn btn-mini btn-danger" ><b>X</b> </button></span>
