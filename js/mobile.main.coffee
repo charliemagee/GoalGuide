@@ -325,13 +325,17 @@ $(".goalsinprogress").delegate "input[name=completedyes]", "click", ->
     goalguid = $(this).closest('li').data("goalguid")
     congratulations = $(this).closest('li').data("complete")
     emailGoal = $(this).closest('li').data('goal')
-    newinfo = parseInt($(this).closest('li').find('input[type="number"]').val(), 10)
     mygoaldate = createInfoDate()
     updateStatus = 'completed'
     incentivepic = 'url("' + $(this).closest('li').data('incentivepic') + '")'
     $.each goals, (index, goal) ->
       if goal.goal.goalguid is goalguid
         if goal.goal.infotype is 'text'
+          newinfo = parseInt($(this).closest('li').find('input[type="number"]').val(), 10)
+          goal.goal.myinfo.push newinfo
+          goal.goal.infocreated.push mygoaldate
+        else
+          newinfo = 1
           goal.goal.myinfo.push newinfo
           goal.goal.infocreated.push mygoaldate
         goal.goal.status = updateStatus
@@ -346,6 +350,28 @@ $(".goalsinprogress").delegate "input[name=completedyes]", "click", ->
     emailCompletion(goalmessage)
     goalChange()
     displayMyGoalList()
+
+$(".goalsinprogress").delegate "input[name=completedno]", "click", ->
+  goalguid = $(this).closest('li').data("goalguid")
+  emailGoal = $(this).closest('li').data('goal')
+  mygoaldate = createInfoDate()
+  newinfo = 0
+  updateStatus = 'missed'
+  $.each goals, (index, goal) ->
+    if goal.goal.goalguid is goalguid
+      goal.goal.myinfo.push newinfo
+      goal.goal.infocreated.push mygoaldate
+      goal.goal.status = updateStatus
+      goal.goal.datecompleted = mygoaldate
+      goalmessage = firstname + ' has not completed this goal: ' + goal.goal.goal
+      localStorage.setItem("goalmessage", JSON.stringify(goalmessage))
+      false # break the each
+  localStorage.setItem "goals", JSON.stringify(goals)
+  $(this).find('.info').val('')
+  $(this).closest('li').removeClass("inprogress completed").addClass("missed").prop("checked", false)
+  emailCompletion(goalmessage)
+  goalChange()
+  displayMyGoalList()
 
 displayprimaryGoals = ->
   primaryGoalsHTML = []
