@@ -4,7 +4,7 @@ Stackoverflow -- http://stackoverflow.com/  This wouldn't have happened without 
 
 JS Fiddle -- http://jsfiddle.net/   Took me a while to get around to it, but now I usually find my errors before begging at stackoverflow.
 
-CoffeeScript -- http://coffeescript.org/  I was just starting to learn Javascript when CoffeeScript started getting a lot of attention. I went from 99 errors per day of coding to 5 errors per day.
+CoffeeScript -- http://coffeescript.org/  I was just starting to learn Javascript when CoffeeScript started getting a lot of attention. I went from 99 errors per hour of coding to 5 errors per hour.
 
 jQuery -- http://jquery.com/  As much as I want to try out meteor or angular, this gets the job done and I know what's going on
 
