@@ -1,0 +1,823 @@
+@import "compass_twitter_bootstrap_awesome";
+@import "compass_twitter_bootstrap_responsive";
+@import "cupertino/jquery-ui-1.10.0.custom.css";
+
+html {
+  overflow-y: scroll;
+  font-size: 62.5%;
+}
+
+body {
+  padding-top: 10px;
+  background: url('../images/dust.png');
+  font-family: 'AmaranthRegular', Arial, sans-serif;
+}
+
+section {
+  overflow: auto;
+}
+header#mainheader{
+  position: relative;
+}
+textarea {
+  resize: vertical;
+}
+.navbar .brand {
+  margin-right: 7rem;
+}
+.navbar a {
+  font-size: 18px;;
+}
+.menuicon {
+  display: inline-block;
+  padding: 0;
+  margin: 0;
+}
+
+
+
+// --- colors ----------------------
+
+$green-dark: #2d8c26;
+$green-main: #79cb73;
+
+$yellow-main: #f2e9a3;
+$gold: #ffd200;
+
+$blue-dark: #2c77cb;
+$blue-light: #d3e7fe;
+
+$red-main: #e30707;
+$red-light: #f6d3d3;
+
+.green {
+  color: $green-dark;
+}
+.blue {
+  color: $blue-dark;
+}
+
+// --- layout ----------------------
+.columnleft, .columnright, .columntwothirds, .columnonethird, .columnfull {
+  position: relative;
+  padding: 1%;
+  background: white;
+  -webkit-box-shadow:  0px 0px 5px 3px rgba(10, 10, 10, .15);
+  box-shadow:  0px 0px 5px 3px rgba(10, 10, 10, .15);
+  @include border-radius(16px);
+}
+.columnfull {
+  float: left;
+  width:97.5%;
+}
+.columntwothirds {
+  float: right;
+  width: 70%;
+}
+.columnonethird {
+  float: left;
+  width:25%;
+}
+.columnleft {
+  float: left;
+  width: 45%;
+}
+.columnright {
+  float: right;
+  width: 45%;
+}
+#checkid {
+  display: none;
+  position: absolute;
+  top: 10%;
+  left: 40%;
+  width: 320px;
+  padding: 20px;
+  z-index: 500;
+  background-color: lighten($green-main, 30%);
+  -webkit-box-shadow:  0px 0px 5px 3px rgba(10, 10, 10, .15);
+  box-shadow:  0px 0px 5px 3px rgba(10, 10, 10, .15);
+  @include border-radius(10px);
+}
+#checkid input {
+  width: 130px;
+  margin-bottom: -5px;
+}
+#errorlogin {
+  display: none;
+  background: white;
+  width: 300px;
+  padding: 10px;
+  margin-bottom: 10px;
+  color: red;
+  font-size: 16px;
+}
+#logout {
+  display: none;
+  float: right;
+  position: relative;
+  margin: -70px 30px 0 0;
+  width: 63px;
+  padding: 10px;
+  background-color: lighten($green-main, 30%);
+  -webkit-box-shadow:  0px 0px 5px 3px rgba(10, 10, 10, .15);
+  box-shadow:  0px 0px 5px 3px rgba(10, 10, 10, .15);
+  @include border-radius(10px);
+}
+.sampleimages {
+  margin: -15px 0 0 30px;
+}
+.success {
+  width: 600px;
+  line-height: 60px;
+  background: $blue-light;
+  display: none;
+}
+#primaryschool, #primarywork, #primarypersonal {
+  display: none;
+}
+#chartbox {
+  display: none;
+  position: absolute;
+  top: -50px;
+  left: 20px;
+  z-index: 5000;
+  width: 560px;
+  height: 400px;
+  background: black;
+}
+#thischart {
+  margin: 20px auto 0;
+  width: 520px;
+  height: 356px;
+  background: #fffce9;
+}
+.chart-backdrop {
+  display: none;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: $zindexModalBackdrop;
+  background-color: $black;
+  @include opacity(80);
+}
+.closechart {
+  position: absolute;
+  top: 20px;
+  right: 5px;
+  z-index: 5010;
+}
+#incentivebox {
+  display: none;
+  position: absolute;
+  z-index: 5100;
+  width: 270px;
+  height: 325px;
+  top: 10px;
+  right: 25px;
+  border: 1px solid #ddd;
+  background-color: lighten($green-main, 15%);
+  @include border-radius(4px);
+  @include box-shadow(0 1px 1px rgba(0,0,0,.055));
+  @include transition(all .2s ease-in-out);
+  overflow: auto;
+}
+#incentivepic {
+  width: 250px;
+  height: 250px;
+  margin: 10px auto 0;
+  //  background: url('../images/pizza.jpg') no-repeat;
+}
+#incentivetext {
+  margin-top: 5px;
+  font-size: 14px;
+  text-align: center;
+}
+.congratsmessageholder {
+  position: absolute;
+  top: -100px;
+  left: 50%;
+}
+.congratsmessage {
+  display: none;
+  position: relative;
+  left: -50%;
+  width: 300px;
+  padding: 50px 35px;
+  background-color: $green-main;
+  border: 5px solid white;
+  font-size: 32px;
+  font-weight: normal;
+  color: black;
+  font-family: 'AmaranthBold', Arial, sans-serif;
+  text-align: center;
+}
+.detailsLabelupdate {
+  display: none;
+}
+// --- position tweaks ---------------------
+.push-right {
+  margin-left: 20px;
+}
+.push-right-savegoal {
+  margin-left: 160px;
+}
+#activityholder {
+  float: left;
+  width: 8rem;
+  height: 10.5rem;
+  margin: 1rem;
+}
+#calendar {
+  clear: both;
+  display: none;
+  padding-top: 2rem;
+}
+#thanks {
+  display: none;
+}
+.thanksmessage {
+  margin: 1.8rem 0 0 2rem;
+  color: black;
+}
+#thanksbtn {
+  float: right;
+  margin: -3.6rem 2rem 0 0;
+}
+
+// --- UL List ---------------------
+.goalsection {
+  display: none;
+}
+#usercontent {
+  width: 100%;
+}
+.users {
+  display: block;
+}
+
+#usercontent ul.users {
+  margin:0;
+  padding:0;
+  list-style-type: none;
+  overflow: hidden;
+}
+#goalcontent, #primarygoalcontent {
+  position: relative;
+  display: none;
+}
+.goalsinprogress, .goalscompleted,
+.primarygoals {
+  margin:0 0 10px 0;
+  padding:0;
+  list-style-type: none;
+  overflow: hidden;
+}
+.users li, .goalsinprogress li, .goalscompleted li,
+.primarygoals li {
+  position: relative;
+  margin: 10px auto;
+  color: black;
+  overflow: hidden;
+}
+.users li {
+  padding: 10px 15px;
+  font-size: 24px;
+  line-height: 28px;
+  background-color: $yellow-main;
+  border-left: 4px solid $gold;
+  border-right: 4px solid $gold;
+}
+.goalsinprogress li, .goalscompleted li, .primarygoals li {
+  padding: 10px 15px;
+  font-size: 24px;
+  line-height: 28px;
+  text-align: center;
+  text-transform: capitalize;
+}
+//.goalscompleted li.completed, .primarygoals li.completed {
+//  background-color: lighten($green-main, 15%);
+//  border-left: 4px solid darken($green-main, 20%);
+//  border-right: 4px solid darken($green-main, 20%);
+//}
+.goalsinprogress li.inprogress, .primarygoals li.inprogress, .goalscompleted li.completed, .primarygoals li.completed {
+  background-color: $blue-light;
+  border-left: 4px solid darken($blue-dark, 20%);
+  border-right: 4px solid darken($blue-dark, 20%);
+}
+.primarygoals li.parent {
+  background-color: lightgray;
+  border-left: 4px solid black;
+  border-right: 4px solid black;
+}
+.primarygoals li.sub {
+  width: 95%;
+  float: right;
+  margin-top: -5px;
+}
+.users li:hover {
+  background-color: lighten($green-main, 15%);
+  border-left: 4px solid darken($green-main, 20%);
+  border-right: 4px solid darken($green-main, 20%);
+}
+.users li.active {
+  background-color: $green-main;
+  border-left: 4px solid darken($green-main, 20%);
+  border-right: 4px solid darken($green-main, 20%);
+}
+ul#listheader, ul#primarylistheader {
+  margin:0;
+  padding:0;
+  width: 100%;
+  list-style-type: none;
+}
+ul#listheader li, ul#primarylistheader li {
+  display: inline-block;
+  font-size: 16px;
+  line-height: 20px;
+  text-align: center;
+}
+ul#listheader li.listheadertitle, ul#primarylistheader li.listheadertitle {
+  width: 50%;
+  float: left;
+  text-align: center;
+}
+ul#listheader li.listheaderdeadline, ul#primarylistheader li.listheaderdeadline {
+  float: left;
+  width: 10%;
+  text-align: center;
+}
+ul#listheader li.listheaderstatus, ul#primarylistheader li.listheaderstatus {
+  float: right;
+  width: 11%;
+}
+ul#listheader li.listheadergatherinfo, ul#listheader li.listheaderchart, ul#primarylistheader li.listheadergatherinfo, ul#primarylistheader li.listheaderchart {
+  float: right;
+  width: 4%;
+  margin: 0 15px 0 0;
+  padding-right: 5px;
+}
+ul#listheader li.listheaderremove, ul#primarylistheader li.listheaderremove {
+  float: right;
+  width: 7%;
+  padding-right: 7px;
+}
+ul#listheader li.listheaderusername {
+  margin-left: 15px;
+}
+ul#listheader li.listheaderuserremove {
+  float: right;
+}
+ul#listheader li.listheaderusername,  ul#listheader li.listheaderpassword, .username, .password {
+  float: left;
+  width: 15%;
+  text-align: left;
+}
+ul#listheader li.listheaderuserfullname, .userfullname {
+  float: left;
+  width: 20%;
+  text-align: left;
+}
+ul#listheader li.listheadernotifications, .notifications {
+  float: left;
+  width: 35%;
+  text-align: left;
+}
+#daysoftheweek, #daysoftheweekA, #daysoftheweekB, #daysoftheweekC {
+  display: none;
+}
+.personal, .Personal {
+  background-image: url('../images/personalicon.png');
+  background-repeat: no-repeat;
+}
+.work, .Work {
+  background-image: url('../images/workicon.png');
+  background-repeat: no-repeat;
+}
+.school, .School {
+  background-image: url('../images/schoolicon.png');
+  background-repeat: no-repeat;
+}
+.goaltitle {
+  width: 50%;
+  float: left;
+  font-size: 24px;
+  line-height: 30px;
+  text-align: left;
+}
+.goalstatus {
+  float: right;
+  width: 11%;
+  line-height: 26px;
+  margin: 0;
+}
+.goaldeadline {
+  float: left;
+  width: 10%;
+  font-size: 16px;
+  line-height: 26px;
+  margin: 0;
+}
+.gatherinfo input {
+  float: right;
+  width: 4%;
+  margin: 0 10px 0 0;
+}
+.gathercompletedinfo {
+  float: right;
+  width: 4%;
+  margin: 0 22px 0 0;
+}
+.chartbutton {
+  float: right;
+  width: 4%;
+  margin: 0 15px 0 0;
+}
+.goalremove {
+  float: right;
+  width: 7%;
+  line-height: 26px;
+  margin: 0;
+}
+.primaryremove {
+  padding: 0 6px;
+}
+#savegoal, #updategoal {
+  display: none;
+}
+#addgoalform, #adduserform {
+  display: none;
+  margin-bottom: 20px;
+}
+#adduserform input {
+  width: 92%;
+  margin-bottom: -5px;
+}
+#adduserform .form-horizontal .control-group {
+  margin-bottom: 10px;
+}
+
+#addgoalform #thecategory {
+  width: 40%;
+}
+.goalcomplete {
+  width: 90%;
+}
+#addgoalform #thestartdate, #addgoalform #theenddate {
+  width: 40%;
+}
+#addgoal, #addprimarygoal {
+  display: none;
+}
+.icondropdown, .icondropdownsub {
+  margin: 0;
+  padding: 5px 0 0 10px;
+  list-style-type: none;
+  width: 94%;
+  height: 160px;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  -khtml-border-radius: 6px;
+  border-radius: 6px;
+  border: solid 1px #e3e3e3;
+  background-color: #f2f2f2;
+}
+.icondropdownsub {
+  height: 80px;
+  overflow: auto;
+}
+.icondropdown li, .icondropdownsub li {
+  display: inline-block;
+  float: left;
+  margin: 5px 0 0 0;
+  width: 68px;
+}
+.incentive {
+  margin: 0;
+  padding: 5px 0 0 10px;
+  list-style-type: none;
+  width: 94%;
+  height: 75px;
+  -webkit-border-radius: 6px;
+  -moz-border-radius: 6px;
+  -khtml-border-radius: 6px;
+  border-radius: 6px;
+  border: solid 1px #e3e3e3;
+  background-color: #f2f2f2;
+}
+.incentive li {
+  display: inline-block;
+  float: left;
+  margin: 5px 20px 0 0;
+  width: 65px;
+}
+.checkboxinfo {
+  display: block;
+  margin: -13px 0 0 20px;
+  font-family: Arial, sans-serif;
+  font-size: 13px;
+  line-height: 14px;
+}
+.user {
+  position: relative;
+  float: left;
+}
+.username {
+  color: $blue-dark;
+}
+.username:hover {
+  color: lighten($blue-dark, 15%);
+  cursor: hand;
+}
+.clear {
+  clear: both;
+}
+.radio.inline {
+  width: 60px;
+  height: 36px;
+  margin: 0;
+  padding:0;
+}
+
+/* typography */
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'AmaranthBold', Arial, sans-serif;
+  color: #0568c4;
+  font-weight: normal;
+  margin: 0 0 8px 0;
+  text-align: left;
+}
+h1 {
+  font-size: 36px;
+}
+h2 {
+  font-size: 32px;
+}
+h3 {
+  font-size: 28px;
+}
+h4 {
+  font-size: 24px;
+}
+h5 {
+  font-size: 20px;
+}
+h6 {
+  font-size: 18px;
+}
+p {
+  font-family:  'AmaranthRegular', Arial, sans-serif;
+  font-size: 18px;
+  line-height: 24px;
+}
+.fa-large {
+  font-size: 28px;
+  vertical-align: middle;
+  padding: 0 8px;
+}
+.required {
+  color: red;
+}
+.small {
+  font-size: 90%;
+  font-family: Arial, sans-serif;
+  color: black;
+  font-weight: normal;
+  text-align: center;
+}
+
+/* tweaks to bootstrap */
+.navbar h3 a {
+  color: white !important;
+  font-size: 30px !important;
+  margin: 0 0 0 20px;
+}
+.navbar h3 a:hover {
+  color: black !important;
+  text-decoration: none;
+}
+.btn-small, .btn-medium, .btn-large, .btn-huge {
+  font-family: 'AmaranthRegular', Arial, sans-serif;
+  font-weight: normal !important;
+}
+a {
+  text-decoration: none !important;
+}
+
+/* footer */
+
+footer {
+  clear: both;
+  margin: -30px auto 20px;
+  padding-top: 5px;
+  font-family: 'AmaranthRegular', Arial, sans-serif;
+  font-weight: normal !important;
+  font-size:13px !important;
+  line-height: 15px !important;
+  /* border-top: 2px solid white; */
+  width:100%;
+  color: gray;
+  span {
+    margin-left: 35px;
+    color: lightgray;
+  }
+  a {
+    color: darkgray;
+    &:hover {
+      color: black;
+      text-decoration: none;
+    }
+  }
+  small {
+    float: left;
+    margin-left:20px;
+  }
+  ul {
+    float: right;
+    list-style: none;
+    margin:0 35px 0 0;
+    li {
+      float: left;
+      margin-left: 15px;
+    }
+  }
+}
+
+
+// Media Queries -------------------------------------------------------------------
+
+@media  (max-width: 319px) {
+
+  header#mainheader{
+    background: url('../images/gg_logo.png') no-repeat;
+    height:85px;
+    margin-top:-20px;
+  }
+
+}
+
+
+@media (min-width: 320px) and (max-width: 480px) {
+
+  header#mainheader{
+    background: url('../images/gg_logo.png') no-repeat;
+    height:85px;
+    margin-top:-20px;
+  }
+
+}
+
+/* Landscape Phone To Small Desktop & Portrait Tablet */
+// --------------------------------------------------
+
+@media (min-width: 481px) and (max-width: 767px) {
+
+  header#mainheader{
+    background: url('../images/gg_logo.png') no-repeat;
+    height:85px;
+    margin-top:-20px;
+  }
+  ul#listheader li, ul#primarylistheader li {
+    font-size: 14px;
+    line-height: 18px;
+  }
+  .goalsinprogress li, .goalscompleted li, .primarygoals li {
+    padding: 4px;
+    font-size: 16px;
+    line-height: 20px;
+  }
+  .btn-group > .btn-large {
+    font-size: 14px !important;
+  }
+  .btn-large {
+    padding: 2px 4px !important;
+  }
+  h2 {
+    font-size: 24px;
+  }
+  .goaldeadline {
+    font-size: 13px;
+  }
+
+}
+
+
+/* Tablets And Below */
+// -----------------
+@media (min-width: 768px) and (max-width: 979px) {
+
+  header#mainheader{
+    background: url('../images/gg_logo.png') no-repeat;
+    height:85px;
+    margin-top:-20px;
+  }
+  #content {
+    margin: 20px 0 30px 0;
+  }
+  #sidebar ul {
+    margin-left: 15px;
+  }
+  .navbar .brand {
+    display: none !important;
+  }
+  .btn-group > .btn-large {
+    font-size: 14px !important;
+  }
+  .btn-large {
+    padding: 2px 4px !important;
+  }
+  h2 {
+    font-size: 24px;
+  }
+  ul#listheader li, ul#primarylistheader li {
+    font-size: 14px;
+    line-height: 18px;
+  }
+  .goalsinprogress li, .goalscompleted li, .primarygoals li {
+    padding: 4px;
+    font-size: 16px;
+    line-height: 20px;
+  }
+  .goaldeadline {
+    font-size: 13px;
+  }
+  #chartbox {
+    left: 0;
+    width: 520px;
+    height: 400px;
+  }
+  #thischart {
+    width: 480px;
+  }
+  .closechart {
+    right: 10px;
+  }
+  #incentivebox {
+    width: 200px;
+    height: 240px;
+    top: 10px;
+    right: 0;
+  }
+  #incentivepic {
+    width: 180px;
+    height: 180px;
+    margin: 10px auto 0;
+    background-size: 180px 180px;
+    //  background: url('../images/pizza.jpg') no-repeat;
+  }
+  #incentivetext {
+    margin-top: 5px;
+    font-size: 14px;
+    text-align: center;
+  }
+  .modal-body {
+    overflow-y: auto;
+    max-height: 340px;
+    padding: 15px;
+  }
+
+}
+
+
+/* Default Desktop */
+// ---------------
+
+@media (min-width: 980px) {
+
+  #content {
+    margin: 30px 0 40px 0;
+  }
+  header#mainheader {
+    background: url('../images/gg_logo.png') no-repeat;
+    height:90px;
+  }
+  .createbtn {
+    float: right;
+    margin: -2rem 2rem 0 0;
+  }
+}
+
+
+/* Large Desktop & Up */
+// ------------------
+
+
+@media (min-width: 1200px) {
+
+  #content {
+    margin: 30px 0 40px 0;
+  }
+  header#mainheader{
+    background: url('../images/gg_logo.png') no-repeat;
+    height:100px;
+  }
+  .createbtn {
+    float: right;
+    margin: 0rem .5rem 0 0;
+  }
+  .navbar .brand {
+    display: block !important;
+  }
+}
