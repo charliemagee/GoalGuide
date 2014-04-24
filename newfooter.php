@@ -31,7 +31,7 @@
         });
 
 
-        $.getJSON("userlist.json", function(data) {
+        $.getJSON("newuserlist.json", function(data) {
             localStorage.setItem("users", JSON.stringify(data));
             return displayUserList();
         });

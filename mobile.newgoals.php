@@ -74,9 +74,6 @@
         <ul class="goalsinprogress goalsection">
 
         </ul>
-        <ul class="goalscompleted goalsection">
-
-        </ul>
         <ul class="primarygoals">
 
         </ul>
@@ -90,11 +87,11 @@
     <!--            <div id="incentivetext"></div>-->
     <!--        </div>-->
     <div class="chart-backdrop hidechart"></div>
-    <div class="congratsmessageholder">
-        <div class="congratsmessage"></div>
+    <div id="incentivebox">
+        <div id="incentivepic"></div>
     </div>
     <footer>
-        <span>&copy;2013 Cognitopia Software, LLC</span>
+<!--        <span>&copy;2013 Cognitopia Software, LLC</span>-->
         <!--  <ul>
            <li><a href="index.html">Desktop</a></li>
            <li><a href="tablet.index.html">Tablet</a></li>
@@ -106,38 +103,11 @@
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 <script src="http://code.highcharts.com/highcharts.js"></script>
-<script src="js/offline.min.js"></script>
+<!--<script src="js/offline.min.js"></script>-->
 <script src="js/mobile.newmain.js"></script>
 
 <script type="text/javascript">
     $(document).ready(function(){
-
-        $(window).focus(function() {
-            var now = (new Date()).getTime();
-            var lastTime = 0;
-            var lastTimeStr = localStorage['daycheck'];
-            if (lastTimeStr) lastTime = parseInt(lastTimeStr, 10);
-            if (now - lastTime > 60*1000) {
-                resetCompleted();
-                localStorage['daycheck'] = ""+now;
-            }
-        })
-
-        // need to run a check every 24 hours to update recurring goals; this triggers once every 30 minutes to cover the chance that they closed the browser window and reopened at a random time
-        var interval = 0;
-        interval = window.setTimeout(function () {
-            interval = window.setInterval(function () {
-                var now = (new Date()).getTime();
-                var lastTime = 0;
-                var lastTimeStr = localStorage['daycheck'];
-                if (lastTimeStr) lastTime = parseInt(lastTimeStr, 10);
-                if (now - lastTime > 24*60*60*1000) {
-                    resetCompleted();
-                    localStorage['daycheck'] = ""+now;
-                }
-
-            }, 60 * 60 * 1000);
-        }, interval);
 
 
         $.getJSON("userlist.json", function(data) {
@@ -150,38 +120,33 @@
             return loadmyFiles();
         }
 
-        var setnewtime = (new Date()).getTime();
-        var daycheck = ""+setnewtime;
-        if (localStorage.getItem("daycheck") === null) {
-            localStorage.setItem("daycheck", daycheck);
-        }
 
     })
 
 </script>
-<script>
-    Offline.options = {
-
-        // Should we monitor AJAX requests to help decide if we have a connection.
-        interceptRequests: true,
-
-        // Should we automatically retest periodically when the connection is down (set to false to disable).
-        reconnect: {
-            // How many seconds should we wait before rechecking.
-            initialDelay: 200,
-
-            // How long should we wait between retries.
-            delay: (100 * last delay, capped at 1 hour)
-    },
-
-    // Should we store and attempt to remake requests which fail while the connection is down.
-    requests: true
-
-    // Should we show a snake game while the connection is down to keep the user entertained?
-    // It's not included in the normal build, you should bring in js/snake.js in addition to
-    // offline.min.js.
-    game: false
-    }
-</script>
+<!--<script>-->
+<!--    Offline.options = {-->
+<!---->
+<!--        // Should we monitor AJAX requests to help decide if we have a connection.-->
+<!--        interceptRequests: true,-->
+<!---->
+<!--        // Should we automatically retest periodically when the connection is down (set to false to disable).-->
+<!--        reconnect: {-->
+<!--            // How many seconds should we wait before rechecking.-->
+<!--            initialDelay: 200,-->
+<!---->
+<!--            // How long should we wait between retries.-->
+<!--            delay: (100 * last delay, capped at 1 hour)-->
+<!--    },-->
+<!---->
+<!--    // Should we store and attempt to remake requests which fail while the connection is down.-->
+<!--    requests: true-->
+<!---->
+<!--    // Should we show a snake game while the connection is down to keep the user entertained?-->
+<!--    // It's not included in the normal build, you should bring in js/snake.js in addition to-->
+<!--    // offline.min.js.-->
+<!--    game: false-->
+<!--    }-->
+<!--</script>-->
 </body>
 </html>

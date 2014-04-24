@@ -982,9 +982,9 @@ require_once("header.php");
             </div>
         </div>
         <div class="savinggoals push-right-savegoal">
-            <button type="button" id="saveprimarygoal" data-dismiss="modal" class="btn btn-success btn-medium"><i class="fa-large icon-checkmark" ></i>&nbsp;&nbsp;Save Primary Goals</a></button>
-            <button type="button" id="updateprimarygoal" data-dismiss="modal" class="btn btn-success btn-medium"><i class="fa-large icon-checkmark" ></i>&nbsp;&nbsp;Update Primary Goal</a></button>
-            <button type="button" id="savegoalcancel"  data-dismiss="modal" class="btn btn-danger btn-medium"><i class="fa-large icon-remove" ></i>&nbsp;&nbsp;Cancel</a></button>
+            <button type="button" id="saveprimarygoal" data-dismiss="modal" class="btn btn-success btn-medium"><i class="fa-large icon-checkmark" ></i>&nbsp;&nbsp;Save Primary Goals</button>
+            <button type="button" id="updateprimarygoal" data-dismiss="modal" class="btn btn-success btn-medium"><i class="fa-large icon-checkmark" ></i>&nbsp;&nbsp;Update Primary Goal</button>
+            <button type="button" id="savegoalcancel"  data-dismiss="modal" class="btn btn-danger btn-medium"><i class="fa-large icon-remove" ></i>&nbsp;&nbsp;Cancel</button>
         </div>
         </form>
         <div class="clearfix"></div>

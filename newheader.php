@@ -72,8 +72,8 @@
 
                     <div class="nav-collapse">
                         <ul class="nav">
-                            <li id="students"><a href="students.php"><i class="fa-large icon-user green" ></i> Students</a></li>
-                            <li id="goals"><a href="goals.php"><i class="fa-large icon-star green" ></i> Goals</a></li>
+                            <li id="students"><a href="newstudents.php"><i class="fa-large icon-user green" ></i> Students</a></li>
+                            <li id="goals"><a href="newgoals.php"><i class="fa-large icon-star green" ></i> Goals</a></li>
 
                         </ul>
                     </div>  <!-- end nav-collapse -->

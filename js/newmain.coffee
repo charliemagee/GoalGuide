@@ -33,10 +33,6 @@ goalinfo = []
 newinfo = ''
 goalCategory = 'school'
 goalType = 'solo'
-daysOfWeek = []
-daysOfWeekA = []
-daysOfWeekB = []
-daysOfWeekC = []
 users = []
 goals = []
 primarygoals = []
@@ -57,7 +53,7 @@ initStudentPage = ->
   localStorage.removeItem('username')
   localStorage.removeItem('users')
   if localStorage.getItem('beenhere') is 'donethat'
-    $.getJSON ("userlist.json"), (data) ->
+    $.getJSON ("newuserlist.json"), (data) ->
       localStorage.setItem "users", JSON.stringify(data)
       localStorage.setItem "beenhere", "donethat"
       saywhat = localStorage.getItem('beenhere')
@@ -65,7 +61,7 @@ initStudentPage = ->
   else
     password = prompt("What is your password?")
     if password is "JoshB654#"
-      $.getJSON ("userlist.json"), (data) ->
+      $.getJSON ("newuserlist.json"), (data) ->
         localStorage.setItem "users", JSON.stringify(data)
         localStorage.setItem "beenhere", "donethat"
         saywhat = localStorage.getItem('beenhere')
@@ -280,7 +276,7 @@ $(".users").delegate "li > span.username", "click", ->
   #  capitaliseFirstLetter(string) = ->
   #    string.charAt(0).toUpperCase() + string.slice(1)
   #  localStorage.setItem("firstname", firstname)
-  document.location.href='goals.php'
+  document.location.href='newgoals.php'
   $(".goalsection").html('')
   $.getJSON (username + "primary.json"), (data) ->
     localStorage.setItem "primarygoals", JSON.stringify(data)
