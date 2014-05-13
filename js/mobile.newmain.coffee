@@ -445,7 +445,7 @@ $(".goalsinprogress").delegate "input[name=completedno]", "click", ->
 ###
   delete a goal
 ###
-$(".goalsection").delegate "button", "click", ->
+$(".goalsection").delegate ".removegoal", "click", ->
   goalguid = $(this).closest('li').data("goalguid")
   shouldRemove = confirm("Are you sure you want to remove this goal?")
   if !shouldRemove
