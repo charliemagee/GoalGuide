@@ -33,10 +33,7 @@ goalinfo = []
 newinfo = ''
 goalCategory = 'school'
 goalType = 'solo'
-daysOfWeek = []
-daysOfWeekA = []
-daysOfWeekB = []
-daysOfWeekC = []
+thecategorysaved = ''
 users = []
 goals = []
 primarygoals = []
@@ -46,6 +43,21 @@ newprimarygoal = {}
 user = {}
 goalmessage = ''
 
+
+# check once a day for goals that didn't get completed
+resetCompleted = ->
+  console.log 'reset triggered'
+  goals = JSON.parse(localStorage["goals"])
+  mygoaldate = createInfoDate()
+  newinfo = 0
+  if (goal.goal.status is 'inprogress') and (goal.goal.infotype isnt 'text')
+    $.each goals, (i, goal) ->
+      goal.goal.myinfo.push newinfo
+      goal.goal.infocreated.push mygoaldate
+      goal.goal.datecompleted = mygoaldate
+  localStorage.setItem "goals", JSON.stringify(goals)
+  goalChange()
+  displayMyGoalList()
 
 checkId = ->
   if localStorage.getItem('username') isnt null
@@ -82,6 +94,15 @@ createInfoDate = ->
 ###
 createDayToday = ->
   currentDay = new Date().getDay()
+
+###
+  create a guid
+###
+createGuid = ->
+  "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace /[xy]/g, (c) ->
+    r = Math.random() * 16 | 0
+    v = (if c is "x" then r else (r & 0x3 | 0x8))
+    v.toString 16
 
 $("#checkid").keydown (event) ->
   $("#loginbutton").trigger "click"  if event.keyCode is 13
@@ -154,11 +175,24 @@ loadmyFiles = ->
 
 # menu nav stuff
 
+#$('#home').click ->
+#  $('#home').addClass('currentmenu')
+#  $('#school').removeClass('currentmenu')
+#  $('#work').removeClass('currentmenu')
+#  $('#personal').removeClass('currentmenu')
+#  $('#goalscontainer').hide()
+#  if localStorage.getItem('username') != null
+#    $('#logout').show()
+#  else
+#    $('#checkid').show()
+
+
 $('#home').click ->
   $('#home').addClass('currentmenu')
   $('#school').removeClass('currentmenu')
   $('#work').removeClass('currentmenu')
   $('#personal').removeClass('currentmenu')
+  $('#addgoalform').show()
   $('#goalscontainer').hide()
   if localStorage.getItem('username') != null
     $('#logout').show()
@@ -173,6 +207,7 @@ $('#school').click ->
   $('#checkid').hide()
   $('#logout').hide()
   $('#goalscontainer').show()
+  $('#addgoalform').hide()
   goalCategory = "school"
   displayMyGoalList()
   displayprimaryGoals()
@@ -185,6 +220,7 @@ $('#work').click ->
   $('#checkid').hide()
   $('#logout').hide()
   $('#goalscontainer').show()
+  $('#addgoalform').hide()
   goalCategory = "work"
   displayMyGoalList()
   displayprimaryGoals()
@@ -197,45 +233,160 @@ $('#personal').click ->
   $('#checkid').hide()
   $('#logout').hide()
   $('#goalscontainer').show()
+  $('#addgoalform').hide()
   goalCategory = "personal"
   displayMyGoalList()
   displayprimaryGoals()
 
+###
+this adds a goal to the goalsArray, resaves the goalsArray with the new info, resaves the usersGoals to localstorage, then clears the form
+###
+$('#savegoal').click ->
+  datecreated = new Date().toString()
+  mygoaldate = createInfoDate()
+  goalguid = createGuid()
+  thecategorysaved = $("#thecategory").val().toLowerCase()
+  newgoal =
+    goal:
+      goalguid: goalguid
+      category: $("#thecategory").val().toLowerCase()
+      datecreated: datecreated
+      goal: $("#thegoal").val()
+      icon: $("input[name=icon]:checked").val()
+      status: "inprogress"
+      infotype: $("input[name=theinfotype]:checked").val()
+      infocreated: []
+      myinfo: []
+      username: username
+  goals.push(newgoal)
+  localStorage.setItem "goals", JSON.stringify(goals)
+  $("#addgoalform").hide()
+  $(".textempty").val('')
+  $('.uncheckit input').removeAttr('checked');
+  jumpToCategory(thecategorysaved)
+  goalChange()
+
+jumpToCategory = ->
+  if thecategorysaved is 'school'
+    $('#home').removeClass('currentmenu')
+    $('#school').addClass('currentmenu')
+    $('#work').removeClass('currentmenu')
+    $('#personal').removeClass('currentmenu')
+    $('#checkid').hide()
+    $('#logout').hide()
+    $('#goalscontainer').show()
+    $('#addgoalform').hide()
+    goalCategory = "school"
+    displayMyGoalList()
+  else if thecategorysaved is 'work'
+    $('#home').removeClass('currentmenu')
+    $('#school').removeClass('currentmenu')
+    $('#work').addClass('currentmenu')
+    $('#personal').removeClass('currentmenu')
+    $('#checkid').hide()
+    $('#logout').hide()
+    $('#goalscontainer').show()
+    $('#addgoalform').hide()
+    goalCategory = "work"
+    displayMyGoalList()
+  else
+    $('#home').removeClass('currentmenu')
+    $('#school').removeClass('currentmenu')
+    $('#work').removeClass('currentmenu')
+    $('#personal').addClass('currentmenu')
+    $('#checkid').hide()
+    $('#logout').hide()
+    $('#goalscontainer').show()
+    $('#addgoalform').hide()
+    goalCategory = "personal"
+    displayMyGoalList()
+
+
+$('#savegoalcancel').click ->
+  $("#addgoalform").hide()
+
 
 displayMyGoalList = ->
+  completedHTML = []
   inprogressHTML = []
   goals = JSON.parse(localStorage["goals"])
   $.each goals, (i, goal) ->
     newinfocreated = JSON.stringify(goal.goal.infocreated)
     if (goal.goal.category is goalCategory)
-      if (goal.goal.infotype is 'text')
-        inprogressHTML.push """<li class='#{ goal.goal.status }' data-info='#{ goal.goal.infotype }' data-goalguid='#{ goal.goal.goalguid }' data-infocreated='#{ newinfocreated }' data-myinfo='[#{ goal.goal.myinfo }]' data-incentivepic='#{ goal.goal.incentivepic }' data-goal='#{ goal.goal.goal }' data-complete='#{ goal.goal.completedmessage }'>
-                        <div class='goalupper'>
-                          <span class='goalicon'><i class='fa-small details icon-#{ goal.goal.icon }'></i></span>
-                          <span class='goaltitle'>#{ goal.goal.goal }</span>
-                          <span class='thechartbutton'><i class='fa-medium icon-stats chartbutton' ></i></span>
-                        </div>
-                        <div class='goallower'>
-                             <label class='gatherinfo'>
-                               <input type='number' name='info' class='info' />
-                             </label>
-                              <button type="button" class="btn btn-success btn-medium completedgoal"><i class="fa-completed icon-checkmark" ></i>&nbsp;Goal Achieved!</button>
-                        </div></li>"""
+      if (goal.goal.status is 'completed')
+        completedHTML.push """<li class='#{ goal.goal.status }' data-info='#{ goal.goal.infotype }' data-goalguid='#{ goal.goal.goalguid }' data-infocreated='#{ newinfocreated }' data-myinfo='[#{ goal.goal.myinfo }]' data-incentivetext='#{ goal.goal.incentivetext }' data-incentivepic='#{ goal.goal.incentivepic }' data-goal='#{ goal.goal.goal }' data-complete='#{ goal.goal.completedmessage }'>
+                          <div class='goalupper'>
+                            <span class='goalicon'><i class='fa-medium details icon-#{ goal.goal.icon }'></i></span>
+                            <span class='goaltitle'>#{ goal.goal.goal }</span>
+                            <span><i class='fa-large icon-checkmark checkmark' ></i></span>
+                            <span><i class='fa-medium icon-stats chartbutton chartcompleted' ></i></span>
+                          </div>
+                          <div class='goallower'>
+                              <div class='lowerleft'>
+                                Use this goal again?<br>
+                                <button type="button" class="btn btn-success btn-medium useagainbutton"><i class="fa-medium icon-checkmark" ></i>&nbsp;&nbsp;Yes</button>
+                              </div>
+                              <div class='lowerright'>
+                                Delete this goal?<br>
+                                <button type='button' class='btn btn-small btn-danger removegoal'><b>X&nbsp;&nbsp;Delete</b></button>
+                              </div>
+                          </div></li>"""
       else
-        inprogressHTML.push """<li class='#{ goal.goal.status }' data-info='#{ goal.goal.infotype }' data-goalguid='#{ goal.goal.goalguid }' data-infocreated='#{ newinfocreated }' data-myinfo='[#{ goal.goal.myinfo }]' data-incentivepic='#{ goal.goal.incentivepic }' data-goal='#{ goal.goal.goal }' data-complete='#{ goal.goal.completedmessage }'>
-                        <div class='goalupper'>
-                          <span class='goalicon'><i class='fa-small details icon-#{ goal.goal.icon }'></i></span>
-                          <span class='goaltitle'>#{ goal.goal.goal }</span>
-                          <span class='thechartbutton'><i class='fa-medium icon-stats chartbutton' ></i></span>
-                        </div>
-                        <div class='goallower'>
-                              <button type="button" class="btn btn-success btn-medium completedgoal"><i class="fa-completed icon-checkmark" ></i>&nbsp;Goal Achieved!</button>
-                        </div></li>"""
+        if (goal.goal.infotype is 'text')
+          inprogressHTML.push """<li class='#{ goal.goal.status }' data-info='#{ goal.goal.infotype }' data-goalguid='#{ goal.goal.goalguid }' data-infocreated='#{ newinfocreated }' data-myinfo='[#{ goal.goal.myinfo }]' data-incentivetext='#{ goal.goal.incentivetext }' data-incentivepic='#{ goal.goal.incentivepic }' data-goal='#{ goal.goal.goal }' data-complete='#{ goal.goal.completedmessage }'>
+                          <div class='goalupper'>
+                            <span class='goalicon'><i class='fa-medium details icon-#{ goal.goal.icon }'></i></span>
+                            <span class='goaltitle'>#{ goal.goal.goal }</span>
+                            <span class='thechartbutton'><i class='fa-medium icon-stats chartbutton' ></i></span>
+                          </div>
+                          <div class='goallower'>
+                              <div class='lowerleft'>
+                                  Enter a number:<br>
+                               <input type='number' name='info' class='info gatherinfo' />
+                               <button type="button" class="btn btn-success btn-medium diditbutton"><i class="fa-medium icon-checkmark" ></i>&nbsp;&nbsp;I did it!</button>
+                              </div>
+                              <div class='lowerright'>
+                                Delete this goal?<br>
+                                <button type='button' class='btn btn-small btn-danger removegoal'><b>X&nbsp;&nbsp;Delete</b></button>
+                              </div>
+                          </div></li>"""
+        else
+          inprogressHTML.push """<li class='#{ goal.goal.status }' data-info='#{ goal.goal.infotype }' data-goalguid='#{ goal.goal.goalguid }' data-infocreated='#{ newinfocreated }' data-myinfo='[#{ goal.goal.myinfo }]' data-incentivetext='#{ goal.goal.incentivetext }' data-incentivepic='#{ goal.goal.incentivepic }' data-goal='#{ goal.goal.goal }' data-complete='#{ goal.goal.completedmessage }'>
+                          <div class='goalupper'>
+                            <span class='goalicon'><i class='fa-medium details icon-#{ goal.goal.icon }'></i></span>
+                            <span class='goaltitle'>#{ goal.goal.goal }</span>
+                            <span class='thechartbutton'><i class='fa-medium icon-stats chartbutton' ></i></span>
+                          </div>
+                          <div class='goallower'>
+                              <div class='lowerleft'>
+                               Completed?<br>
+                               <button type="button" class="btn btn-success btn-medium diditbutton"><i class="fa-medium icon-checkmark" ></i>&nbsp;&nbsp;I did it!</button>
+                              </div>
+                              <div class='lowerright'>
+                                Delete this goal?<br>
+                                <button type='button' class='btn btn-small btn-danger removegoal'><b>X&nbsp;&nbsp;Delete</b></button>
+                              </div>
+                          </div></li>"""
 
   $(".goalsinprogress").html inprogressHTML.join("")
+  $(".goalscompleted").html completedHTML.join("")
 
 
-$(".goalsinprogress").delegate ".completedgoal", "click", ->
+$(".goalscompleted").delegate ".useagainbutton", "click", ->
+  goalguid = $(this).closest('li').data("goalguid")
+  emailGoal = $(this).closest('li').data('goal')
+  $(this).closest('li').removeClass("completed").addClass("inprogress").prop("checked", false)
+  updateStatus = 'inprogress'
+  $.each goals, (index, goal) ->
+    if goal.goal.goalguid is goalguid
+      goal.goal.status = updateStatus
+      false # break the each
+  localStorage.setItem "goals", JSON.stringify(goals)
+  goalChange()
+  displayMyGoalList()
+
+
+$(".goalsinprogress").delegate ".diditbutton", "click", ->
   checkinginfotype = $(this).closest('li').data('info')
   if ( !$(this).closest('li').find('input[name="info"]').val() ) and (checkinginfotype is 'text')
     alert "You have to enter a number before this goal can be completed."
@@ -247,6 +398,7 @@ $(".goalsinprogress").delegate ".completedgoal", "click", ->
     mygoaldate = createInfoDate()
     newinfo = parseInt($(this).closest('li').find('input[type="number"]').val(), 10)
     nontextinfo = 1
+    updateStatus = 'completed'
     incentivepic = 'url("' + $(this).closest('li').data('incentivepic') + '")'
     $.each goals, (index, goal) ->
       if goal.goal.goalguid is goalguid
@@ -256,16 +408,60 @@ $(".goalsinprogress").delegate ".completedgoal", "click", ->
         else
           goal.goal.myinfo.push nontextinfo
           goal.goal.infocreated.push mygoaldate
+        goal.goal.status = updateStatus
         goal.goal.datecompleted = mygoaldate
         goalmessage = firstname + ' has completed this goal: ' + goal.goal.goal
         localStorage.setItem("goalmessage", JSON.stringify(goalmessage))
         false # break the each
     localStorage.setItem "goals", JSON.stringify(goals)
     $(this).find('.info').val('')
+    $(this).closest('li').removeClass("inprogress").addClass("completed")
     emailCompletion(goalmessage)
     goalChange()
     displayMyGoalList()
-#    showCongrats()
+
+$(".goalsinprogress").delegate "input[name=completedno]", "click", ->
+  goalguid = $(this).closest('li').data("goalguid")
+  emailGoal = $(this).closest('li').data('goal')
+  mygoaldate = createInfoDate()
+  newinfo = 0
+  updateStatus = 'missed'
+  $.each goals, (index, goal) ->
+    if goal.goal.goalguid is goalguid
+      goal.goal.myinfo.push newinfo
+      goal.goal.infocreated.push mygoaldate
+      goal.goal.status = updateStatus
+      goal.goal.datecompleted = mygoaldate
+      goalmessage = firstname + ' has not completed this goal: ' + goal.goal.goal
+      localStorage.setItem("goalmessage", JSON.stringify(goalmessage))
+      false # break the each
+  localStorage.setItem "goals", JSON.stringify(goals)
+  $(this).find('.info').val('')
+  $(this).closest('li').removeClass("inprogress completed").addClass("missed").prop("checked", false)
+  emailCompletion(goalmessage)
+  goalChange()
+  displayMyGoalList()
+
+###
+  delete a goal
+###
+$(".goalsection").delegate "button", "click", ->
+  goalguid = $(this).closest('li').data("goalguid")
+  shouldRemove = confirm("Are you sure you want to remove this goal?")
+  if !shouldRemove
+    false
+  else
+    i = 0
+
+    while i < goals.length
+      if goals[i].goal.goalguid and goals[i].goal.goalguid is goalguid
+        goals.splice i, 1
+        break
+      i++
+    localStorage.setItem "goals", JSON.stringify(goals)
+    goalChange()
+    displayMyGoalList()
+
 
 displayprimaryGoals = ->
   primaryGoalsHTML = []
@@ -274,15 +470,15 @@ displayprimaryGoals = ->
     if (primarygoal.primarygoal.category == goalCategory)
       primaryGoalsHTML.push """<li class='parent'  data-goalguid='#{ primarygoal.primarygoal.goalguid }' >
             <div class='goalupper'>
-               <span class='goalicon'><i class='fa-small details icon-#{ primarygoal.primarygoal.icon }'></i></span>
+               <span class='goalicon'><i class='fa-medium details icon-#{ primarygoal.primarygoal.icon }'></i></span>
                <span class='goaltitle'>#{ primarygoal.primarygoal.goal }</span>
             </div></li>"""
       if (primarygoal.primarygoal.subA.status == 'completed')
         newinfocreated = JSON.stringify(primarygoal.primarygoal.subA.infocreated)
         (primarygoal.primarygoal.subA.infotype == 'text')
-        primaryGoalsHTML.push  """<li class='#{ primarygoal.primarygoal.subA.status } sub' data-info='#{ primarygoal.primarygoal.subA.infotype }' data-goalguid='#{ primarygoal.primarygoal.subA.goalguid }' data-infocreated='#{ newinfocreated }' data-myinfo='[#{ primarygoal.primarygoal.subA.myinfo }]' data-incentivepic='#{ primarygoal.primarygoal.subA.incentivepic }' data-goal='#{ primarygoal.primarygoal.subA.goal }' data-complete='#{ primarygoal.primarygoal.subA.completedmessage }'>
+        primaryGoalsHTML.push  """<li class='#{ primarygoal.primarygoal.subA.status } sub' data-info='#{ primarygoal.primarygoal.subA.infotype }' data-goalguid='#{ primarygoal.primarygoal.subA.goalguid }' data-infocreated='#{ newinfocreated }' data-myinfo='[#{ primarygoal.primarygoal.subA.myinfo }]' data-incentivetext='#{ primarygoal.primarygoal.subA.incentivetext }' data-incentivepic='#{ primarygoal.primarygoal.subA.incentivepic }' data-goal='#{ primarygoal.primarygoal.subA.goal }' data-complete='#{ primarygoal.primarygoal.subA.completedmessage }'>
                           <div class='goalupper'>
-                            <span class='goalicon'><i class='fa-small details icon-#{ primarygoal.primarygoal.subA.icon }'></i></span>
+                            <span class='goalicon'><i class='fa-medium details icon-#{ primarygoal.primarygoal.subA.icon }'></i></span>
                             <span class='goaltitle'>#{ primarygoal.primarygoal.subA.goal }</span>
                             <span class='thechartbutton'><i class='fa-medium icon-stats chartbutton' ></i></span>
                           </div>
@@ -301,9 +497,9 @@ displayprimaryGoals = ->
                           </div></li>"""
       else if (primarygoal.primarygoal.subA.status == "inprogress")
         if (primarygoal.primarygoal.subA.infotype == 'text')
-          primaryGoalsHTML.push  """<li class='#{ primarygoal.primarygoal.subA.status } sub' data-info='#{ primarygoal.primarygoal.subA.infotype }' data-goalguid='#{ primarygoal.primarygoal.subA.goalguid }' data-infocreated='#{ newinfocreated }' data-myinfo='[#{ primarygoal.primarygoal.subA.myinfo }]' data-incentivepic='#{ primarygoal.primarygoal.subA.incentivepic }' data-goal='#{ primarygoal.primarygoal.subA.goal }' data-complete='#{ primarygoal.primarygoal.subA.completedmessage }'>
+          primaryGoalsHTML.push  """<li class='#{ primarygoal.primarygoal.subA.status } sub' data-info='#{ primarygoal.primarygoal.subA.infotype }' data-goalguid='#{ primarygoal.primarygoal.subA.goalguid }' data-infocreated='#{ newinfocreated }' data-myinfo='[#{ primarygoal.primarygoal.subA.myinfo }]' data-incentivetext='#{ primarygoal.primarygoal.subA.incentivetext }' data-incentivepic='#{ primarygoal.primarygoal.subA.incentivepic }' data-goal='#{ primarygoal.primarygoal.subA.goal }' data-complete='#{ primarygoal.primarygoal.subA.completedmessage }'>
                           <div class='goalupper'>
-                            <span class='goalicon'><i class='fa-small details icon-#{ primarygoal.primarygoal.subA.icon }'></i></span>
+                            <span class='goalicon'><i class='fa-medium details icon-#{ primarygoal.primarygoal.subA.icon }'></i></span>
                             <span class='goaltitle'>#{ primarygoal.primarygoal.subA.goal }</span>
                             <span class='thechartbutton'><i class='fa-medium icon-stats chartbutton' ></i></span>
                           </div>
@@ -322,11 +518,12 @@ displayprimaryGoals = ->
                                 </label>
                               </div>
                             </div>
+                            <span class='goaldeadline'>Deadline: #{ primarygoal.primarygoal.subA.deadline }</span>
                           </div></li>"""
         else
-          primaryGoalsHTML.push """<li class='#{ primarygoal.primarygoal.subA.status } sub' data-info='#{ primarygoal.primarygoal.subA.infotype }' data-goalguid='#{ primarygoal.primarygoal.subA.goalguid }' data-infocreated='#{ newinfocreated }' data-myinfo='[#{ primarygoal.primarygoal.subA.myinfo }]' data-incentivepic='#{ primarygoal.primarygoal.subA.incentivepic }' data-goal='#{ primarygoal.primarygoal.subA.goal }' data-complete='#{ primarygoal.primarygoal.subA.completedmessage }'>
+          primaryGoalsHTML.push """<li class='#{ primarygoal.primarygoal.subA.status } sub' data-info='#{ primarygoal.primarygoal.subA.infotype }' data-goalguid='#{ primarygoal.primarygoal.subA.goalguid }' data-infocreated='#{ newinfocreated }' data-myinfo='[#{ primarygoal.primarygoal.subA.myinfo }]' data-incentivetext='#{ primarygoal.primarygoal.subA.incentivetext }' data-incentivepic='#{ primarygoal.primarygoal.subA.incentivepic }' data-goal='#{ primarygoal.primarygoal.subA.goal }' data-complete='#{ primarygoal.primarygoal.subA.completedmessage }'>
                           <div class='goalupper'>
-                            <span class='goalicon'><i class='fa-small details icon-#{ primarygoal.primarygoal.subA.icon }'></i></span>
+                            <span class='goalicon'><i class='fa-medium details icon-#{ primarygoal.primarygoal.subA.icon }'></i></span>
                             <span class='goaltitle'>#{ primarygoal.primarygoal.subA.goal }</span>
                             <span class='thechartbutton'><i class='fa-medium icon-stats chartbutton' ></i></span>
                           </div>
@@ -342,13 +539,14 @@ displayprimaryGoals = ->
                                 </label>
                               </div>
                             </div>
+                            <span class='goaldeadline'>Deadline: #{ primarygoal.primarygoal.subA.deadline }</span>
                           </div></li>"""
       if (primarygoal.primarygoal.subB.status == 'completed')
         newinfocreated = JSON.stringify(primarygoal.primarygoal.subB.infocreated)
         (primarygoal.primarygoal.subB.infotype == 'text')
-        primaryGoalsHTML.push """<li class='#{ primarygoal.primarygoal.subB.status } sub' data-info='#{ primarygoal.primarygoal.subB.infotype }' data-goalguid='#{ primarygoal.primarygoal.subB.goalguid }' data-infocreated='#{ newinfocreated }' data-myinfo='[#{ primarygoal.primarygoal.subB.myinfo }]' data-incentivepic='#{ primarygoal.primarygoal.subB.incentivepic }' data-goal='#{ primarygoal.primarygoal.subB.goal }' data-complete='#{ primarygoal.primarygoal.subB.completedmessage }'>
+        primaryGoalsHTML.push """<li class='#{ primarygoal.primarygoal.subB.status } sub' data-info='#{ primarygoal.primarygoal.subB.infotype }' data-goalguid='#{ primarygoal.primarygoal.subB.goalguid }' data-infocreated='#{ newinfocreated }' data-myinfo='[#{ primarygoal.primarygoal.subB.myinfo }]' data-incentivetext='#{ primarygoal.primarygoal.subB.incentivetext }' data-incentivepic='#{ primarygoal.primarygoal.subB.incentivepic }' data-goal='#{ primarygoal.primarygoal.subB.goal }' data-complete='#{ primarygoal.primarygoal.subB.completedmessage }'>
                           <div class='goalupper'>
-                            <span class='goalicon'><i class='fa-small details icon-#{ primarygoal.primarygoal.subB.icon }'></i></span>
+                            <span class='goalicon'><i class='fa-medium details icon-#{ primarygoal.primarygoal.subB.icon }'></i></span>
                             <span class='goaltitle'>#{ primarygoal.primarygoal.subB.goal }</span>
                             <span class='thechartbutton'><i class='fa-medium icon-stats chartbutton' ></i></span>
                           </div>
@@ -367,9 +565,9 @@ displayprimaryGoals = ->
                           </div></li>"""
       else if (primarygoal.primarygoal.subB.status == "inprogress")
         if (primarygoal.primarygoal.subB.infotype == 'text')
-          primaryGoalsHTML.push  """<li class='#{ primarygoal.primarygoal.subB.status } sub' data-info='#{ primarygoal.primarygoal.subB.infotype }' data-goalguid='#{ primarygoal.primarygoal.subB.goalguid }' data-infocreated='#{ newinfocreated }' data-myinfo='[#{ primarygoal.primarygoal.subB.myinfo }]' data-incentivepic='#{ primarygoal.primarygoal.subB.incentivepic }' data-goal='#{ primarygoal.primarygoal.subB.goal }' data-complete='#{ primarygoal.primarygoal.subB.completedmessage }'>
+          primaryGoalsHTML.push  """<li class='#{ primarygoal.primarygoal.subB.status } sub' data-info='#{ primarygoal.primarygoal.subB.infotype }' data-goalguid='#{ primarygoal.primarygoal.subB.goalguid }' data-infocreated='#{ newinfocreated }' data-myinfo='[#{ primarygoal.primarygoal.subB.myinfo }]' data-incentivetext='#{ primarygoal.primarygoal.subB.incentivetext }' data-incentivepic='#{ primarygoal.primarygoal.subB.incentivepic }' data-goal='#{ primarygoal.primarygoal.subB.goal }' data-complete='#{ primarygoal.primarygoal.subB.completedmessage }'>
                           <div class='goalupper'>
-                            <span class='goalicon'><i class='fa-small details icon-#{ primarygoal.primarygoal.subB.icon }'></i></span>
+                            <span class='goalicon'><i class='fa-medium details icon-#{ primarygoal.primarygoal.subB.icon }'></i></span>
                             <span class='goaltitle'>#{ primarygoal.primarygoal.subB.goal }</span>
                             <span class='thechartbutton'><i class='fa-medium icon-stats chartbutton' ></i></span>
                           </div>
@@ -388,11 +586,12 @@ displayprimaryGoals = ->
                                 </label>
                               </div>
                             </div>
+                            <span class='goaldeadline'>Deadline: #{ primarygoal.primarygoal.subB.deadline }</span>
                           </div></li>"""
         else
-          primaryGoalsHTML.push """<li class='#{ primarygoal.primarygoal.subB.status } sub' data-info='#{ primarygoal.primarygoal.subB.infotype }' data-goalguid='#{ primarygoal.primarygoal.subB.goalguid }' data-infocreated='#{ newinfocreated }' data-myinfo='[#{ primarygoal.primarygoal.subB.myinfo }]' data-incentivepic='#{ primarygoal.primarygoal.subB.incentivepic }' data-goal='#{ primarygoal.primarygoal.subB.goal }' data-complete='#{ primarygoal.primarygoal.subB.completedmessage }'>
+          primaryGoalsHTML.push """<li class='#{ primarygoal.primarygoal.subB.status } sub' data-info='#{ primarygoal.primarygoal.subB.infotype }' data-goalguid='#{ primarygoal.primarygoal.subB.goalguid }' data-infocreated='#{ newinfocreated }' data-myinfo='[#{ primarygoal.primarygoal.subB.myinfo }]' data-incentivetext='#{ primarygoal.primarygoal.subB.incentivetext }' data-incentivepic='#{ primarygoal.primarygoal.subB.incentivepic }' data-goal='#{ primarygoal.primarygoal.subB.goal }' data-complete='#{ primarygoal.primarygoal.subB.completedmessage }'>
                           <div class='goalupper'>
-                            <span class='goalicon'><i class='fa-small details icon-#{ primarygoal.primarygoal.subB.icon }'></i></span>
+                            <span class='goalicon'><i class='fa-medium details icon-#{ primarygoal.primarygoal.subB.icon }'></i></span>
                             <span class='goaltitle'>#{ primarygoal.primarygoal.subB.goal }</span>
                             <span class='thechartbutton'><i class='fa-medium icon-stats chartbutton' ></i></span>
                           </div>
@@ -408,13 +607,14 @@ displayprimaryGoals = ->
                                 </label>
                               </div>
                             </div>
+                            <span class='goaldeadline'>Deadline: #{ primarygoal.primarygoal.subB.deadline }</span>
                           </div></li>"""
       if (primarygoal.primarygoal.subC.status == 'completed')
         newinfocreated = JSON.stringify(primarygoal.primarygoal.subC.infocreated)
         (primarygoal.primarygoal.subC.infotype == 'text')
-        primaryGoalsHTML.push """<li class='#{ primarygoal.primarygoal.subC.status } sub' data-info='#{ primarygoal.primarygoal.subC.infotype }' data-goalguid='#{ primarygoal.primarygoal.subC.goalguid }' data-infocreated='#{ newinfocreated }' data-myinfo='[#{ primarygoal.primarygoal.subC.myinfo }]' data-incentivepic='#{ primarygoal.primarygoal.subC.incentivepic }' data-goal='#{ primarygoal.primarygoal.subC.goal }' data-complete='#{ primarygoal.primarygoal.subC.completedmessage }'>
+        primaryGoalsHTML.push """<li class='#{ primarygoal.primarygoal.subC.status } sub' data-info='#{ primarygoal.primarygoal.subC.infotype }' data-goalguid='#{ primarygoal.primarygoal.subC.goalguid }' data-infocreated='#{ newinfocreated }' data-myinfo='[#{ primarygoal.primarygoal.subC.myinfo }]' data-incentivetext='#{ primarygoal.primarygoal.subC.incentivetext }' data-incentivepic='#{ primarygoal.primarygoal.subC.incentivepic }' data-goal='#{ primarygoal.primarygoal.subC.goal }' data-complete='#{ primarygoal.primarygoal.subC.completedmessage }'>
                           <div class='goalupper'>
-                            <span class='goalicon'><i class='fa-small details icon-#{ primarygoal.primarygoal.subC.icon }'></i></span>
+                            <span class='goalicon'><i class='fa-medium details icon-#{ primarygoal.primarygoal.subC.icon }'></i></span>
                             <span class='goaltitle'>#{ primarygoal.primarygoal.subC.goal }</span>
                             <span class='thechartbutton'><i class='fa-medium icon-stats chartbutton' ></i></span>
                           </div>
@@ -433,9 +633,9 @@ displayprimaryGoals = ->
                           </div></li>"""
       else if (primarygoal.primarygoal.subC.status == "inprogress")
         if (primarygoal.primarygoal.subC.infotype == 'text')
-          primaryGoalsHTML.push  """<li class='#{ primarygoal.primarygoal.subC.status } sub' data-info='#{ primarygoal.primarygoal.subC.infotype }' data-goalguid='#{ primarygoal.primarygoal.subC.goalguid }' data-infocreated='#{ newinfocreated }' data-myinfo='[#{ primarygoal.primarygoal.subC.myinfo }]' data-incentivepic='#{ primarygoal.primarygoal.subC.incentivepic }' data-goal='#{ primarygoal.primarygoal.subC.goal }' data-complete='#{ primarygoal.primarygoal.subC.completedmessage }'>
+          primaryGoalsHTML.push  """<li class='#{ primarygoal.primarygoal.subC.status } sub' data-info='#{ primarygoal.primarygoal.subC.infotype }' data-goalguid='#{ primarygoal.primarygoal.subC.goalguid }' data-infocreated='#{ newinfocreated }' data-myinfo='[#{ primarygoal.primarygoal.subC.myinfo }]' data-incentivetext='#{ primarygoal.primarygoal.subC.incentivetext }' data-incentivepic='#{ primarygoal.primarygoal.subC.incentivepic }' data-goal='#{ primarygoal.primarygoal.subC.goal }' data-complete='#{ primarygoal.primarygoal.subC.completedmessage }'>
                           <div class='goalupper'>
-                            <span class='goalicon'><i class='fa-small details icon-#{ primarygoal.primarygoal.subC.icon }'></i></span>
+                            <span class='goalicon'><i class='fa-medium details icon-#{ primarygoal.primarygoal.subC.icon }'></i></span>
                             <span class='goaltitle'>#{ primarygoal.primarygoal.subC.goal }</span>
                             <span class='thechartbutton'><i class='fa-medium icon-stats chartbutton' ></i></span>
                           </div>
@@ -454,11 +654,12 @@ displayprimaryGoals = ->
                                 </label>
                               </div>
                             </div>
+                            <span class='goaldeadline'>Deadline: #{ primarygoal.primarygoal.subC.deadline }</span>
                           </div></li>"""
         else
-          primaryGoalsHTML.push """<li class='#{ primarygoal.primarygoal.subC.status } sub' data-info='#{ primarygoal.primarygoal.subC.infotype }' data-goalguid='#{ primarygoal.primarygoal.subC.goalguid }' data-infocreated='#{ newinfocreated }' data-myinfo='[#{ primarygoal.primarygoal.subC.myinfo }]' data-incentivepic='#{ primarygoal.primarygoal.subC.incentivepic }' data-goal='#{ primarygoal.primarygoal.subC.goal }' data-complete='#{ primarygoal.primarygoal.subC.completedmessage }'>
+          primaryGoalsHTML.push """<li class='#{ primarygoal.primarygoal.subC.status } sub' data-info='#{ primarygoal.primarygoal.subC.infotype }' data-goalguid='#{ primarygoal.primarygoal.subC.goalguid }' data-infocreated='#{ newinfocreated }' data-myinfo='[#{ primarygoal.primarygoal.subC.myinfo }]' data-incentivetext='#{ primarygoal.primarygoal.subC.incentivetext }' data-incentivepic='#{ primarygoal.primarygoal.subC.incentivepic }' data-goal='#{ primarygoal.primarygoal.subC.goal }' data-complete='#{ primarygoal.primarygoal.subC.completedmessage }'>
                           <div class='goalupper'>
-                            <span class='goalicon'><i class='fa-small details icon-#{ primarygoal.primarygoal.subC.icon }'></i></span>
+                            <span class='goalicon'><i class='fa-medium details icon-#{ primarygoal.primarygoal.subC.icon }'></i></span>
                             <span class='goaltitle'>#{ primarygoal.primarygoal.subC.goal }</span>
                             <span class='thechartbutton'><i class='fa-medium icon-stats chartbutton' ></i></span>
                           </div>
@@ -474,6 +675,7 @@ displayprimaryGoals = ->
                                 </label>
                               </div>
                             </div>
+                            <span class='goaldeadline'>Deadline: #{ primarygoal.primarygoal.subC.deadline }</span>
                           </div></li>"""
     primaryGoalsHTML.push '<span class="clearfix"></span>'
 
@@ -507,7 +709,7 @@ $(".primarygoals").delegate "input[name='completedyes']", "click", ->
     else
       newinfo = parseInt($(this).closest('li').find('input[type="number"]').val(), 10)
       mygoaldate = createInfoDate()
-      updateStatus = 'inprogress'
+      updateStatus = 'completed'
       $.each primarygoals, (index, primarygoal) ->
         if primarygoal.primarygoal.subA.goalguid is goalguid
           if primarygoal.primarygoal.subA.infotype is 'text'
@@ -560,6 +762,7 @@ $(".primarygoals").delegate "input[name='completedyes']", "click", ->
     primarygoalChange()
     displayprimaryGoals()
 
+
 $('#modalclose').click ->
   $('#adduserform').hide()
   $('#addgoalform').hide()
@@ -594,15 +797,7 @@ $(".primarygoals").on "click", "span.goaltitle", ->
 # this is for regular goals
 $(".goalsection").on "click", "i.chartbutton", ->
   $("#chartbox").show()
-  $("#incentivebox").css('top', -10)
-  $("#incentivebox").css('right', 25)
-  $("#incentivebox").show()
   $(".chart-backdrop").show()
-  incentivetext = $(this).closest('li').data('incentivetext')
-  incentivepic = 'url("' + $(this).closest('li').data('incentivepic') + '")'
-  placeincentivetext =  '<p>' + incentivetext + '</p>'
-  $("#incentivetext").html(placeincentivetext)
-  $("#incentivepic").css('background-image', incentivepic )
   infocreated = $(this).closest('li').data('infocreated')
   myinfo = $(this).closest('li').data('myinfo')
   mytitle = $(this).closest('li').data('goal')
@@ -624,15 +819,7 @@ $(".goalsection").on "click", "i.chartbutton", ->
 # this is for primary goals
 $(".primarygoals").on "click", "i.chartbutton", ->
   $("#chartbox").show()
-  $("#incentivebox").css('top', -10)
-  $("#incentivebox").css('right', 25)
-  $("#incentivebox").show()
   $(".chart-backdrop").show()
-  incentivetext = $(this).closest('li').data('incentivetext')
-  incentivepic = 'url("' + $(this).closest('li').data('incentivepic') + '")'
-  placeincentivetext =  '<p>' + incentivetext + '</p>'
-  $("#incentivetext").html(placeincentivetext)
-  $("#incentivepic").css('background-image', incentivepic )
   infocreated = $(this).closest('li').data('infocreated')
   myinfo = $(this).closest('li').data('myinfo')
   mytitle = $(this).closest('li').data('goal')
@@ -664,9 +851,13 @@ $('.hidechart').click ->
 
 # show the congrats message
 showCongrats = ->
-  $("#incentivebox").css('left', 30)
+  $("#incentivebox").css('top', -90)
+  $("#incentivebox").css('right', 430)
+  placeincentivetext =  '<p>' + congratulations + '</p>'
+  $("#incentivetext").html(placeincentivetext)
   $("#incentivepic").css('background-image', incentivepic )
-  setTimeout "$('#incentivebox').css('left', 3000);", 3000
+  $("#incentivebox").fadeIn "slow"
+  setTimeout "$('#incentivebox').hide();", 5000
 
 # show the email about a goal completion
 emailCompletion = ->

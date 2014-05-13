@@ -11,13 +11,13 @@ require_once("newheader.php");
 
 
         <div id="usercontent">
-            <ul id="listheader">
-                <li class="listheaderusername">Username</li>
-                <li class="listheaderuserfullname">Full Name</li>
-                <li class="listheaderpassword">Password</li>
-                <li class="listheadernotifications">Notifications</li>
-                <li class="listheaderuserremove">Remove User</li>
-            </ul>
+<!--            <ul id="listheader">-->
+<!--                <li class="listheaderusername">Username</li>-->
+<!--                <li class="listheaderuserfullname">Full Name</li>-->
+<!--                <li class="listheaderpassword">Password</li>-->
+<!--                <li class="listheadernotifications">Notifications</li>-->
+<!--                <li class="listheaderuserremove">Remove User</li>-->
+<!--            </ul>-->
             <div class="clearfix"></div>
             <ul class="users">
 

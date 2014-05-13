@@ -8,12 +8,12 @@
     <meta http-equiv="cleartype" content="on">
 
     <!-- For device.js -->
-    <link rel="alternate" href="newgoals.php" id="desktop"
-          media="only screen and (touch-enabled: 0)">
-    <link rel="alternate" href="mobile.newgoals.php" id="phone"
-          media="only screen and (max-device-width: 640px)">
-    <link rel="alternate" href="newgoals.php" id="tablet"
-          media="only screen and (min-device-width: 641px)">
+<!--    <link rel="alternate" href="newgoals.php" id="desktop"-->
+<!--          media="only screen and (touch-enabled: 0)">-->
+<!--    <link rel="alternate" href="mobile.newgoals.php" id="phone"-->
+<!--          media="only screen and (max-device-width: 640px)">-->
+<!--    <link rel="alternate" href="newgoals.php" id="tablet"-->
+<!--          media="only screen and (min-device-width: 641px)">-->
 
     <meta name="viewport" content="width=device-width">
 
@@ -31,12 +31,12 @@
      Respond is a polyfill for min/max-width media queries. Modernizr enables HTML5 elements & feature detects;
      for optimal performance, create your own custom Modernizr build: www.modernizr.com/download/ -->
     <!--    <script src="js/modernizr-2.6.1.min.js"></script>-->
-    <script src="js/vendor/device.min.js"></script>
-    <script>
-        if (device.mobile()) {
-            window.location.href = 'http://www.cognitopia.com/ggnew/mobile.newgoals.php';
-        }
-    </script>
+<!--    <script src="js/vendor/device.min.js"></script>-->
+<!--    <script>-->
+<!--        if (device.mobile()) {-->
+<!--            window.location.href = 'http://www.cognitopia.com/ggnew/mobile.newgoals.php';-->
+<!--        }-->
+<!--    </script>-->
 </head>
 <body>
 

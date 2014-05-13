@@ -53,7 +53,7 @@ initStudentPage = ->
   localStorage.removeItem('username')
   localStorage.removeItem('users')
   if localStorage.getItem('beenhere') is 'donethat'
-    $.getJSON ("newuserlist.json"), (data) ->
+    $.getJSON ("userlist.json"), (data) ->
       localStorage.setItem "users", JSON.stringify(data)
       localStorage.setItem "beenhere", "donethat"
       saywhat = localStorage.getItem('beenhere')
@@ -61,7 +61,7 @@ initStudentPage = ->
   else
     password = prompt("What is your password?")
     if password is "JoshB654#"
-      $.getJSON ("newuserlist.json"), (data) ->
+      $.getJSON ("userlist.json"), (data) ->
         localStorage.setItem "users", JSON.stringify(data)
         localStorage.setItem "beenhere", "donethat"
         saywhat = localStorage.getItem('beenhere')
@@ -172,10 +172,10 @@ displayUserList = ->
   newHTML = []
   $.each users, (index, user) ->
     newHTML.push """<li data-username='#{ user.username }' data-notify='#{ user.notify }' data-firstname='#{ user.firstname }'>
-          <span class='username'>#{ user.username }</span>
-          <span class='userfullname'>#{ user.firstname } #{ user.lastname }</span>
-          <span class='password'>#{ user.password }</span>
-          <span class='notifications'>#{ user.notify }</span>
+          <span class='username'>Username: #{ user.username }</span>
+          <span class='userfullname'>Full name: #{ user.firstname } #{ user.lastname }</span><br>
+          <span class='password'>Password: #{ user.password }</span>
+          <span class='notifications'>Notify: #{ user.notify }</span>
           <span><button type="button" class="btn btn-mini btn-danger pull-right removeuser"><b>X</b> </button></span></li>"""
   $(".users").css(
     "-ms-filter": "progid:DXImageTransform.Microsoft.Alpha(Opacity=1)"
@@ -276,7 +276,7 @@ $(".users").delegate "li > span.username", "click", ->
   #  capitaliseFirstLetter(string) = ->
   #    string.charAt(0).toUpperCase() + string.slice(1)
   #  localStorage.setItem("firstname", firstname)
-  document.location.href='newgoals.php'
+  document.location.href='mobile.newgoals.php'
   $(".goalsection").html('')
   $.getJSON (username + "primary.json"), (data) ->
     localStorage.setItem "primarygoals", JSON.stringify(data)

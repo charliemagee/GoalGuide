@@ -492,7 +492,7 @@ $('#savegoal').click(function() {
 });
 
 /*
-this adds a goal to the goalsArray, resaves the goalsArray with the new info, resaves the usersGoals to localstorage, then clears the form
+this adds a multistep goal to the goalsArray, resaves the goalsArray with the new info, resaves the usersGoals to localstorage, then clears the form
 */
 
 

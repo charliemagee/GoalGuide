@@ -1,4 +1,3 @@
-
 @import "mobile_awesome";
 @import "mobile_responsive";
 
@@ -59,7 +58,7 @@ $red-light: #f6d3d3;
 
 // --- layout ----------------------
 #nav {
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   height: 50px;
@@ -80,7 +79,7 @@ $red-light: #f6d3d3;
   width: 97%;
 }
 #goalscontainer {
-  position: fixed;
+  position: absolute;
   display: none;
   top: 50px;
   left: 7px;
@@ -118,34 +117,37 @@ $red-light: #f6d3d3;
 }
 .goallower {
   display: none;
-  width: 280px;
-  margin: 25px 0 0 5px;
+  width: 99%;
+  margin: 20px 0 0 0px;
   padding: 10px 5px 0 10px;
+  background-color: $yellow-main;
   overflow: hidden;
+  text-align: center;
   text-transform: none;
+  @include border-radius(12px);
 }
 /* footer */
 
-//footer {
-//  position: fixed;
-//  top: 400px;
-//  left: 0px;
-//  font-family: 'AmaranthRegular', Arial, sans-serif;
-//  font-weight: normal !important;
-//  font-size:10px !important;
-//  line-height: 15px !important;
-//  text-align: center;
-//  width:100%;
-//  height: 15px;
-//  color: gray;
-//  a {
-//    color: darkgray;
-//    &:hover {
-//      color: black;
-//      text-decoration: none;
-//    }
-//  }
-//}
+footer {
+  position: fixed;
+  top: 400px;
+  left: 0px;
+  font-family: 'AmaranthRegular', Arial, sans-serif;
+  font-weight: normal !important;
+  font-size:10px !important;
+  line-height: 15px !important;
+  text-align: center;
+  width:100%;
+  height: 15px;
+  color: gray;
+  a {
+    color: darkgray;
+    &:hover {
+      color: black;
+      text-decoration: none;
+    }
+  }
+}
 
 // --- menu stuff ----------------------
 
@@ -190,17 +192,27 @@ $red-light: #f6d3d3;
   position: absolute;
   top: 20%;
   left: 20%;
-  width: 175px;
-  padding: 20px;
+  width: 190px;
+  padding: 10px;
   z-index: 500;
   background-color: lighten($green-main, 30%);
 }
 #checkid input {
-  width: 130px;
+  width: 170px;
+  height: 34px;
+  font-size: 20px;
   margin-bottom: -5px;
 }
+#checkid label {
+  margin-top: 10px;
+  width: 100px;
+}
+#checkid button {
+  margin-top: 20px;
+  float: right;
+}
 .detailsLabel {
-  margin-bottom: 10px;
+  margin-bottom: 5px;
 }
 .showdetails {
   display: block;
@@ -211,8 +223,24 @@ $red-light: #f6d3d3;
 .goallower label {
   font-size: 16px;
 }
+.goallower .lowerleft {
+  float: left;
+  height: 80px;
+  margin: 0 20px 0 10px;
+}
+.goallower .lowerright {
+  float: right;
+  height: 80px;
+  margin-right: 10px;
+}
+.lowerleft button {
+  margin-top: 10px;
+}
+.lowerright button {
+  margin-top: 17px;
+}
 #loginbutton {
-  margin-left: -80px;
+  margin-left: 0;
 }
 #errorlogin {
   display: none;
@@ -228,10 +256,14 @@ $red-light: #f6d3d3;
   position: absolute;
   top: 40%;
   left: 35%;
-  width: 85px;
-  padding: 10px;
+  width: 115px;
+  padding: 20px;
   z-index: 500;
   background-color: lighten($green-main, 30%);
+}
+#logoutbutton {
+  display: block;
+  margin: 0 auto;
 }
 .sampleimages {
   margin: -15px 0 0 30px;
@@ -279,31 +311,14 @@ $red-light: #f6d3d3;
   right: 5px;
   z-index: 5010;
 }
-#incentivebox {
-  display: block;
-  position: absolute;
-  top: 70px;
-  left: 3000px;
-  width: 270px;
-  height: 270px;
-  padding: 10px;
-  z-index: 1000;
-  border: 1px solid #ddd;
-  background-color: lighten($green-main, 15%);
-  @include transition(all .2s ease-in-out);
-  overflow: none;
-}
-#incentivepic {
-  width: 250px;
-  height: 250px;
-}
 
 // --- position tweaks ---------------------
 .push-right {
   margin-left: 20px;
 }
 .push-right-savegoal {
-  margin-left: 160px;
+  display: block;
+  margin: 0 auto;
 }
 #activityholder {
   float: left;
@@ -328,8 +343,9 @@ $red-light: #f6d3d3;
   margin: -3.6rem 2rem 0 0;
 }
 
+
 // --- UL List ---------------------
-ul.goalsinprogress, ul.goalscompleted, ul.primarygoals {
+ul.goalsinprogress, ul.goalscompleted, ul.goalsmissed, ul.primarygoals {
   display: block;
   padding: 0;
   margin: 0;
@@ -337,11 +353,7 @@ ul.goalsinprogress, ul.goalscompleted, ul.primarygoals {
   width: 100%;
   text-align: left;
 }
-ul.primarygoals {
-  margin-top: 15px;
-  border-top: 1px solid black;
-}
-.goalsinprogress li, .goalscompleted li, .primarygoals li {
+.goalsinprogress li, .goalscompleted li, .goalsmissed li, .primarygoals li {
   position: relative;
   margin: 10px auto;
   color: black;
@@ -349,23 +361,29 @@ ul.primarygoals {
   overflow: hidden;
   padding: 15px 5px 10px 10px;
   text-transform: capitalize;
-//  border: 1px solid darkblue;
   @include border-radius(16px);
 }
+
 .goalscompleted li.completed, .primarygoals li.completed {
-  background-color: $blue-light;
+  background-color: lighten($green-main, 15%);
 }
 .goalsinprogress li.inprogress, .primarygoals li.inprogress {
   background-color: $blue-light;
 }
+.goalsmissed li.missed, .primarygoals li.missed {
+  background-color: $blue-light;
+//  background-color: $red-light;
+}
 .primarygoals li.parent {
-  background-color: darkgray;
+  background-color: lightgray;
 }
 .primarygoals li.sub {
-//  width: 90%;
-//  float: right;
-  background-color: lightgray;
+  width: 90%;
+  float: right;
   margin-top: -5px;
+}
+#daysoftheweek, #daysoftheweekA, #daysoftheweekB, #daysoftheweekC {
+  display: none;
 }
 .personal, .Personal {
   background-image: url('../images/personalicon.png');
@@ -382,52 +400,62 @@ ul.primarygoals {
 .goalicon {
   float: left;
   width: 30px;
-  padding: 0 40px 0 0;
+  padding: 0 15px 0 0;
   margin-left: 2px;
 }
 .goaltitle {
   float: left;
-  font-size: 22px;
-  line-height: 24px;
+  font-size: 20px;
+  line-height: 20px;
   text-align: left;
-  width: 60%;
+  width: 72%;
 }
-//.primarygoals .goaltitle {
-//  width: 70%;
-//}
+.primarygoals .goaltitle {
+  width: 70%;
+}
 .goalbuttons {
   float: right;
   width: 30px;
   padding-right: 5px;
 }
-.gatherinfo, .goalstatus {
-  float: left;
-  height: 36px;
-}
-.gatherinfo input {
-  float: left;
-  width: 70px;
-  height: 60px;
+.goaldeadline {
+  font-size: 16px;
+  line-height: 16px;
   margin: 0;
-  padding: 0 0 0 5px;
-  font-size: 32px;
+}
+.gatherinfo, .goaldeadline, .goalstatus {
+  float: left;
+  width: 100%;
+  height: 24px;
+}
+input.gatherinfo {
+  display: inline-block;
+  width: 50px;
+  height: 45px;
+  margin: 5px 5px 0 0;
+  padding: 0 0 0 10px;
+  font-size: 28px;
 }
 .goalstatus input {
-  float: left;
-  width: 60px;
-  height: 60px;
+  width: 30px;
+  height: 30px;
   margin: 0;
   padding: 0;
 }
 .chartbutton {
   float: right;
-  width: 50px;
-  height: 50px;
-  margin: 0;
-  border-left: 1px solid darkblue;
+  width: 30px;
+  height: 30px;
+  margin: 0 0 0 10px;
 }
-button.completedgoal {
+.chartcompleted {
+  clear: both;
+}
+.checkmark {
   float: right;
+  width: 30px;
+  height: 30px;
+  margin: -10px 5px 0 10px;
 }
 .goalremove {
   float: right;
@@ -440,13 +468,22 @@ button.completedgoal {
 }
 #addgoalform, #adduserform {
   display: none;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  z-index: 500;
+  width: 100%;
+  height: 98%;
+  padding: 1% 3% 3% 3%;
+  background-color: $yellow-main;
   margin-bottom: 20px;
+  overflow: auto;
 }
 #adduserform input {
   width: 92%;
   margin-bottom: -5px;
 }
-#adduserform .form-horizontal .control-group {
+#addgoalform .form-horizontal .control-group {
   margin-bottom: 10px;
 }
 
@@ -464,10 +501,10 @@ button.completedgoal {
 }
 .icondropdown, .icondropdownsub {
   margin: 0;
-  padding: 5px 0 0 10px;
+  padding: 10px 0 0 5px;
   list-style-type: none;
-  width: 94%;
-  height: 160px;
+  width: 300px;
+  height: 250px;
   border: solid 1px #e3e3e3;
   background-color: #f2f2f2;
 }
@@ -478,30 +515,23 @@ button.completedgoal {
 .icondropdown li, .icondropdownsub li {
   display: inline-block;
   float: left;
-  margin: 5px 0 0 0;
-  width: 68px;
+  margin: 10px 0 0 0;
+  width: 72px;
 }
-.incentive {
-  margin: 0;
-  padding: 5px 0 0 10px;
-  list-style-type: none;
-  width: 94%;
-  height: 75px;
-  border: solid 1px #e3e3e3;
-  background-color: #f2f2f2;
-}
-.incentive li {
-  display: inline-block;
-  float: left;
-  margin: 5px 20px 0 0;
-  width: 65px;
+.icon {
+  margin: -10px 0 0 5px;
 }
 .checkboxinfo {
   display: block;
-  margin: -13px 0 0 20px;
+  margin: -30px 0 0 40px;
   font-family: Arial, sans-serif;
-  font-size: 13px;
-  line-height: 14px;
+  font-size: 16px;
+  line-height: 20px;
+}
+.buttongroup {
+  display: block;
+  height: 55px;
+  margin: 5px auto;
 }
 .user {
   position: relative;
@@ -543,7 +573,7 @@ h2 {
   font-size: 32px;
 }
 h3 {
-  font-size: 28px;
+  font-size: 24px;
 }
 h4 {
   font-size: 24px;
@@ -559,23 +589,18 @@ p {
   font-size: 18px;
   line-height: 24px;
 }
-.fa-small {
-  font-size: 36px;
+.fa-regular {
+  font-size: 20px;
   vertical-align: middle;
   padding: 0;
 }
 .fa-medium {
-  font-size: 36px;
+  font-size: 24px;
   vertical-align: middle;
-  padding: 0 0 0 10px;
-  margin-right: 10px;
-}
-.fa-completed {
-  font-size: 36px;
-  vertical-align: middle;
+  padding: 0;
 }
 .fa-large {
-  font-size: 50px;
+  font-size: 36px;
   vertical-align: middle;
   padding: 0;
   margin-bottom: 10px;
@@ -593,15 +618,31 @@ p {
   font-weight: normal;
   text-align: center;
 }
+label {
+  font-size: 18px;
+}
 input[type='checkbox'] {
   -webkit-appearance:none;
-  width:60px;
-  height:60px;
+  width:30px;
+  height:30px;
   background: url('../images/checked-no.png');
   border-radius:5px;
 }
+input[type='radio'] {
+//  -webkit-appearance:none;
+  width:25px;
+  height:25px;
+  margin: -10px 0 0 -20px;
+}
+input[type='text'] {
+  //  -webkit-appearance:none;
+  font-size: 18px;
+  padding: 5px;
+  width: 300px;
+  height: 30px;
+}
 .thequestion {
-  width: 200px;
+  float: left;
   margin: 0;
 }
 .theanswer {
@@ -658,7 +699,9 @@ and (orientation : portrait) {
     left: 321px;
   }
 
-
+  footer {
+    top: 335px;
+  }
 
 }
 
@@ -669,15 +712,17 @@ and (max-device-width : 480px)
 and (orientation : landscape) {
 
   #goalscontainer {
-    height: 75%;
+    height: 66%;
   }
 
   #primarygoalscontainer {
     left: 481px;
-    height: 75%;
+    height: 66%;
   }
 
-
+  footer {
+    top: 290px;
+  }
 
 }
 
